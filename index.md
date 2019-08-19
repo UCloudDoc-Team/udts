@@ -4,4 +4,4 @@
 
 **目录：**
 
-{{indexmenu>:middleware:udts#1 | skipfile=/^(middleware:udts:concepts)$/ nsort dsort msort}}
+{{indexmenu>:middleware:udts#1 |  nsort dsort msort}}

@@ -23,7 +23,9 @@ UDTS支持全量任务和增量任务两种模式，使用源为MySQL或者 UDB 
 
 ## 步骤四 填写剩余信息创建并启动任务
 
-用户需再次填写数据库密码，sync data中的ServerID (保证和MySQL Server ID 不重复)，任务名称
+用户需再次填写数据库密码，sync data中的ServerID (保证和MySQL Server ID 不重复)，任务名称。
+
+![](http://udts-doc.cn-bj.ufileos.com/create007.png)
 
 
 

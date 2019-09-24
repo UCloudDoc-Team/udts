@@ -15,3 +15,22 @@ UDTS支持自建MySQL作为数据传输源
 | 密码     | MySQL数据库对应用户密码                                      |
 | 表名     | MySQL传输表名，若不填，系统默认为整库迁移                    |
 
+备注：
+
+如增量迁移，要求MySQL参数如下设置
+
+binlog_format    为 ROW
+
+binlog_row_image 为 FULL
+
+查询方式：
+
+show global variables like 'binlog_format';
+
+show global variables like 'binlog_row_image'；
+
+设置方式：
+
+set global binlog_format = "ROW" ;
+
+set global binlog_row_image = "FULL" ;

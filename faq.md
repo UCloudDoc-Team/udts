@@ -14,6 +14,16 @@ MySQL(包括UDB MySQL) Binlog信息返回需要用户数据源的账号具备权
 
 增量任务需要保证binlog 为row 模式。如果完成全量任务后再改为row模式，需要重新跑一次全量任务。
 
+#### 问：UDB MySQL作为传输目标，源数据库有视图的情况下全量任务失败。
+
+传输视图需要super权限。udb 默认回收了 super 权限，可使用命令：    
+
+update mysql.user set super_priv = 'Y' where user = 'root';   
+
+flush privileges;
+
+恢复权限
+
 
 
 

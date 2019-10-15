@@ -15,7 +15,7 @@ UDTS 跨域迁移利用到了 UDPN或者专线，现在部署的服务区域为�
 假设你的迁移账号为 backup_user ，你可以通过以下命令查看权限，  
 确保 Select_priv、Reload_priv、Lock_tables_priv、Repl_client_priv 的值为 Y
 
-```sql
+```
 mysql > SELECT User,Host,Select_priv,Reload_priv,Lock_tables_priv,Repl_client_priv FROM mysql.user WHERE User = "backup_user"\G;
 
 User             | backup_user
@@ -29,7 +29,7 @@ Repl_client_priv | Y
 2. sql_mode 一致  
 为了保证迁移能正确执行，最好保持 源和目标数据库的 sql_mode 一致，可以通过一下命令查询 sql_mode
 
-```sql
+```
 select @@sql_mode;
 
 --- 或者
@@ -38,7 +38,7 @@ show variables like "sql_mode";
 
 如果目标数据库和源数据的 sql_mode 不一致，可以通过下面的命令进行修改
 
-```sql
+```
 SET @@GLOBAL.sql_mode='xxxx';
 ```
 
@@ -50,7 +50,7 @@ SET @@GLOBAL.sql_mode='xxxx';
 4. 视图(view) 权限  
 当源数据库有视图时，需要要求迁移的账号拥有 super 权限，如果您使用的是 UDB-MySQL，可以通过下面的命令获取 super 权限
 
-```sql
+```
 update mysql.user set super_priv = 'Y' where user = 'root';   
 flush privileges;
 ```
@@ -65,7 +65,7 @@ MySQL(包括UDB MySQL) 增量迁移需要迁移的账号具有权限：SELECT, R
 
 确保 Select_priv、Repl_slave_priv、Repl_client_priv 的值为 Y
 
-```sql
+```
 mysql > SELECT User,Host,Select_priv,Repl_slave_priv,Repl_client_priv FROM mysql.user WHERE User = "backup_user"\G;
 
 User                   | backup_user
@@ -81,7 +81,7 @@ Repl_client_priv       | Y
 
 可以通过下面的命令查看
 
-```sql
+```
 show global variables like 'binlog_format';
 show global variables like 'binlog_row_image';
 ```
@@ -90,7 +90,7 @@ show global variables like 'binlog_row_image';
 
 3. 停止 event  
 
-```sql
+```
 -- 停止所有 event
 
 SET GLOBAL event_scheduler = OFF;
@@ -120,7 +120,7 @@ binlog_row_image = FULL
 
 2. 通过 MySQL 命令设置
 
-```sql
+```
 FLUSH TABLES WITH READ LOCK;
 FLUSH LOGS;
 SET GLOBAL binlog_format = 'ROW';
@@ -132,13 +132,13 @@ UNLOCK TABLES;
 
 在 slave 节点上执行 
 
-```sql
+```
 stop slave;
 ```
 
 在 master 上执行
 
-```sql
+```
 FLUSH TABLES WITH READ LOCK;
 FLUSH LOGS;
 SET GLOBAL binlog_format = 'ROW';
@@ -148,7 +148,7 @@ UNLOCK TABLES;
 
 在 slave 上执行
 
-```sql 
+```
 start slave;
 ```
 
@@ -162,7 +162,7 @@ start slave;
 
 可以通过下面的命令查看 sql_mode
 
-```sql
+```
 select @@sql_mode;
 
 --- 或者
@@ -173,7 +173,7 @@ show variables like "sql_mode";
 
 通过以下命令对 sql_mode 进行修改
 
-```sql
+```
 SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
 ```
 
@@ -184,7 +184,7 @@ SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
 
 假设有 group、user 两个 table 如下
 
-```sql
+```
 CREATE TABLE `group` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(100) NOT NULL,
@@ -213,7 +213,7 @@ VALUES
 
 当我们执行删除时
 
-```sql
+```
 DELETE FROM `group` WHERE `id` = 1;
 ```
 
@@ -227,7 +227,7 @@ Cannot delete or update a parent row: a foreign key constraint fails
 原因是，我们删除 group 的时候，其关联的 user 对应的数据不知道如何操作。  
 对于这种情况，我们需要设置级联`删除/更新`规则，参考规则如下
 
-```sql
+```
 ALTER TABLE tbl_name
     ADD [CONSTRAINT [symbol]] FOREIGN KEY
     [index_name] (index_col_name, ...)
@@ -238,7 +238,7 @@ ALTER TABLE tbl_name
 
 比如
 
-```sql 
+```
 -- 级联更新与删除
 ALTER TABLE `user` 
     ADD CONSTRAINT `g_fk2` 

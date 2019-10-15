@@ -9,7 +9,7 @@ UDTS 跨域迁移利用到了 UDPN或者专线，现在部署的服务区域为�
 
 #### 问：MySQL 全量迁移需要满足哪些条件
 
-1. 权限要求  
+###### 1. 权限要求  
     MySQL(包括UDB MySQL) 全量迁移需要迁移的账号具有权限： SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT
 
 假设你的迁移账号为 backup_user ，你可以通过以下命令查看权限，  
@@ -26,7 +26,7 @@ Lock_tables_priv | Y
 Repl_client_priv | Y
 ```
 
-2. sql_mode 一致  
+###### 2. sql_mode 一致  
 为了保证迁移能正确执行，最好保持 源和目标数据库的 sql_mode 一致，可以通过一下命令查询 sql_mode
 
 ```
@@ -44,10 +44,10 @@ SET @@GLOBAL.sql_mode='xxxx';
 
 其中具体的值，可以通过连接源数据库查询。
 
-3. binlog 格式  
+###### 3. binlog 格式  
 如果您在完成全量迁移之后，需要增加增量迁移，需要要求 binlog_format 为 ROW, binlog_row_image 为 FULL（如果有这个变量的话, MySQL 5.5 中没有这个变量）
 
-4. 视图(view) 权限  
+###### 4. 视图(view) 权限  
 当源数据库有视图时，需要要求迁移的账号拥有 super 权限，如果您使用的是 UDB-MySQL，可以通过下面的命令获取 super 权限
 
 ```
@@ -57,7 +57,7 @@ flush privileges;
 
 #### 问： MySQL 增量迁移需要满足哪些条件
 
-1. 权限要求
+###### 1. 权限要求
 
 MySQL(包括UDB MySQL) 增量迁移需要迁移的账号具有权限：SELECT, REPLICATION SLAVE, REPLICATION CLIENT 
 
@@ -75,7 +75,7 @@ Repl_slave_priv        | Y
 Repl_client_priv       | Y
 ```
 
-2. binlog 配置要求
+###### 2. binlog 配置要求
 
 增量迁移要求 MySQL(包括UDB MySQL) 的 binlog 格式为 ROW，且如果有 binlog_row_image 变量，其值需要为 FULL
 
@@ -88,7 +88,7 @@ show global variables like 'binlog_row_image';
 
 如果增量任务启动前，binlog_format 值不为 ROW，需要再次执行全量任务，以保证 binlog 信息正确。
 
-3. 停止 event  
+###### 3. 停止 event  
 
 ```
 -- 停止所有 event
@@ -106,7 +106,7 @@ ALTER EVENT hello DISABLE;
 
 增量迁移要求 MySQL(包括UDB MySQL) binlog_format 值为 ROW
 
-1. 修改配置文件（默认为 my.cnf ），重启 MySQL
+###### 1. 修改配置文件（默认为 my.cnf ），重启 MySQL
 
 ```
 [mysqld]
@@ -118,7 +118,7 @@ binlog_row_image = FULL
 
 备注： 如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
 
-2. 通过 MySQL 命令设置
+###### 2. 通过 MySQL 命令设置
 
 ```
 FLUSH TABLES WITH READ LOCK;

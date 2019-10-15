@@ -225,7 +225,7 @@ Cannot delete or update a parent row: a foreign key constraint fails
 ```
 
 原因是，我们删除 group 的时候，其关联的 user 对应的数据不知道如何操作。  
-对于这种情况，我们需要设置级联`删除/更新`规则，参考规则如下
+对于这种情况，我们需要设置级联删除/更新规则，参考规则如下
 
 ```
 ALTER TABLE tbl_name

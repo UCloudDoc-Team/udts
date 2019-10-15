@@ -108,7 +108,7 @@ ALTER EVENT hello DISABLE;
 
 1. 修改配置文件（默认为 my.cnf ），重启 MySQL
 
-```my.cnf
+```
 [mysqld]
 ...
 binlog_format = ROW

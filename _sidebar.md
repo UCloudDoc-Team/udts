@@ -6,17 +6,17 @@
     * 操作指南
      * [创建任务](middleware/udts/guide/createtask）
      * [启动任务](middleware/udts/guide/starttask）
-      * [停止任务](middleware/udts/guide/stoptask）
-      * [删除任务](middleware/udts/guide/deletetask）
-      * [获取任务详情](middleware/udts/guide/getconfig）
+           * [停止任务](middleware/udts/guide/stoptask）
+           * [删除任务](middleware/udts/guide/deletetask）
+           * [获取任务详情](middleware/udts/guide/getconfig）
     * [FAQ](middleware/udts/faq）
     * [全量任务和增量任务](middleware/udts/tasktype）
     * 传输类型说明
      * [MySQL源](middleware/udts/type/mysqlsource）
-      * [UDB源](middleware/udts/type/udbsource）
-      * [ORACLE源](middleware/udts/type/oraclesource）
-      * [CSV源](middleware/udts/type/csvsource）
-      * [MongoDB源](middleware/udts/type/mongonode）
+           * [UDB源](middleware/udts/type/udbsource）
+           * [ORACLE源](middleware/udts/type/oraclesource）
+           * [CSV源](middleware/udts/type/csvsource）
+           * [MongoDB源](middleware/udts/type/mongonode）
     
 
 

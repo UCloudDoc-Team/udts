@@ -11,6 +11,7 @@
         * [获取任务详情](middleware/udts/guide/getconfig)
     * [FAQ](middleware/udts/faq)
     * [全量任务和增量任务](middleware/udts/tasktype)
+    * [ETL设置](middleware/udts/etl)
     * 传输类型说明
         * [MySQL源](middleware/udts/type/mysqlsource)
         * [UDB源](middleware/udts/type/udbsource)

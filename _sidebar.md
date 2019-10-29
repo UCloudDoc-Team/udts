@@ -15,7 +15,6 @@
     * 传输类型说明
         * [MySQL源](middleware/udts/type/mysqlsource)
         * [UDB源](middleware/udts/type/udbsource)
-        * [ORACLE源](middleware/udts/type/oraclesource)
         * [CSV源](middleware/udts/type/csvsource)
         * [MongoDB源](middleware/udts/type/mongonode)
     

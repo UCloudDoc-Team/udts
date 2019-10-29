@@ -2,7 +2,7 @@
 
 # MySQL源
 
-UDTS支持自建MySQL作为数据传输源
+UDTS支持MySQL作为数据传输源
 
 ## MySQL源填写表单
 

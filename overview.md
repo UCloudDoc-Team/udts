@@ -1,7 +1,7 @@
 # 概览
 
 * 产品简介
-    * [什么是数据传输服务](middleware/udts/introduction/concept).
+    * [什么是数据传输服务](middleware/udts/introduction/concept)
     * [支持传输类型](middleware/udts/introduction/supporttype)
 * 操作指南
     * [创建任务](middleware/udts/guide/createtask)

@@ -14,7 +14,6 @@
 * [ETL设置](middleware/udts/etl)
 * 传输类型说明
     * [MySQL源](middleware/udts/type/mysqlsource)
-    * [UDB源](middleware/udts/type/udbsource)
     * [CSV源](middleware/udts/type/csvsource)
     * [MongoDB源](middleware/udts/type/mongonode)
     

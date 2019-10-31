@@ -18,3 +18,5 @@
 被修改的任务状态，会初始化为 “已创建”。
 
 ![](http://antman-docs.cn-bj.ufileos.com/update003.png)
+
+备注：目前不提供修改 数据源目类型 和 传输任务类型。

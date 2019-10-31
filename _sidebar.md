@@ -9,6 +9,7 @@
         * [停止任务](middleware/udts/guide/stoptask)
         * [删除任务](middleware/udts/guide/deletetask)
         * [获取任务详情](middleware/udts/guide/getconfig)
+        * [修改任务](middleware/udts/guide/updatetask)
     * [FAQ](middleware/udts/faq)
     * [全量任务和增量任务](middleware/udts/tasktype)
     * [ETL设置](middleware/udts/etl)

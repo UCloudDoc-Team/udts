@@ -8,4 +8,4 @@
 
 用户无法对同步中的任务进行修改参数。目前开放的修改状态和类型为，全量任务/全量+增量任务 ，状态为“已创建”，“停止”，“失败”，“成功”的任务。
 
-![](http://udts-doc.cn-bj.ufileos.com/update001.jpg)
+![](http://antman-docs.cn-bj.ufileos.com/update001.png)

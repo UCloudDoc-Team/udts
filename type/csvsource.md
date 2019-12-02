@@ -2,7 +2,7 @@
 
 # CSV源 
 
-UDTS可以讲UFile上保存的csv文件，传输至mysql或udw的数据类型。
+UDTS可以将UFile上保存的csv文件，传输至mysql或udw的数据类型。
 
 ## CSV源填写表单
 

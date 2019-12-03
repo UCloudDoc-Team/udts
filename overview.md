@@ -18,6 +18,8 @@
     * [MySQL源](middleware/udts/type/mysqlsource)
     * [CSV源](middleware/udts/type/csvsource)
     * [MongoDB源](middleware/udts/type/mongonode)
+    * [UFile源](middleware/udts/type/ufilesource)
+    * [Redis源](middleware/udts/type/redissource)
     
     
 

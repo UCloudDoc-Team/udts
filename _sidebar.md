@@ -13,11 +13,14 @@
     * [修改任务](middleware/udts/guide/updatetask)
 * [FAQ](middleware/udts/faq)
 * [全量任务和增量任务](middleware/udts/tasktype)
+* [双向同步](middleware/udts/synchronization)
 * [ETL设置](middleware/udts/etl)
 * 传输类型说明
     * [MySQL源](middleware/udts/type/mysqlsource)
     * [CSV源](middleware/udts/type/csvsource)
     * [MongoDB源](middleware/udts/type/mongonode)
+    * [UFile源](middleware/udts/type/ufilesource)
+    * [Redis源](middleware/udts/type/redissource)
     
     
 

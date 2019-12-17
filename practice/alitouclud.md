@@ -22,4 +22,6 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/rdsstart001.png)
 
+执行后可以观测任务状态
 
+![](http://udts-doc.cn-bj.ufileos.com/aliudb002.png)

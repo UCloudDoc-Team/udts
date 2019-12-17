@@ -2,7 +2,7 @@
 
 适用场景：通过UDTS将阿里云 RDS MySQL数据库迁移至UCloud UDB MySQL上。
 
-### 配置外网IP和白名单
+### 配置外网地址和白名单
 
 确保UDTS可以从外部访问阿里云的数据库
 
@@ -18,7 +18,7 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/udtsali001.png)
 
-由于阿里云RDS并非root账号，需要在UDTS任务中开启nolocks
+由于阿里云RDS提供的高级账号并非root账号，需要在UDTS任务中开启 NoLocks
 
 ### 启动UDTS任务
 

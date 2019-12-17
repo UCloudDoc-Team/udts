@@ -1,4 +1,4 @@
-# 如何从阿里云RDS MySQL版本迁移至UCloud UDB
+# 如何从阿里云RDS MySQL迁移至UCloud UDB
 
 适用场景：通过UDTS将阿里云 RDS MySQL数据库迁移至UCloud UDB MySQL上。
 

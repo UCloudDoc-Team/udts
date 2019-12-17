@@ -15,7 +15,7 @@
 * [双向同步](middleware/udts/synchronization)
 * [ETL设置](middleware/udts/etl)
 * [最佳实践]
-    * [如何从阿里云RDS MySQL版本迁移至UCloud UDB](middleware/udts/practice/alitouclud)
+    * [如何从阿里云RDS MySQL迁移至UCloud UDB](middleware/udts/practice/alitouclud)
 * 传输类型说明
     * [MySQL源](middleware/udts/type/mysqlsource)
     * [CSV源](middleware/udts/type/csvsource)

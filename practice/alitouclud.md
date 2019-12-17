@@ -4,9 +4,7 @@
 
 ### 配置外网地址和白名单
 
-确保UDTS可以从外部访问阿里云的数据库
-
-如图：
+确保UDTS可以从外部访问阿里云的数据库，如图：
 
 ![](http://udts-doc.cn-bj.ufileos.com/ali001.png)
 

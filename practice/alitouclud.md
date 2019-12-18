@@ -16,7 +16,9 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/udtsali001.png)
 
-由于阿里云RDS提供的高级账号并非root账号，需要在UDTS任务中开启 NoLocks
+如果是搭建的专线也可以使用专线地址。
+
+由于阿里云RDS提供的高级账号并非root账号，需要在UDTS任务中开启 NoLocks。
 
 ### 启动UDTS任务
 

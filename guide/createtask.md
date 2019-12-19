@@ -4,18 +4,17 @@
 
 ## 创建UDTS迁移任务
 
-
-![](http://udts-doc.cn-bj.ufileos.com/createnew001.jpg)
+UDTS为全局型产品
 
 ## 点击创建任务
 
-![](http://udts-doc.cn-bj.ufileos.com/create002.png)
+![](http://udts-doc.cn-bj.ufileos.com/createnew001.png)
 
 ## 选择任务类型
 
-UDTS支持全量任务和增量任务两种
+UDTS支持全量任务，增量任务，全量+增量任务，双向同步4种
 
-![](http://udts-doc.cn-bj.ufileos.com/create003.png)
+![](http://udts-doc.cn-bj.ufileos.com/typenew001.png)
 
 ## 选择源目类型并填写对应信息
 

@@ -18,7 +18,7 @@ UDTS支持全量任务，增量任务，全量+增量任务，双向同步4种
 
 ## 选择源目类型并填写对应信息
 
-![](http://udts-doc.cn-bj.ufileos.com/create004.png)
+![](http://udts-doc.cn-bj.ufileos.com/typenew002.png)
 
 ## 填写任务名称并点击创建
 

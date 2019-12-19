@@ -4,9 +4,8 @@
 
 ## 创建UDTS迁移任务
 
-选择 北京二 区域（后台任务使用资源自行调度）和用户的源目地址无关。
 
-![](http://udts-doc.cn-bj.ufileos.com/create001.jpg)
+![](http://udts-doc.cn-bj.ufileos.com/createnew001.jpg)
 
 ## 点击创建任务
 

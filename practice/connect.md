@@ -4,7 +4,7 @@
 
 ## 搭建专线
 
-用户可以通过![罗马](https://docs.ucloud.cn/network/roma/overview)，VPC互通等功能保证源目两端专线网络互通。
+用户可以通过[罗马](https://docs.ucloud.cn/network/roma/overview)，VPC互通等功能保证源目两端专线网络互通。
 
 ![](http://udts-doc.cn-bj.ufileos.com/connect001.png)
 

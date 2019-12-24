@@ -6,7 +6,7 @@
 
 用户可以通过[罗马](https://docs.ucloud.cn/network/roma/overview)，或自建专线保证源目两端专线网络互通。
 
-![](http://udts-doc.cn-bj.ufileos.com/connect001.png)
+![](http://udts-doc.cn-bj.ufileos.com/connect005.png)
 
 ## 创建UDTS任务
 

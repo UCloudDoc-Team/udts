@@ -4,9 +4,7 @@
 
 ## 搭建专线
 
-专线是将用户源端和希望的目标段原本内网互相无法通信的情况下，搭建专属线路用以保持内网通信。
-
-可以通过罗马，VPC互通等功能保证两端网络互通。
+用户可以通过![罗马](https://docs.ucloud.cn/network/roma/overview)，VPC互通等功能保证源目两端专线网络互通。
 
 ![](http://udts-doc.cn-bj.ufileos.com/connect001.png)
 

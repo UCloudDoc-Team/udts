@@ -12,7 +12,7 @@
 
 地址类型选择专线地址
 
-![](http://udts-doc.cn-bj.ufileos.com/connect002.png)
+![](http://udts-doc.cn-bj.ufileos.com/speed001.png)
 
 目标端填写打通的UCloud端内网地址和对应VPC
 

@@ -8,7 +8,7 @@
 
 ## 创建UDTS任务
 
-地址类型选择专线地址/外网迁移选择外网地址。
+地址类型选择专线地址/外网迁移请选择外网地址。
 
 ![](http://udts-doc.cn-bj.ufileos.com/speed001.png)
 

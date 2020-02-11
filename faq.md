@@ -236,10 +236,15 @@ ALTER TABLE tbl_name
     [ON UPDATE {RESTRICT | CASCADE | SET NULL | NO ACTION | SET DEFAULT}]
 ```
 
-比如
+修复步骤：
 
+1. --- 删除外键约束 
 ```
--- 级联更新与删除
+ALTER TABLE `user` DROP FOREIGN KEY `g_fk1`;
+```
+
+2. -- 级联更新与删除
+```
 ALTER TABLE `user` 
     ADD CONSTRAINT `g_fk2` 
     FOREIGN KEY (`group_id`) 
@@ -247,4 +252,6 @@ ALTER TABLE `user`
     ON DELETE CASCADE 
     ON UPDATE CASCADE;
 ```
+
+3. 点击启动任务
 

@@ -238,12 +238,12 @@ ALTER TABLE tbl_name
 
 修复步骤：
 
-1. --- 删除外键约束 
+1. 删除外键约束 
 ```
 ALTER TABLE `user` DROP FOREIGN KEY `g_fk1`;
 ```
 
-2. -- 级联更新与删除
+2. 级联更新与删除
 ```
 ALTER TABLE `user` 
     ADD CONSTRAINT `g_fk2` 

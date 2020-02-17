@@ -2,7 +2,7 @@
 
 # Redis源 
 
-UDTS可以将Redis作为数据源进行全量+增量任务的传输，目前支持集群版和主备版(暂不支持UCloud Redis分布式版本)。
+UDTS可以将Redis作为数据源进行全量+增量任务的传输，暂时不支持UCloud Redis 分布式版。
 
 ## Redis源填写表单
 

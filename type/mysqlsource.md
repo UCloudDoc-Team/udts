@@ -2,7 +2,7 @@
 
 # MySQL源
 
-UDTS支持MySQL作为数据传输源
+UDTS支持MySQL作为数据传输源，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。
 
 ## MySQL源填写表单
 

@@ -1,6 +1,6 @@
-<div class="sidebar_title icon__udts"> 数据传输服务 UDTS</div>
+# 概览
 
-* [概览](/udts/README)
+
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
     * [支持传输类型](/udts/introduction/supporttype)

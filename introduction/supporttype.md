@@ -8,6 +8,7 @@
 | MySQL  | TiDB     | 支持     | 支持     |
 | TiDB   | TiDB     | 支持     | 暂不支持 |
 | MongoDB   | MongoDB     | 支持     | 暂不支持 |
+| PostgreSQL   | PostgreSQL    | 支持     | 暂不支持 |
 | CSV    | MySQL    | 支持     | 暂不支持 |
 | CSV    | UDW      | 支持     | 暂不支持 |
 | UFile-bucket    | UFile-Bucket      | 支持     | 方案支持 |

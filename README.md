@@ -18,6 +18,7 @@
     * [如何从阿里云RDS MySQL迁移至UCloud UDB](/udts/practice/alitouclud)
     * [自建IDC如何传输数据至UCloud](/udts/practice/connect)
     * [托管云如何传输数据至公有云区域](/udts/practice/hybrid)
+    * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
 * 传输类型说明
     * [MySQL源](/udts/type/mysqlsource)
     * [CSV源](/udts/type/csvsource)

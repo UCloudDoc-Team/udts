@@ -25,7 +25,7 @@
     * [MongoDB源](/udts/type/mongonode)
     * [UFile源](/udts/type/ufilesource)
     * [Redis源](/udts/type/redissource)
-    * [PostgreSQL源](/udts/type/PostgreSQLsource)
+    * [PostgreSQL源](/udts/type/pgsqlsource)
     
 
 

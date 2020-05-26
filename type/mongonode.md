@@ -2,7 +2,7 @@
 
 # MongoDB源
 
-UDTS支持自建MongoDB和UDB MongoDB作为数据传输源。MongoDB支持副本集，分片集，副本集地址为路由节点地址，副本集地址为master节点地址。
+UDTS支持自建MongoDB和UDB MongoDB。支持副本集，分片集之间的相互迁移，分片集地址为路由节点地址，副本集地址为master节点地址。
 
 ## MongoDB源填写表单
 

@@ -27,7 +27,7 @@
     * [Redis源](/udts/type/redissource)
     * [PostgreSQL源](/udts/type/pgsqlsource)
 * 功能原理
-    * [MySQL迁移](/udts/tech/mysql.md)
+    * [MySQL迁移](/udts/tech/mysql)
 
 
 

@@ -26,7 +26,7 @@
     * [UFile源](/udts/type/ufilesource)
     * [Redis源](/udts/type/redissource)
     * [PostgreSQL源](/udts/type/pgsqlsource)
-* 功能原理
+* 功能原理与传输速度
     * [MySQL迁移](/udts/tech/mysql)
 
 

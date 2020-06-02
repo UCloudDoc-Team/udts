@@ -8,7 +8,7 @@
 
 ![](http://antman-docs.cn-bj.ufileos.com/udtscheck001.png)
 
-![](http://antman-docs.cn-bj.ufileos.com/udtscheck001.png)
+![](http://antman-docs.cn-bj.ufileos.com/udtscheck002.png)
 
 - 出现连通性检查失败，请检查端口密码是否正确。
 

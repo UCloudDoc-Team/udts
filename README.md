@@ -5,6 +5,7 @@
     * [支持传输类型](/udts/introduction/supporttype)
 * 操作指南
     * [创建任务](/udts/guide/createtask)
+    * [连通性检查](/udts/guide/checkconnection)
     * [启动任务](/udts/guide/starttask)
     * [停止任务](/udts/guide/stoptask)
     * [删除任务](/udts/guide/deletetask)

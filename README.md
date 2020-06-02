@@ -11,6 +11,7 @@
     * [删除任务](/udts/guide/deletetask)
     * [获取任务详情](/udts/guide/getconfig)
     * [修改任务](/udts/guide/updatetask)
+    * [任务失败通知](/udts/guide/notice)
 * [FAQ](/udts/faq)
 * [全量任务和增量任务](/udts/tasktype)
 * [双向同步](/udts/synchronization)

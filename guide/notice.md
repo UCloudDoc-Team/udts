@@ -6,3 +6,4 @@
 
 进入 资源监控UMon - 消息订阅： https://console.ucloud.cn/umon/umsg
 
+![](http://antman-docs.cn-bj.ufileos.com/notice002.png)

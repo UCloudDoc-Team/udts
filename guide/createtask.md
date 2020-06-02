@@ -22,6 +22,6 @@ UDTS支持全量任务，增量任务，全量+增量任务，双向同步4种
 
 ## 填写任务名称，完成连通性检查后点击创建
 
-[连通性检查]（https://docs.ucloud.cn/udts/guide/checkconnection）
+[连通性检查](https://docs.ucloud.cn/udts/guide/checkconnection)
 
 ![](http://udts-doc.cn-bj.ufileos.com/create005.png)

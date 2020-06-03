@@ -12,7 +12,7 @@
 | CSV    | MySQL    | 支持     | 暂不支持 |
 | CSV    | UDW      | 支持     | 暂不支持 |
 | UFile-bucket    | UFile-Bucket      | 支持     | 方案支持 |
-| Redis    | Redis      |   当前仅支持全量+增量任务   |  |
+| Redis    | Redis      |   支持   | 支持全量+增量 |
 
 
 

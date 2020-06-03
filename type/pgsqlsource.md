@@ -1,10 +1,10 @@
 
 
-# PostgreSQL源
+# PostgreSQL
 
-UDTS支持PostgreSQL作为数据传输源。
+UDTS支持PostgreSQL作为数据传输源/目标。
 
-## PostgreSQL源填写表单
+## PostgreSQL填写表单
 
 | 参数名   | 说明                                                         |
 | -------- | ------------------------------------------------------------ |

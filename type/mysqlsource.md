@@ -1,10 +1,10 @@
 
 
-# MySQL源
+# MySQL
 
-UDTS支持MySQL作为数据传输源，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。
+UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。 MariaDB 版本需大于等于 10.1.2。
 
-## MySQL源填写表单
+## MySQL填写表单
 
 | 参数名   | 说明                                                         |
 | -------- | ------------------------------------------------------------ |

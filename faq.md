@@ -262,3 +262,35 @@ ALTER TABLE `user`
 已同步 状态说明：
 
 指迁移任务中指定的 db 和 table 对应的目标数据库数据和源数据库达到一致。比如：当迁移任务为 * 时，已同步 是指目标数据库内置库(sys, test, INFORMATION_SCHEMA，PERFORMANCE_SCHEMA 等)之外的所有 db 达到和源库数据一致。当迁移任务为多 db 时，比如 db1,db2 ，是指目标数据的 db1,db2 和源数据库数据达到一致。当源数据库数据发生任何变化(即使发生变化的 db 不在迁移任务中)，已同步 状态也会再次变化为 同步中，直到数据再次达到一致。
+
+#### 问： error="Error 1040: Too many connections" 错误处理
+
+数据库服务器连接达到上限。
+
+```
+show variables like '%max_connections%';
++-----------------+-------+
+| Variable_name   | Value |
++-----------------+-------+
+| max_connections | 151   |
++-----------------+-------+
+1 row in set (0.01 sec)
+```
+
+解决方法：
+
+1. 增加 max_connections：  `set GLOBAL max_connections=1000;`
+
+
+
+## row size too large (\u003e 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED may help. In current row format, BLOB prefix of 768 bytes is stored inline
+
+解决方法：
+
+在目标库执行
+
+```
+set GLOBAL innodb_file_format_max = 'Barracuda';
+set GLOBAL innodb_file_format = 'Barracuda';
+set GLOBAL  innodb_file_per_table = ON;
+```

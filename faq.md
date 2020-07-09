@@ -294,3 +294,11 @@ set GLOBAL innodb_file_format_max = 'Barracuda';
 set GLOBAL innodb_file_format = 'Barracuda';
 set GLOBAL  innodb_file_per_table = ON;
 ```
+
+
+#### 问： Column count doesn't match value count
+
+阿里云迁移到 UCloud 的增量任务出现类似的错误， Column count doesn't match value count: 2 (columns) vs 3 (values)，是因为源库中存在隐藏主键，导致数据的 columns 和 values 不匹配。
+
+解决方法：
+1. 用户在源库，修改表，增加自定义主键

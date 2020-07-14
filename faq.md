@@ -124,6 +124,7 @@ binlog_row_image = FULL
 FLUSH TABLES WITH READ LOCK;
 FLUSH LOGS;
 SET GLOBAL binlog_format = 'ROW';
+SET GLOBAL binlog_row_image = 'FULL';
 FLUSH LOGS;
 UNLOCK TABLES;
 ```
@@ -302,3 +303,9 @@ set GLOBAL  innodb_file_per_table = ON;
 
 解决方法：
 1. 用户在源库，修改表，增加自定义主键
+
+
+
+#### 问: sync: Type:ExecSQL msg:"exec jobs failed,err:Error 1205:Lock wait timeout exceeded;try restarting transaction"
+
+当增量任务的目标数据库有业务运行(对数据库有读写操作)，且业务对数据库有读写锁时，UDTS 服务向目标数据库中同步数据会出现超时的情况，我们在内部重试之后，依然还没有等到锁释放，就会出现这个错误，需要用户手动启动这个任务，任务会自动从上次同步完成的位置继续执行(即支持断点续传功能)

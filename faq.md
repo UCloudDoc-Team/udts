@@ -3,11 +3,11 @@
 
 
 
-#### 问: 现在支持多少区域间的跨域迁移？
+#### 1 问: 现在支持多少区域间的跨域迁移？
 
 UDTS 跨域迁移利用到了 UDPN或者专线，已支持区域且有UDPN/专线传输线路的路径皆可支持。已支持区域详见控制台。
 
-#### 问：MySQL 全量迁移需要满足哪些条件
+#### 2 问：MySQL 全量迁移需要满足哪些条件
 
 ###### 1. 权限要求  
     MySQL(包括UDB MySQL) 全量迁移需要迁移的账号具有权限： SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT
@@ -55,7 +55,7 @@ update mysql.user set super_priv = 'Y' where user = 'root';
 flush privileges;
 ```
 
-#### 问： MySQL 增量迁移需要满足哪些条件
+#### 3 问： MySQL 增量迁移需要满足哪些条件
 
 ###### 1. 权限要求
 
@@ -102,7 +102,7 @@ SHOW EVENTS;
 ALTER EVENT hello DISABLE;
 ```
 
-#### 问： 增量提示 only support ROW format binlog 该如何操作
+#### 4 问： 增量提示 only support ROW format binlog 该如何操作
 
 增量迁移要求 MySQL(包括UDB MySQL) binlog_format 值为 ROW
 
@@ -157,7 +157,7 @@ start slave;
 通过 SET GLOBAL binlog_format = 'ROW'; 设置参数，  
 再次通过 show global variables like 'binlog_format'; 查询到的值还是旧的值，需要重新断开连接再次连接后才会显示变更后的值。
 
-#### 问：ERROR 1292 (22007): Incorrect date value: '0000-00-00' for column
+#### 5 问：ERROR 1292 (22007): Incorrect date value: '0000-00-00' for column
 
 这是由于迁移的 MySQL(UDB-MySQL) 的 sql_mode 不一致导致的， 目标库的日期不允许 '0000-00-00' 这种无效的日期。
 
@@ -181,7 +181,7 @@ SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
 这里的 xxxx 是指原有查询出来的 sql_mode 值
 
 
-#### 问： Error 1451: Cannot delete or update a parent row: a foreign key constraint fails
+#### 6 问： Error 1451: Cannot delete or update a parent row: a foreign key constraint fails
 
 假设有 group、user 两个 table 如下
 
@@ -256,7 +256,7 @@ ALTER TABLE `user`
 
 3. 点击启动任务
 
-#### 问： 如何判断MySQL-MySQL增量任务中，源目数据库已经同步完成
+#### 7 问： 如何判断MySQL-MySQL增量任务中，源目数据库已经同步完成
 
 当增量任务中目标库的数据和源库达到一致时，增量任务的状态会由 同步中 变成 已同步。
 
@@ -264,7 +264,7 @@ ALTER TABLE `user`
 
 指迁移任务中指定的 db 和 table 对应的目标数据库数据和源数据库达到一致。比如：当迁移任务为 * 时，已同步 是指目标数据库内置库(sys, test, INFORMATION_SCHEMA，PERFORMANCE_SCHEMA 等)之外的所有 db 达到和源库数据一致。当迁移任务为多 db 时，比如 db1,db2 ，是指目标数据的 db1,db2 和源数据库数据达到一致。当源数据库数据发生任何变化(即使发生变化的 db 不在迁移任务中)，已同步 状态也会再次变化为 同步中，直到数据再次达到一致。
 
-#### 问： error="Error 1040: Too many connections" 错误处理
+#### 8 问： error="Error 1040: Too many connections" 错误处理
 
 数据库服务器连接达到上限。
 
@@ -284,7 +284,7 @@ show variables like '%max_connections%';
 
 
 
-#### 问： row size too large (\u003e 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED may help. In current row format, BLOB prefix of 768 bytes is stored inline
+#### 9 问： row size too large (\u003e 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED may help. In current row format, BLOB prefix of 768 bytes is stored inline
 
 解决方法：
 
@@ -297,7 +297,7 @@ set GLOBAL  innodb_file_per_table = ON;
 ```
 
 
-#### 问： Column count doesn't match value count
+#### 10 问： Column count doesn't match value count
 
 阿里云迁移到 UCloud 的增量任务出现类似的错误， Column count doesn't match value count: 2 (columns) vs 3 (values)，是因为源库中存在隐藏主键，导致数据的 columns 和 values 不匹配。
 
@@ -306,7 +306,7 @@ set GLOBAL  innodb_file_per_table = ON;
 
 
 
-#### 问: sync: Type:ExecSQL msg:"exec jobs failed,err:Error 1205:Lock wait timeout exceeded;try restarting transaction"
+#### 11 问: sync: Type:ExecSQL msg:"exec jobs failed,err:Error 1205:Lock wait timeout exceeded;try restarting transaction"
 
 当增量任务的目标数据库有业务运行(对数据库有读写操作)，且业务对数据库有读写锁时，UDTS 服务向目标数据库中同步数据会出现超时的情况，我们在内部重试之后，依然还没有等到锁释放，就会出现这个错误，需要用户手动启动这个任务，任务会自动从上次同步完成的位置继续执行(即支持断点续传功能)
 

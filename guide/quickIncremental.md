@@ -13,11 +13,11 @@ UDTS 对以下表格中所列出的全量传输任务， 提供基于已完成�
 
 ![](http://udts-doc.cn-bj.ufileos.com/connect004.png)
 
-点击“详细”按钮进入下一步。
+点击“详情”按钮进入下一步。
 
 ## 步骤二 查看任务详情
 
-查看任务详情，确认 sync 栏有 binlog 数据。 如果 sync 栏没有数据说明源数据库没有开启binlog, 无法创建增量任务进行数据同步。
+确认 sync 栏有 binlog 数据。 如果 sync 栏没有数据说明源数据库没有开启binlog, 无法创建增量任务进行数据同步。
 
 ![](http://udts-doc.cn-bj.ufileos.com/create006.png)
 

@@ -4,6 +4,50 @@
 
 UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。 MariaDB 版本需大于等于 10.1.2。
 
+## 注意事项
+
+### 数据量
+
+建议单个全量迁移任务所迁移的数据量不超过200G， 最大支持500G。 如果所要迁移的数据量超过了500G，可以将任务拆分为多个任务进行迁移。 UDTS 提供按库、按表、按多库、按多表等多维度的迁移方式。 
+
+如果迁移任务超过了500G， 且无法拆分为多个任务， 请联系技术支持。
+
+### 存储空间
+
+迁移的过程中可能会在目标数据库产生slow log, 其存储于mysql数据库中。 所以迁移结束以后目标数据库占用的存储空间可能会大于源数据库占用的存储空间。 建议使用UDTS迁移数据库的过程中关闭目标数据库的slow log， 迁移结束以后重新开启 slow log。 在迁移较大的数据库时， 产生的slow log可能会很大， 如果迁移的过程中没有关闭slow log, 请预留好slow log的存储空间。 
+
+迁移任务如果开启了“保留Binlog”选项， 目标数据库产生的Binlog 会占用存储空间。 当数据量较大时（超过200G）， 建议用户保持“保留Binlog”默认关闭，这样在全量迁移的过程中在目标数据库不会产生Binlog，减少迁移对磁盘的额外需求。 如果在迁移的过程中一定要开启Binlog， 请为目标数据库创建较大的存储空间， 以免存储空间不够导致任务失败（根据经验，迁移3TB的数据会产生3TB以上的Binlog文件， 即源数据库存储空间为3TB， 目标需要6TB存储空间）。
+
+### MyISAM 引擎表
+
+UDTS 支持 MyISAM 引擎表的全量迁移及增量同步， 但是有以下限制：
+* 导出数据时会锁表， 直到全表数据导出。 可能会影响业务。
+* 不支持一条事务中同时更新MyISAM引擎表和InnoDB引擎表。
+* 对于损坏的表，在迁移之前要进行修复。
+
+建议用户将MyISAM 引擎表转换为InnoDB引擎表以后再使用UDTS迁移。
+
+### 参数
+
+如里全量迁移以后还要进行增量迁移，要求源数据库开启binlog, 格式设置为ROW, image设置为FULL
+
+```
+binlog_format    为 ROW
+binlog_row_image 为 FULL
+```
+
+查询方式：
+```
+show global variables like 'binlog_format';
+show global variables like 'binlog_row_image'；
+```
+
+设置方式：
+```
+set global binlog_format = "ROW" ;
+set global binlog_row_image = "FULL" ;
+```
+
 ## MySQL填写表单
 
 | 参数名   | 说明                                                         |
@@ -20,22 +64,4 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6
 |保留Binlog|当MySQL为目标端可用，保留同步中数据产生的 binlog 从而保证目标端作为主库的高可用架构生效|
 
 
-备注：
 
-如增量迁移，要求MySQL参数如下设置
-
-binlog_format    为 ROW
-
-binlog_row_image 为 FULL
-
-查询方式：
-
-show global variables like 'binlog_format';
-
-show global variables like 'binlog_row_image'；
-
-设置方式：
-
-set global binlog_format = "ROW" ;
-
-set global binlog_row_image = "FULL" ;

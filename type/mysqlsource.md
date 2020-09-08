@@ -4,6 +4,35 @@
 
 UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。 MariaDB 版本需大于等于 10.1.2。
 
+## 注意事项
+
+### 数据量
+
+建议单个全量迁移任务所迁移的数据量不超过200G， 最大支持500G。 如果所要迁移的数据量超过了500G，可以将任务拆分为多个任务进行迁移。 UDTS 提供按库、按表、按多库、按多表等多维度的迁移方式。 
+
+如果迁移任务超过了500G， 且无法拆分为多个任务， 请联系技术支持。
+
+### 参数
+
+如里全量迁移以后还要进行增量迁移，要求源数据库开启binlog, 格式设置为ROW, image设置为FULL
+
+```
+binlog_format    为 ROW
+binlog_row_image 为 FULL
+```
+
+查询方式：
+```
+show global variables like 'binlog_format';
+show global variables like 'binlog_row_image'；
+```
+
+设置方式：
+```
+set global binlog_format = "ROW" ;
+set global binlog_row_image = "FULL" ;
+```
+
 ## MySQL填写表单
 
 | 参数名   | 说明                                                         |
@@ -20,22 +49,4 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6
 |保留Binlog|当MySQL为目标端可用，保留同步中数据产生的 binlog 从而保证目标端作为主库的高可用架构生效|
 
 
-备注：
 
-如增量迁移，要求MySQL参数如下设置
-
-binlog_format    为 ROW
-
-binlog_row_image 为 FULL
-
-查询方式：
-
-show global variables like 'binlog_format';
-
-show global variables like 'binlog_row_image'；
-
-设置方式：
-
-set global binlog_format = "ROW" ;
-
-set global binlog_row_image = "FULL" ;

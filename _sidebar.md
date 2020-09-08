@@ -13,7 +13,7 @@
     * [获取任务详情](/udts/guide/getconfig)
     * [修改任务](/udts/guide/updatetask)
     * [任务失败通知](/udts/guide/notice)  
-    * [基于全量创建增量任务](/udts/guide/quickIncremental)
+    * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
 * [FAQ](/udts/faq)
 * [双向同步](/udts/synchronization)
 * [ETL设置](/udts/etl)

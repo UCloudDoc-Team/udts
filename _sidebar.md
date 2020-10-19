@@ -7,7 +7,7 @@
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
         * [MySQL](/udts/type/mysqlsource)
-        * [TiDB](/udts/type/tidbsource)
+        * [TiDB](/udts/type/tidb)
         * [CSV](/udts/type/csvsource)
         * [MongoDB](/udts/type/mongonode)
         * [UFile](/udts/type/ufilesource)

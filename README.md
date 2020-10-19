@@ -3,6 +3,15 @@
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
     * [支持传输类型](/udts/introduction/supporttype)
+* 传输类型说明
+    * [MySQL源](/udts/type/mysqlsource)
+    * [CSV源](/udts/type/csvsource)
+    * [MongoDB源](/udts/type/mongonode)
+    * [UFile源](/udts/type/ufilesource)
+    * [Redis源](/udts/type/redissource)
+    * [PostgreSQL源](/udts/type/pgsqlsource)
+* 功能原理与传输速度
+    * [MySQL迁移](/udts/tech/mysql)
 * 操作指南
     * [创建任务](/udts/guide/createtask)
     * [连通性检查](/udts/guide/checkconnection)
@@ -22,15 +31,7 @@
     * [自建IDC如何传输数据至UCloud](/udts/practice/connect)
     * [托管云如何传输数据至公有云区域](/udts/practice/hybrid)
     * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
-* 传输类型说明
-    * [MySQL源](/udts/type/mysqlsource)
-    * [CSV源](/udts/type/csvsource)
-    * [MongoDB源](/udts/type/mongonode)
-    * [UFile源](/udts/type/ufilesource)
-    * [Redis源](/udts/type/redissource)
-    * [PostgreSQL源](/udts/type/pgsqlsource)
-* 功能原理与传输速度
-    * [MySQL迁移](/udts/tech/mysql)
+
 
 
 

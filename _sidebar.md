@@ -10,7 +10,7 @@
         * [TiDB](/udts/type/tidb)
         * [CSV](/udts/type/csvsource)
         * [MongoDB](/udts/type/mongonode)
-        * [UFile](/udts/type/ufilesource)
+        * [US3](/udts/type/ufilesource)
         * [Redis](/udts/type/redissource)
         * [PostgreSQL](/udts/type/pgsqlsource)
     * 功能原理与传输速度

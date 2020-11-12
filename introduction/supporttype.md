@@ -11,7 +11,7 @@
 | PostgreSQL   | PostgreSQL    | 支持     | 暂不支持 |
 | CSV    | MySQL    | 支持     | N/A |
 | CSV    | UDW      | 支持     | N/A |
-| UFile-bucket    | UFile-Bucket      | 支持     | 方案支持 |
+| US3-bucket    | US3-Bucket      | 支持     | 方案支持 |
 | Redis    | Redis      |   支持   | 支持全量+增量 |
 
 

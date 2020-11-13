@@ -1,8 +1,5 @@
 # FAQ
 
-
-
-
 #### 1 问: 现在支持多少区域间的跨域迁移？
 
 UDTS 跨域迁移利用到了 UDPN或者专线，已支持区域且有UDPN/专线传输线路的路径皆可支持。已支持区域详见控制台。
@@ -332,3 +329,19 @@ SELECT
 - 对于 InnoDB表，正在转储中的表允许读写。
 
 Nolock 模式下： 不会对任何数据库及表加锁。
+
+#### 13 问：Redis 迁移出现 ERR illegal address 
+
+原因可能是用户配置了白名单，但是UDTS机器的 IP 不在白名单内。
+
+#### 14 问：Error 3140: Invalid JSON text
+
+在MySQL 同步过程中出现 Error 3140: Invalid JSON text: \"The document is empty.\" at position 0 in value for column， 原因是源库校验不严格。数据库中的字段要求为 NOT NULL，但是数据中存在值为 NULL 的数据。
+
+有两个解决方法，根据需要处理：
+- 对源库中的数据进行修复，将所有值 NULL 的数据修正为正确的值 (这也符合业务逻辑需要)
+- 或者对目标库中的表进行修改，将字段修改为允许为 NULL。 例如表为 period_progress，字段为 total
+
+```
+ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
+```

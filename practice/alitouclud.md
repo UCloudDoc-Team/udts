@@ -1,8 +1,10 @@
 # 如何从阿里云RDS MySQL迁移至UCloud UDB
 
-适用场景：通过UDTS将阿里云 RDS MySQL数据库迁移至UCloud UDB MySQL上。
+适用场景：通过UDTS将阿里云 RDS MySQL数据库迁移至UCloud UDB MySQL。
 
 ### 配置外网地址和白名单
+
+> 白名单地址请联系技术支持获取。
 
 确保UDTS可以从外部访问阿里云的数据库，如图：
 

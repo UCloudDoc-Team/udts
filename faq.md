@@ -1,8 +1,5 @@
 # FAQ
 
-
-
-
 #### 1 问: 现在支持多少区域间的跨域迁移？
 
 UDTS 跨域迁移利用到了 UDPN或者专线，已支持区域且有UDPN/专线传输线路的路径皆可支持。已支持区域详见控制台。
@@ -301,15 +298,50 @@ set GLOBAL  innodb_file_per_table = ON;
 
 阿里云迁移到 UCloud 的增量任务出现类似的错误， Column count doesn't match value count: 2 (columns) vs 3 (values)，是因为源库中存在隐藏主键，导致数据的 columns 和 values 不匹配。
 
-解决方法：
-1. 用户在源库，修改表，增加自定义主键
+解决方法：查找没有主键的表，并增加主键
+- 查找没有主键的表
 
+```sql
+SELECT
+         table_schema,
+         table_name
+     FROM
+         information_schema.tables
+     WHERE (table_schema, table_name)
+     NOT in( SELECT DISTINCT
+             table_schema, table_name FROM information_schema.columns
+         WHERE
+             COLUMN_KEY = 'PRI')
+         AND table_schema NOT in('sys', 'mysql', 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA');
+```
+
+- 对这些没有主键的表增加主键
 
 
 #### 11 问: sync: Type:ExecSQL msg:"exec jobs failed,err:Error 1205:Lock wait timeout exceeded;try restarting transaction"
 
-当增量任务的目标数据库有业务运行(对数据库有读写操作)，且业务对数据库有读写锁时，UDTS 服务向目标数据库中同步数据会出现超时的情况，我们在内部重试之后，依然还没有等到锁释放，就会出现这个错误，需要用户手动启动这个任务，任务会自动从上次同步完成的位置继续执行(即支持断点续传功能)
+当目标数据库配置较低时可能会遇到这个问题， 用户重新启动任务即可。任务会自动从上次同步完成的位置继续执行(即支持断点续传功能)
 
 #### 12 问：MySQL 全量任务运行中会有数据库锁吗？什么时候释放
 
-全量任务运行中，为了保证数据的一致性，会执行 FTWRL（`FLUSH TABLES WITH READ LOCK`），如果迁移的数据库中存在 MyISAM 等非事务表时，锁会在这些非事务表数据备份完成之后释放（锁释放的时间与表数据大小有关）；对于 InnoDB ，会立即释放锁，并通过 `START TRANSACTION WITH CONSISTENT SNAPSHOT` 开启读一致的事务。
+默认模式下： 全量任务运行中，为了保证数据的一致性，会执行 FTWRL（`FLUSH TABLES WITH READ LOCK`），如果迁移的数据库中存在 MyISAM 等非事务表时，锁会在这些非事务表数据备份完成之后释放（锁释放的时间与表数据大小有关）；对于 InnoDB 引擎表，会立即释放锁，并通过 `START TRANSACTION WITH CONSISTENT SNAPSHOT` 开启读一致的事务。
+- 对于 MyISAM表，正在转储中的表允许读，不允许写，直到表转储完毕
+- 对于 InnoDB表，正在转储中的表允许读写。
+
+Nolock 模式下： 不会对任何数据库及表加锁。
+
+#### 13 问：Redis 迁移出现 ERR illegal address 
+
+原因可能是用户开启了白名单设置，但是UDTS机器的 IP 不在白名单内。 如需要白名单地址， 请联系技术支持。
+
+#### 14 问：Error 3140: Invalid JSON text
+
+在MySQL 同步过程中出现 Error 3140: Invalid JSON text: \"The document is empty.\" at position 0 in value for column， 原因是源库校验不严格。数据库中的字段要求为 NOT NULL，但是数据中存在值为 NULL 的数据。
+
+有两个解决方法，根据需要处理：
+- 对源库中的数据进行修复，将所有值 NULL 的数据修正为正确的值 (这也符合业务逻辑需要)
+- 或者对目标库中的表进行修改，将字段修改为允许为 NULL。 例如表为 period_progress，字段为 total
+
+```
+ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
+```

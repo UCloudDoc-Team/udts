@@ -301,9 +301,24 @@ set GLOBAL  innodb_file_per_table = ON;
 
 阿里云迁移到 UCloud 的增量任务出现类似的错误， Column count doesn't match value count: 2 (columns) vs 3 (values)，是因为源库中存在隐藏主键，导致数据的 columns 和 values 不匹配。
 
-解决方法：
-1. 用户在源库，修改表，增加自定义主键
+解决方法：查找没有主键的表，并增加主键
+- 查找没有主键的表
 
+```sql
+SELECT
+         table_schema,
+         table_name
+     FROM
+         information_schema.tables
+     WHERE (table_schema, table_name)
+     NOT in( SELECT DISTINCT
+             table_schema, table_name FROM information_schema.columns
+         WHERE
+             COLUMN_KEY = 'PRI')
+         AND table_schema NOT in('sys', 'mysql', 'INFORMATION_SCHEMA', 'PERFORMANCE_SCHEMA');
+```
+
+- 对这些没有主键的表增加主键
 
 
 #### 11 问: sync: Type:ExecSQL msg:"exec jobs failed,err:Error 1205:Lock wait timeout exceeded;try restarting transaction"
@@ -312,4 +327,8 @@ set GLOBAL  innodb_file_per_table = ON;
 
 #### 12 问：MySQL 全量任务运行中会有数据库锁吗？什么时候释放
 
-全量任务运行中，为了保证数据的一致性，会执行 FTWRL（`FLUSH TABLES WITH READ LOCK`），如果迁移的数据库中存在 MyISAM 等非事务表时，锁会在这些非事务表数据备份完成之后释放（锁释放的时间与表数据大小有关）；对于 InnoDB ，会立即释放锁，并通过 `START TRANSACTION WITH CONSISTENT SNAPSHOT` 开启读一致的事务。
+默认模式下： 全量任务运行中，为了保证数据的一致性，会执行 FTWRL（`FLUSH TABLES WITH READ LOCK`），如果迁移的数据库中存在 MyISAM 等非事务表时，锁会在这些非事务表数据备份完成之后释放（锁释放的时间与表数据大小有关）；对于 InnoDB 引擎表，会立即释放锁，并通过 `START TRANSACTION WITH CONSISTENT SNAPSHOT` 开启读一致的事务。
+- 对于 MyISAM表，正在转储中的表允许读，不允许写，直到表转储完毕
+- 对于 InnoDB表，正在转储中的表允许读写。
+
+Nolock 模式下： 不会对任何数据库及表加锁。

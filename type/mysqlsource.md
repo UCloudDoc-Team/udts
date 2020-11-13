@@ -2,7 +2,7 @@
 
 # MySQL
 
-UDTS支持MySQL作为数据传输源/目标，支持版本有MySQL5.5，MySQL5.6，MySQL5.7，MySQL8.0。 MariaDB 版本需大于等于 10.1.2。
+UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percona版)5.5/5.6/5.7; MariaDB 10.1.2 及以上。
 
 ### 功能限制
 ### 参数

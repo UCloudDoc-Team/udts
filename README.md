@@ -25,6 +25,17 @@
         * [任务失败通知](/udts/guide/notice)
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
     * [双向同步](/udts/synchronization)
+* 数据集成服务
+    * [支持数据类型](/udts/inti/introduction/supporttype)
+    * 数据类型说明
+        * [MySQL](/udts/init/type/mysql)
+    * 操作指南
+        * [创建任务](/udts/inti/guide/createtask)
+        * [连通性检查](/udts/inti/guide/checkconnection)
+        * [启动任务](/udts/inti/guide/starttask)
+        * [停止任务](/udts/inti/guide/stoptask)
+        * [删除任务](/udts/inti/guide/deletetask)
+        * [获取任务详情](/udts/inti/guide/getconfig)
 * [FAQ](/udts/faq)
 * [ETL设置](/udts/etl)
 * 最佳实践

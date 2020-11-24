@@ -29,7 +29,7 @@
 * 数据集成服务
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 数据类型说明
-        * [MySQL](/udts/init/type/mysql)
+        * [MySQL](/udts/inti/type/mysql)
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [连通性检查](/udts/inti/guide/checkconnection)

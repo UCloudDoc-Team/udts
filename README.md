@@ -37,7 +37,6 @@
         * [获取任务详情](/udts/inti/guide/getconfig)
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
-* [ETL设置](/udts/etl)
 * 最佳实践
     * [如何从阿里云RDS MySQL迁移至UCloud UDB](/udts/practice/alitouclud)
     * [如何从阿里云 云数据库Redis 迁移至UCloud 云内存Redis](/udts/practice/aliredis)

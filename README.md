@@ -2,8 +2,8 @@
 
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
-    * [计费说明](/udts/introduction/)
-* 数据传输服务
+    * [计费说明](/udts/introduction/billing)
+* 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
         * [MySQL](/udts/type/mysqlsource)
@@ -25,7 +25,7 @@
         * [修改任务](/udts/guide/updatetask)
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
     * [双向同步](/udts/synchronization)
-* 数据集成服务
+* 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 数据类型说明
         * [MySQL](/udts/inti/type/mysql)

@@ -19,7 +19,7 @@
 填写源库信息
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create-src.png)
 
-进行[预检查](/udts/init/guide/precheck)，成功通过后点击【确定】
+进行[预检查](/udts/inti/guide/precheck)，成功通过后点击【确定】
 
 可按需添加多个数据源
 
@@ -31,7 +31,7 @@
 
 ## 添加目标
 
-填写目标库信息，完成[预检查](https://docs.ucloud.cn/udts/guide/checkconnection)后，点击确认
+填写目标库信息，完成[预检查](/udts/inti/guide/precheck)后，点击确认
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create007.png)
 

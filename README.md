@@ -30,7 +30,7 @@
         * [MySQL](/udts/inti/type/mysql)
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
-        * [预检查](/udts/inti/guide/check)
+        * [预检查](/udts/inti/guide/precheck)
         * [启动任务](/udts/inti/guide/starttask)
         * [停止任务](/udts/inti/guide/stoptask)
         * [删除任务](/udts/inti/guide/deletetask)

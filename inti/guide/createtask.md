@@ -19,7 +19,7 @@
 填写源库信息
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create-src.png)
 
-进行[预检查](/udts/init/guide/precheck)，成功通过后点击【确定】
+进行[预检查](/udts/int/guide/precheck)，成功通过后点击【确定】
 
 可按需添加多个数据源
 

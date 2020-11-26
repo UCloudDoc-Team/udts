@@ -1,6 +1,6 @@
 # MySQL
 
-数据集成的基本要求与数据迁移完全相同， 具体信息请参考[数据迁移说明](https://docs.ucloud.cn/udts/type/mysqlsource)
+数据集成的基本要求与数据迁移完全相同， 具体信息请参考[数据迁移说明](/udts/type/mysqlsource)
 
 ## 功能说明
 

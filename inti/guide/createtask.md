@@ -16,9 +16,10 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create003.png)
 
-填写源库信息，完成[预检查](/udts/guide/checkconnection)后，点击确定
+填写源库信息
+![](http://udts-doc.cn-bj.ufileos.com/integration/create-src.png)
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/create004.png)
+进行[预检查](/udts/init/guide/precheck)，成功通过后点击【确定】
 
 可按需添加多个数据源
 

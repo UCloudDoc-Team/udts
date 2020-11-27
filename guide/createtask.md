@@ -18,11 +18,11 @@ UDTS支持全量迁移任务，单向增量同步任务，全量+增量任务，
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create002.png)
 
 ## 填写源目详细信息
-数据源
+- 数据源
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create003.png)
 
-数据目标
+- 数据目标
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create004.png)
 

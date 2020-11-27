@@ -35,10 +35,11 @@
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [预检查](/udts/inti/guide/precheck)
-        * [启动任务](/udts/inti/guide/starttask)
-        * [停止任务](/udts/inti/guide/stoptask)
-        * [删除任务](/udts/inti/guide/deletetask)
+        * [启动任务](/udts/inti/guide/starttask)               
         * [获取任务详情](/udts/inti/guide/getconfig)
+        * [查看进度](/udts/inti/guide/getprogress)
+        * [停止任务](/udts/inti/guide/stoptask) 
+        * [删除任务](/udts/inti/guide/deletetask)        
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
 * 最佳实践

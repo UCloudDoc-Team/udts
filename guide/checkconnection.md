@@ -6,7 +6,7 @@
 
 ## 填写表单后点击预检查
 
-![](http://antman-docs.cn-bj.ufileos.com/udtscheck001.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create006.png)
 
 ![](http://antman-docs.cn-bj.ufileos.com/udtscheck002.png)
 

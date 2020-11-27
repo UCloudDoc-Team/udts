@@ -10,5 +10,8 @@
 
 ##  方式一：在列表中查看
 
+![](http://udts-doc.cn-bj.ufileos.com/transfer/progress/progress-list.png)
 
 ##  方式二：在详情中查看
+
+![](http://udts-doc.cn-bj.ufileos.com/transfer/progress/progress-details.png)

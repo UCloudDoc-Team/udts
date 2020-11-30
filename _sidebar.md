@@ -16,15 +16,17 @@
         * [PostgreSQL](/udts/type/pgsqlsource)
     * 功能原理与传输速度
         * [MySQL迁移](/udts/tech/mysql)
-    * 操作指南
+    * 操作指南        
         * [创建任务](/udts/guide/createtask)
         * [预检查](/udts/guide/checkconnection)
         * [启动任务](/udts/guide/starttask)
-        * [停止任务](/udts/guide/stoptask)
-        * [删除任务](/udts/guide/deletetask)
         * [获取任务详情](/udts/guide/getconfig)
-        * [修改任务](/udts/guide/updatetask)
+        * [查看进度](/udts/guide/getprogress)
+        * [查看运行历史](/udts/guide/gethistory)
+        * [停止任务](/udts/guide/stoptask)
+        * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
+        * [删除任务](/udts/guide/deletetask)        
     * [双向同步](/udts/synchronization)
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
@@ -33,10 +35,11 @@
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [预检查](/udts/inti/guide/precheck)
-        * [启动任务](/udts/inti/guide/starttask)
-        * [停止任务](/udts/inti/guide/stoptask)
-        * [删除任务](/udts/inti/guide/deletetask)
+        * [启动任务](/udts/inti/guide/starttask)               
         * [获取任务详情](/udts/inti/guide/getconfig)
+        * [查看进度](/udts/inti/guide/getprogress)
+        * [停止任务](/udts/inti/guide/stoptask) 
+        * [删除任务](/udts/inti/guide/deletetask)        
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
 * 最佳实践

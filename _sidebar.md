@@ -1,4 +1,3 @@
-<div class="sidebar_title icon__udts"> 数据传输服务 UDTS</div>
 
 * [概览](/udts/README)
 * 产品简介

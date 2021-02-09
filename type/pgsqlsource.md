@@ -13,6 +13,6 @@ UDTS支持PostgreSQL作为数据传输源/目标。
 | 端口     | PostgreSQL连接端口                                                |
 | 用户名   | PostgreSQL连接用户名                                              |
 | 密码     | PostgreSQL数据库对应用户密码                                      |
-| 表名     | PostgreSQL传输表名，若不填，系统默认为整库迁移                    |
+| 表名     | PostgreSQL传输表名，可选项。 若不填，整库迁移； 若填写，只迁移指定的一张表  |
 
 

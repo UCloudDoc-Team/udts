@@ -117,7 +117,7 @@ binlog_row_image = FULL
 
 ###### 2. 通过 MySQL 命令设置
 
-需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开再修改才会生效。
+需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开后才会生效。
 
 ```sql
 FLUSH TABLES WITH READ LOCK;
@@ -143,6 +143,8 @@ UNLOCK TABLES;
 
 -- 通过 kill 断开所有 session，如果能确认哪些连接有写操作，可以只 kill 这些连接
 > kill 497
+
+FLUSH LOGS;
 ```
 
 

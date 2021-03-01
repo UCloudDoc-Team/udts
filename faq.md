@@ -101,7 +101,7 @@ ALTER EVENT hello DISABLE;
 
 #### 4 问： 增量提示 only support ROW format binlog 该如何操作
 
-增量迁移要求 MySQL(包括UDB MySQL) binlog_format 值为 ROW
+增量迁移要求 MySQL(包括UDB MySQL) binlog_format 值为 ROW，可以根据情况选择下面的方式之一来完成 binlog_format 的变更; 变更完成后，需要重新执行一次 UDTS 的 `全量 + 增量`
 
 ###### 1. 修改配置文件（默认为 my.cnf ），重启 MySQL
 
@@ -117,14 +117,36 @@ binlog_row_image = FULL
 
 ###### 2. 通过 MySQL 命令设置
 
-```
+需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开后才会生效。
+
+```sql
 FLUSH TABLES WITH READ LOCK;
 FLUSH LOGS;
 SET GLOBAL binlog_format = 'ROW';
+-- 同样的，如果是 MySQL 5.5 ，不需要设置 binlog_row_image
 SET GLOBAL binlog_row_image = 'FULL';
 FLUSH LOGS;
 UNLOCK TABLES;
 ```
+
+变更完成后，可以通过以下命令断开现有的连接
+
+```sql
+-- 查看当前所有连接
+> show processlist;
++-----+------+-----------------+--------+---------+------+----------+------------------+
+| Id  | User | Host            | db     | Command | Time | State    | Info             |
++-----+------+-----------------+--------+---------+------+----------+------------------+
+| 495 | root | 10.20.5.1:56820 | <null> | Query   | 0    | starting | show processlist |
+| 497 | root | 10.20.5.1:56828 | <null> | Sleep   | 3    |          | <null>           |
++-----+------+-----------------+--------+---------+------+----------+------------------+
+
+-- 通过 kill 断开所有 session，如果能确认哪些连接有写操作，可以只 kill 这些连接
+> kill 497
+
+FLUSH LOGS;
+```
+
 
 如果你使用的是 master-slave 模式，需要执行以下命令
 
@@ -151,8 +173,13 @@ start slave;
 ```
 
 备注：  
-通过 SET GLOBAL binlog_format = 'ROW'; 设置参数，  
-再次通过 show global variables like 'binlog_format'; 查询到的值还是旧的值，需要重新断开连接再次连接后才会显示变更后的值。
+	通过 SET GLOBAL binlog_format = 'ROW'; 设置参数，  
+	再次通过 show global variables like 'binlog_format'; 查询到的值还是旧的值，需要重新断开连接再次连接后才会显示变更后的值。
+
+###### 3. 云数据
+
+如果你使用的是云数据，可以通过复制当前使用的`配置文件`，修改对应的 `binlog_format` 和 `binlog_row_image` 配置项，然后使用该配置重新应用数据库。
+
 
 #### 5 问：ERROR 1292 (22007): Incorrect date value: '0000-00-00' for column
 

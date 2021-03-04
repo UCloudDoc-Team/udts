@@ -29,4 +29,4 @@ UDTS支持自建MongoDB和UDB MongoDB。支持单节点，副本集，分片集�
 
 1. 不迁移系统内置库，config/local/admin
 2. 增量仅支持迁移数据，不同步DDL
-2. MongoOplogTs需填写UTC时间（与CST时间差8小时），例如：`2021-03-01T00:00:00Z`
+2. MongoOplogTs需填写UTC时间（与CST时间差8小时），例如：期望同步点为北京时间`2021-03-01 20:10:10`时，应填写`2021-03-01T12:10:10Z`

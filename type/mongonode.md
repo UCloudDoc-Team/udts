@@ -1,8 +1,6 @@
-
-
 # MongoDB
 
-UDTS支持自建MongoDB和UDB MongoDB。支持副本集，分片集之间的相互迁移，分片集地址为路由节点地址，副本集地址为master节点地址。
+UDTS支持自建MongoDB和UDB MongoDB。支持单节点，副本集，分片集之间的相互迁移
 
 ## MongoDB填写表单
 
@@ -15,5 +13,20 @@ UDTS支持自建MongoDB和UDB MongoDB。支持副本集，分片集之间的相�
 | 端口     | MongoDB连接端口                                                |
 | 用户名   | MongoDB连接用户名                                              |
 | 密码     | MongoDB数据库对应用户密码                                      |
+| MongoOplogTs | （仅增量任务需填写）增量开始的oplog位置，即增量同步点，格式为`1970-01-01T00:00:00Z`（UTC time） |
 
+## 支持版本
 
+源目数据库版本必须为3.0或以上版本
+
+## 分片集群的迁移
+
+1. 需要为每一个shard分片单独建立迁移任务，实现分片集群数据库的整体迁移
+2. 在迁移前需要关闭源库Balancer
+3. 清理源库中的孤儿文档，防止迁移时遇到id冲突的问题
+
+## 注意事项
+
+1. 不迁移系统内置库，config/local/admin
+2. 增量仅支持迁移数据，不同步DDL
+2. MongoOplogTs需填写UTC时间（与CST时间差8小时）

@@ -15,4 +15,9 @@ UDTS支持PostgreSQL作为数据传输源/目标。
 | 密码     | PostgreSQL数据库对应用户密码                                      |
 | 表名     | PostgreSQL传输表名，可选项。 若不填，整库迁移； 若填写，只迁移指定的一张表  |
 
+## 所需权限
 
+| 源库/目标库   | 权限                                                         |
+| -------- | ------------------------------------------------------------ |
+| 源库       | select |
+| 目标库 | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE|

@@ -387,7 +387,7 @@ CREATE TABLE `aaa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ```
 
-加入源数据库中存在以上一张结构如上的表，表中要求自然 lot 的数据类型为 float，长度为 10，小数点部分为 7 位，如果数据中存在一条数据为 -1000，则导入时可能会失败，而出现 Error 1264: Out of range value for column 'lot' 的情况。
+假如源数据库中存在一张结构如上的表，表中要求字段 `lot` 的数据类型为 `float`，长度为 10，小数点部分为 7 位，如果数据中存在一条数据为 -1000 的数据，则导入时可能会失败，而出现 Error 1264: Out of range value for column 'lot' 的情况。
 
 解决方案有两个，需要对源数据库进行调整：
 - 调整表结构，加大字段长度
@@ -398,6 +398,10 @@ CREATE TABLE `aaa` (
     ```
 
     获得最大值和最小值，然后通过 alter 修改表结构，使其符合具体的条件。比如将上面的表 `aaa` 的 `lot` 修改为 float(11,7)
+
+    ```sql
+    ALTER TABLE `aaa` MODIFY `lot` float(11,7) NOT NULL DEFAULT '0.0000000',
+    ```
 
 - 修正数据，使其符合表结构的限制
 

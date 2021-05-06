@@ -394,9 +394,10 @@ CREATE TABLE `aaa` (
 
     ```sql
     select max(`lot`) from `aaa`;
+    select min(`lot`) from `aaa`;
     ```
 
-    获取最长的值，然后通过 alter 修改表结构，比如将上面的表 `aaa` 的 `lot` 修改为 float(11,7)
+    获得最大值和最小值，然后通过 alter 修改表结构，使其符合具体的条件。比如将上面的表 `aaa` 的 `lot` 修改为 float(11,7)
 
 - 修正数据，使其符合表结构的限制
 

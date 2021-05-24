@@ -372,3 +372,12 @@ Nolock 模式下： 不会对任何数据库及表加锁。
 ```
 ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
 ```
+
+#### 15 问：Mongodb 迁移出现 error reading collection: cursor id 5707195885304103447 not found\
+
+mongodb 的cursor 默认有效时间是10分钟， 如果数据无法在10分钟内处理完成，cursor将会过期，导致无法获取剩下的数据
+解决方法
+- 登录mongodb 的shell 切换至admin库 将cursor超时时间设置成1天
+```
+db.runCommand( { setParameter:1 , "cursorTimeoutMillis":86400000}  )
+```

@@ -372,3 +372,7 @@ Nolock 模式下： 不会对任何数据库及表加锁。
 ```
 ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
 ```
+
+#### 15 问：目标库为TiDB时，出现 Error 1071: Specified key was too long; max key length is 3072 bytes
+
+需要增大目标库TiDB文件中的配置项`max-index-length`

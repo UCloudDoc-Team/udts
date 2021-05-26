@@ -373,7 +373,16 @@ Nolock 模式下： 不会对任何数据库及表加锁。
 ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
 ```
 
-#### 15 问： Error 1264: Out of range value for column 'xxx' at row 100
+#### 15 问：Mongodb 迁移出现 error reading collection: cursor id 5707195885304103447 not found
+
+mongodb 的cursor 默认有效时间是10分钟， 如果数据无法在10分钟内处理完成，cursor将会过期，导致无法获取剩下的数据
+解决方法
+- 登录mongodb 的shell 切换至admin库 将cursor超时时间设置成1天
+```
+db.runCommand( { setParameter:1 , "cursorTimeoutMillis":86400000}  )
+```
+
+#### 16 问： Error 1264: Out of range value for column 'xxx' at row 100
 
 在 MySQL2TiDB 的数据导入过程中，可能会出现 Error 1264: Out of range value for column 'xxx' at row 100， 这里的原因是 数据在源数据库中没有被强制校验，即非正常的数据也可以正常存放，但导入到目标时目标数据库要求数据必须满足指定的约束。
 

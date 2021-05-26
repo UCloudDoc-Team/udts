@@ -372,3 +372,41 @@ Nolock 模式下： 不会对任何数据库及表加锁。
 ```
 ALTER TABLE `period_progress` CHANGE `total` `total` JSON NULL;
 ```
+
+#### 15 问： Error 1264: Out of range value for column 'xxx' at row 100
+
+在 MySQL2TiDB 的数据导入过程中，可能会出现 Error 1264: Out of range value for column 'xxx' at row 100， 这里的原因是 数据在源数据库中没有被强制校验，即非正常的数据也可以正常存放，但导入到目标时目标数据库要求数据必须满足指定的约束。
+
+比如：
+
+```sql
+CREATE TABLE `aaa` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `lot` float(10,7) NOT NULL DEFAULT '0.0000000',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+```
+
+假如源数据库中存在一张结构如上的表，表中要求字段 `lot` 的数据类型为 `float`，长度为 10，小数点部分为 7 位，如果数据中存在一条数据为 -1000 的数据，则导入时可能会失败，而出现 Error 1264: Out of range value for column 'lot' 的情况。
+
+解决方案有两个，需要对源数据库进行调整：
+- 调整表结构，加大字段长度
+
+    ```sql
+    select max(`lot`) from `aaa`;
+    select min(`lot`) from `aaa`;
+    ```
+
+    获得最大值和最小值，然后通过 alter 修改表结构，使其符合具体的条件。比如将上面的表 `aaa` 的 `lot` 修改为 float(11,7)
+
+    ```sql
+    ALTER TABLE `aaa` MODIFY `lot` float(11,7) NOT NULL DEFAULT '0.0000000',
+    ```
+
+- 修正数据，使其符合表结构的限制
+
+    ```sql
+    select `id` where `lot` > 999 OR `lot` < -999;
+    ```
+    
+    对查找出来的数据进行修正。

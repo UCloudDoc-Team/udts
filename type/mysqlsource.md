@@ -66,6 +66,17 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 - 发生在全量迁移阶段，全量迁移失败，需要重启任务。
 - 发生的增量同步阶段，如果使用GTID同步，则无影响；如果没有使用GTID同步， 则同步失败， 需要重新做全+增。
 
+### 视图迁移
+
+在结构迁移时，UDTS会将视图中的DEFINER转换为INVOKER。
+如果用户有权限方面的需求，可以手动将视图的权限改回DEFINER。
+
+####修改视图权限的SQL 示例
+```
+CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`%` SQL SECURITY DEFINER VIEW `test`.`v_user` AS select `user`.`user_name` AS `user_name` from `user`;
+```
+用户需要将语句中的`root`换成真实用户`%`换成数据库地址，将`VIEW`之后的语句换成实际的建视图语句即可。
+
 ## MySQL填写表单
 
 | 参数名   | 说明                                                         |

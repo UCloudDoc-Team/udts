@@ -27,12 +27,13 @@ UDTS支持全量迁移任务，单向增量同步任务，全量+增量任务，
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create004.png)
 
 ## 填写任务名称
+- 支持设置任务备注，最大长度不超过255
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create005.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create007.png)
 
 ## 预检查
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create006.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create008.png)
 
 [预检查](https://docs.ucloud.cn/udts/guide/checkconnection) 详细信息。
 

@@ -7,9 +7,9 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
 ## 迁移内容
 
 全量和增量迁移以下内容
-- 函数(Function)、存储过程(Procedure)
-- 视图(View)
 - Database、Table 结构及数据
+- 视图(View)
+- 函数(Function)、存储过程(Procedure)
 
 在全量迁移时，为了保证数据的一致性，防止数据冲突，会在迁移前清理目标库中的数据，清理的内容为本次迁移对应的 Database 和 Table，具体如下
 

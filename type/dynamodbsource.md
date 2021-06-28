@@ -22,8 +22,8 @@ UDTS 支持将 AWS DynamoDB 迁移到 MongoDB
 | 端口              | MongoDB 连接端口      | 27017     |
 | 用户名            | MongoDB 用户名       | root      |
 | 密码              | MongoDB 密码         | 123456    |
-| 授权DB            | MongoDB 的授权 db，udb 默认为 admin |  admin |
-| 数据库名           | DynamoDB 迁移到 MongoDB 中对应的名称(具体请参考备注2) |  dynamodb |
+| 授权DB            | MongoDB 的授权 DB，UDB 默认为 admin |  admin |
+| 数据库名           | DynamoDB 迁移到 MongoDB 中对应的名称(具体请参考备注2) |  mydb |
 
 
 ## 备注说明

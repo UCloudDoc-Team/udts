@@ -61,6 +61,7 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 
 如果迁移目标MySQL数据库开启了Binlog， 目标数据库产生的 Binlog 会占用存储空间。 当数据量较大时（超过200G）， 建议用户打开 NoBinlog 选项，这样在全量迁移的过程中在目标数据库不会产生Binlog，减少迁移对磁盘的额外需求。 也可加快全量迁移速度， 缩短进程。 如果在迁移的过程中一定要开启Binlog， 请为目标数据库创建较大的存储空间或者定时清理不需要的Binlog文件， 以免存储空间不够导致任务失败（根据经验，迁移3TB的数据会产生3TB以上的Binlog文件， 即源数据库存储空间为3TB， 目标需要6TB存储空间）。
 
+如果任务失败，在调整好目标数据库配置之后，可以重新启动任务，任务会重新开始。
 ### 主从切换
 
 如果源MySQL数据库是主从结构，当主从发生切换时，对UDTS产生的影响如下：
@@ -116,3 +117,71 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 | [60, 80)         | 80       |
 | [80, 100)        | 90       |
 | >=100             | 100      |
+
+
+## 迁移内容
+
+全量和增量迁移以下内容
+- 函数(Function)、存储过程(Procedure)
+- 视图(View)
+- Database、Table 结构及数据
+
+在全量迁移时，为了保证数据的一致性，防止数据冲突，会在迁移前清理目标库中的数据，清理的内容为本次迁移对应的 Database 和 Table，具体如下
+
+| `数据库名`设置 | `表名`设置           | 清理内容                                                |
+|----------------|----------------------|-----------------------------------------------------|
+| *              |                      | 清理源库中除内置库之外的数据库(参考备注说明 1)          |
+| db1,db2,db3    |                      | 清理任务指定的多个 DB(参考备注说明 2)                   |
+| db1            |                      | 清理任务指定的单个 DB                                   |
+| db1            | table1,table2,table3 | 清理任务指定的单个DB 下指定的多个 Table(参考备注说明 3) |
+| db1            | table1               | 清理任务指定的单个DB 下指定的单个 Table                 |
+
+
+
+备注说明：
+
+- 1. 假设在源库上执行 SHOW DATABASES 的内容如下
+
+        ```sql
+        > SHOW databases;
+        
+        INFORMATION_SCHEMA
+        PERFORMANCE_SCHEMA
+        mysql
+        sys
+        mydb1
+        mydb2
+        ```
+
+        当前的内置库为 `mysql`、`sys`、`INFORMATION_SCHEMA`、`PERFORMANCE_SCHEMA`，排除这些 DB 后，剩余 `mydb1`和`mydb2`，则在迁移任务运行时，会在目标数据库中执行
+
+        ```sql
+        DROP DATABASE IF EXISTS `mydb1`;
+        DROP DATABASE IF EXISTS `mydb2`;
+        ```
+
+- 2. 迁移任务配置的 `数据库名`为 db1,db2,db3，则在目标数据库中会执行
+
+        ```
+        DROP DATABASE IF EXISTS `db1`;
+        DROP DATABASE IF EXISTS `db2`;
+        DROP DATABASE IF EXISTS `db3`;
+        ```
+
+- 3. 迁移任务配置的 `数据库名`为 db1, 迁移的 `表名` 为 table1,table2,table3，则在目标数据库中会执行
+
+        ```sql
+        DROP TABLE IF EXISTS `db1`.`table1`;
+        DROP TABLE IF EXISTS `db1`.`table2`;
+        DROP TABLE IF EXISTS `db1`.`table3`;
+        ```
+
+
+## 权限
+
+| 类型/权限 | 源库权限(开启 NoLocks)                                           | 源库权限(未开启 NoLocks)                                                                  | 目标库权限                                                                                                                   |
+|---------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| 全量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE"                  |
+| 增量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"                          | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
+| 全+增     | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
+

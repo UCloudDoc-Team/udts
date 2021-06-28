@@ -7,13 +7,13 @@ UDTS 跨域迁移利用到了 UDPN或者专线，已支持区域且有UDPN/专�
 #### 2 问：MySQL 全量迁移需要满足哪些条件
 
 ###### 1. 权限要求  
-    MySQL(包括UDB MySQL) 全量迁移需要迁移的账号具有权限： SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT
+    MySQL(包括UDB MySQL) 全量迁移需要迁移的账号具有权限： SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT, SHOW VIEW
 
 假设你的迁移账号为 backup_user ，你可以通过以下命令查看权限，  
 确保 Select_priv、Reload_priv、Lock_tables_priv、Repl_client_priv 的值为 Y
 
 ```
-mysql > SELECT User,Host,Select_priv,Reload_priv,Lock_tables_priv,Repl_client_priv FROM mysql.user WHERE User = "backup_user"\G;
+mysql > SELECT User,Host,Select_priv,Reload_priv,Lock_tables_priv,Repl_client_priv,Show_view_priv FROM mysql.user WHERE User = "backup_user"\G;
 
 User             | backup_user
 Host             | %
@@ -21,7 +21,10 @@ Select_priv      | Y
 Reload_priv      | Y
 Lock_tables_priv | Y
 Repl_client_priv | Y
+Show_view_priv   | Y
 ```
+
+如果创建任务时，设置了 NoLocks 参数，可以不需要 RELOAD, LOCK TABLES 权限，一般用于 RDS 的迁移。
 
 ###### 2. sql_mode 一致  
 为了保证迁移能正确执行，最好保持 源和目标数据库的 sql_mode 一致，可以通过一下命令查询 sql_mode
@@ -43,14 +46,6 @@ SET @@GLOBAL.sql_mode='xxxx';
 
 ###### 3. binlog 格式  
 如果您在完成全量迁移之后，需要增加增量迁移，需要要求 binlog_format 为 ROW, binlog_row_image 为 FULL（如果有这个变量的话, MySQL 5.5 中没有这个变量）
-
-###### 4. 视图(view) 权限  
-当源数据库有视图时，需要要求迁移的账号拥有 super 权限，如果您使用的是 UDB-MySQL，可以通过下面的命令获取 super 权限
-
-```
-update mysql.user set super_priv = 'Y' where user = 'root';   
-flush privileges;
-```
 
 #### 3 问： MySQL 增量迁移需要满足哪些条件
 

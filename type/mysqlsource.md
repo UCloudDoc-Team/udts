@@ -60,7 +60,7 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
         DROP TABLE IF EXISTS `db1`.`table3`;
         ```
 
-## 迁移需要满足的条件
+## 前提条件
 
 UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包括以下内容
 

@@ -26,7 +26,6 @@
         * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
         * [删除任务](/udts/guide/deletetask)   
-        * [修改任务备注](/udts/guide/updateRemark)
     * [双向同步](/udts/synchronization)
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)

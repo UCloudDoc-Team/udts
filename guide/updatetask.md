@@ -20,3 +20,14 @@
 ![](http://antman-docs.cn-bj.ufileos.com/update003.png)
 
 备注：目前不提供修改 数据源目类型 和 传输任务类型。
+
+## 更新任务备注
+
+在列表页可直接编辑任务备注
+
+编辑UDTS迁移任务备注
+
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark001.png)
+
+最大支持备注长度255字节
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark002.png)

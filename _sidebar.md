@@ -25,7 +25,7 @@
         * [停止任务](/udts/guide/stoptask)
         * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
-        * [删除任务](/udts/guide/deletetask)        
+        * [删除任务](/udts/guide/deletetask) 
     * [双向同步](/udts/synchronization)
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
@@ -37,8 +37,9 @@
         * [启动任务](/udts/inti/guide/starttask)               
         * [获取任务详情](/udts/inti/guide/getconfig)
         * [查看进度](/udts/inti/guide/getprogress)
-        * [停止任务](/udts/inti/guide/stoptask) 
-        * [删除任务](/udts/inti/guide/deletetask)        
+        * [停止任务](/udts/inti/guide/stoptask)
+        * [修改任务](/udts/inti/guide/updatetask)
+        * [删除任务](/udts/inti/guide/deletetask)
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
 * 最佳实践

@@ -6,7 +6,7 @@ UDTS支持自建MongoDB和UDB MongoDB。支持单节点，副本集，分片集�
 
 | 参数名   | 说明                                                         |
 | -------- | ------------------------------------------------------------ |
-| 地址      | 提供内网地址，外网地址，专线地址三种方式，内网地址需要填写VPC和子网信息，外网地址支持ip和域名两种。副本集填写primary地址；分片集源库填写该分片的primary地址，分片集目标库填写mongos路由地址。 |
+| 地址      | 提供内网地址，外网地址，专线地址三种方式，内网地址需要填写VPC和子网信息，外网地址支持ip和域名两种。副本集填写primary地址(UDB MongoDB 请参考备注 1)；分片集源库填写该分片的primary地址，分片集目标库填写mongos路由地址。 |
 | 授权DB      |授权数据库名  ，UDB MongoDB默认为admin|
 | Collection       | 集合， MongoDB 文档组 |
 | 数据库名 | MongoDB数据库名称|                                         |
@@ -31,3 +31,7 @@ UDTS支持自建MongoDB和UDB MongoDB。支持单节点，副本集，分片集�
 1. 不迁移系统内置库，config/local/admin
 2. 增量仅支持迁移数据，不同步DDL
 2. MongoOplogTs需填写UTC时间（与CST时间差8小时），例如：期望同步点为北京时间`2021-03-01 20:10:10`时，应填写`2021-03-01T12:10:10Z`
+
+## 备注说明
+- 1、 UDB MongoDB 填写示例，填写属性为 primary 的地址  
+![mongo](http://udts-doc.cn-bj.ufileos.com/integration/mongodb/mongosrc.png)

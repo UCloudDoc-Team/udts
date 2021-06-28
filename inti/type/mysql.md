@@ -2,6 +2,10 @@
 
 数据集成的基本要求与数据迁移完全相同， 具体信息请参考[数据迁移说明](/udts/type/mysqlsource)
 
+## 迁移内容
+
+数据集成当前只迁移 Database、Table 及其数据，不迁移视图(View)、函数(Function)、存储过程(Procedure)等其它内容。
+
 ## 功能说明
 
 ### 执行顺序

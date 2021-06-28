@@ -7,10 +7,6 @@
 | 数据源 | 数据目标 | 全量迁移 |
 |--------|----------|--------|
 | MySQL  | MySQL    | 支持     |
-| MySQL  | TiDB     | 支持     |
-| TiDB   | MySQL    | 支持     |
-| TiDB   | TiDB     | 支持     |
-| Redis  | Redis    | 支持     |
 
 ##  在详情中查看
 

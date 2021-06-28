@@ -24,7 +24,7 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
 
 备注说明：
 
-- 1. 假设在源库上执行 SHOW DATABASES 的内容如下
+- 1、 假设在源库上执行 SHOW DATABASES 的内容如下
 
         ```sql
         > SHOW databases;
@@ -44,7 +44,7 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
         DROP DATABASE IF EXISTS `mydb2`;
         ```
 
-- 2. 迁移任务配置的 `数据库名`为 db1,db2,db3，则在目标数据库中会执行
+- 2、 迁移任务配置的 `数据库名`为 db1,db2,db3，则在目标数据库中会执行
 
         ```
         DROP DATABASE IF EXISTS `db1`;
@@ -52,7 +52,7 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
         DROP DATABASE IF EXISTS `db3`;
         ```
 
-- 3. 迁移任务配置的 `数据库名`为 db1, 迁移的 `表名` 为 table1,table2,table3，则在目标数据库中会执行
+- 3、 迁移任务配置的 `数据库名`为 db1, 迁移的 `表名` 为 table1,table2,table3，则在目标数据库中会执行
 
         ```sql
         DROP TABLE IF EXISTS `db1`.`table1`;

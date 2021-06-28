@@ -23,11 +23,15 @@
 
 ## 更新任务备注
 
-在列表页可直接编辑任务备注
+更新任务备注现在有以下两种途径
 
-编辑UDTS迁移任务备注
+- 1,在任务列表页面编辑UDTS迁移任务备注
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark001.png)
+
+- 2,在编辑任务详情页面进行修改
+
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark003.png)
 
 最大支持备注长度255字节
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark002.png)

@@ -33,5 +33,5 @@ UDTS支持自建MongoDB和UDB MongoDB。支持单节点，副本集，分片集�
 2. MongoOplogTs需填写UTC时间（与CST时间差8小时），例如：期望同步点为北京时间`2021-03-01 20:10:10`时，应填写`2021-03-01T12:10:10Z`
 
 ## 备注说明
-- 1. UDB MongoDB 填写示例，填写属性为 primary 的地址  
+- 1、 UDB MongoDB 填写示例，填写属性为 primary 的地址  
 ![mongo](http://udts-doc.cn-bj.ufileos.com/integration/mongodb/mongosrc.png)

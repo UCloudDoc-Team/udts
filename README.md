@@ -4,6 +4,7 @@
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
     * [计费说明](/udts/introduction/billing)
+    * [使用限制](/udts/introduction/limitation)
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明

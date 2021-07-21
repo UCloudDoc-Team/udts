@@ -85,11 +85,11 @@ UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包�
 
 默认配置迁移需要源数据库账号拥有 super 权限， 如果没有 super 权限，请选择 "NoLocks" 模式。 在 "NoLocks" 模式下，需要所有表都有显式主键或者唯一键，否则增量同步过程中可能产生重复数据。
 
-| 类型/权限 | 源库权限(开启 NoLocks)                                           | 源库权限(未开启 NoLocks)                                                                  | 目标库权限                                                                                                                   |
-|---------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| 全量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE"                  |
-| 增量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"                          | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
-| 全+增     | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
+| 类型/权限 | 源库权限(开启 NoLocks)                                                          | 源库权限(未开启 NoLocks)                                                                                 | 目标库权限                                                                                                                   |
+|---------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| 全量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE"                  |
+| 增量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"             | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"                                      | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
+| 全+增     | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
 
 ### sql_mode 检查
 

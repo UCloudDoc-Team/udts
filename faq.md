@@ -5,10 +5,10 @@
 UDTS 跨域迁移利用到了 UDPN或者专线，已支持区域且有UDPN/专线传输线路的路径皆可支持。已支持区域详见控制台。
 
 #### 2 问：MySQL 全量迁移需要满足哪些条件
-[请参考](type/mysqlsource.md)
+[请参考](udts/type/mysqlsource.md)
 
 #### 3 问： MySQL 增量迁移需要满足哪些条件
-[请参考](type/mysqlsource.md)
+[请参考](udts/type/mysqlsource.md)
 
 #### 4 问： 增量提示 only support ROW format binlog 该如何操作
 

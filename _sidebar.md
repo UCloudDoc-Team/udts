@@ -44,9 +44,9 @@
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
 * 最佳实践
-    * [如何从阿里云RDS MySQL迁移至UCloud UDB](/udts/practice/alitouclud)
-    * [如何从阿里云 云数据库Redis 迁移至UCloud 云内存Redis](/udts/practice/aliredis)
-    * [自建IDC如何传输数据至UCloud](/udts/practice/connect)
-    * [托管云如何传输数据至公有云区域](/udts/practice/hybrid)
+    * [如何从阿里云RDS MySQL迁移到UCloud UDB](/udts/practice/alitouclud)
+    * [如何从阿里云云数据库Redis迁移到UCloud云内存Redis](/udts/practice/aliredis)
+    * [自建IDC如何传输数据到UCloud](/udts/practice/connect)
+    * [托管云如何传输数据到公有云区域](/udts/practice/hybrid)
     * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
 

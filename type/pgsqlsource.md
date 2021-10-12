@@ -38,7 +38,7 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标。
 ## 增量同步相关
 
 ### 前提条件
-- postgres的版本必须是9.4及以上
+- 暂时只支持源库为9.4至13.x的PostgreSQL进行增量迁移
 - 用户需要开启数据日志，源库的账号需具备REPLICATION权限，并且`wal_level`需要是`logical`,`max_replication_slots`至少大于1
 - 待迁移的表需具备主键或唯一键，否则可能会导致目标数据库中出现重复数据。
   

@@ -294,8 +294,11 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-如何修改表的 charset
+出现该问题时如何处理：
+1. 在源数据库中，执行以下 SQL，修改表的 CHARSET，推荐使用兼容的编码替换老的编码(使用 utf8mb4 替换 utf8)，使 `user` 和 `group` 的 CHARSET 一致。
 
 ```sql
 ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ```
+
+2. 重新运行 UDTS 任务

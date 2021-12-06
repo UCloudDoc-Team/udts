@@ -270,3 +270,35 @@ set global tidb_skip_utf8_check=1;
 #### 18 问：目标库为TiDB时，出现 Error 1071: Specified key was too long; max key length is 3072 bytes
 
 可以通过将TiDB配置文件中 `max-index-length` 项的值改成 12288 来解决
+
+#### 19 问： Cannot add foreign key constraint
+
+在 MySQL 迁移到 MySQL/TiDB 时，如果出现 Cannot add foreign key constraint，需要检查表结构的 CHARSET，当前表结构及其依赖的外键的表结构 CHARSET 要一致。
+
+以下为示例，当 group 和 user 表的 CHARSET 不同时，可能会出现错误： Cannot add foreign key constraint
+
+```sql
+CREATE TABLE `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `g_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`g_id`) REFERENCES `group`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
+出现该问题时如何处理：
+1. 在源数据库中，执行以下 SQL，修改表的 CHARSET，推荐使用兼容的编码替换老的编码(使用 utf8mb4 替换 utf8)，使 `user` 和 `group` 的 CHARSET 一致。
+
+```sql
+ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```
+
+2. 重新运行 UDTS 任务

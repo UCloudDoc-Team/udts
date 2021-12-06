@@ -293,3 +293,9 @@ CREATE TABLE `user` (
   FOREIGN KEY (`g_id`) REFERENCES `group`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
+
+如何修改表的 charset
+
+```sql
+ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```

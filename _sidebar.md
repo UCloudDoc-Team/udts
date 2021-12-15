@@ -2,6 +2,7 @@
 * [概览](/udts/README)
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
+    * [实例类型](/udts/introduction/instancetype)
     * [计费说明](/udts/introduction/billing)
     * [使用限制](/udts/introduction/limitation)
 * 数据传输

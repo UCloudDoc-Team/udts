@@ -1,7 +1,5 @@
 # 创建任务
 
-[UDTS有奖用户调研，期待您的加入!](https://www.ucloud.cn/site/survey/survey.html?id=63)
-
 选择"数据集成"标签页，点击“创建任务”按钮
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create001.png)

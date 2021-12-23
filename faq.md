@@ -302,3 +302,16 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ```
 
 2. 重新运行 UDTS 任务
+
+
+## 21 问： The table 'xxx' is full 或者 No space left on device
+
+一般情况是目标磁盘空间不足导致的，需要升级目标磁盘空间，或者清理目标数据库中的数据。
+
+The table 'xxx' is full 还有一种特殊的情况是 table 使用了 memory 存储引擎  
+可以通过修改 MySQL 的配置文件的下面两个值来解决(或者将 table 修改为其它存储引擎)，该值默认为 16M  
+
+```
+tmp_table_size = 256M
+max_heap_table_size = 256M
+```

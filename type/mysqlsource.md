@@ -139,11 +139,19 @@ set global binlog_row_image = "FULL" ;
 
 ### MyISAM 引擎表检查
 
-如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 gtid ，可能发生冲突，建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 gtid 模式。
+如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 gtid ，可能导致 MySQL 1785 错误，报错信息如下：
+```
+When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
+```
+建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 gtid 模式。
 查询方式：
 ```
-# 在源库中查询 MyISAM 表
-show create table table1;
+# 在源库中查询数据库db1中是否存在 MyISAM 表
+select table_schema, table_name
+	from information_schema.tables
+	where engine = 'MyISAM'
+		and table_type = 'BASE TABLE'
+		and table_schema in (db1);
 
 # 在目标库中查询是否开启了 gtid
 show global variables like 'gtid_mode';
@@ -151,7 +159,7 @@ show global variables like 'gtid_mode';
 
 设置方式：
 ```
-# 将表 table1 的引擎修改为 InnoDB
+# 将 MyISAM 表 table1 的引擎修改为 InnoDB
 alter table table1 ENGINE = InnoDB;
 
 # 关闭目标库的 gtid 模式

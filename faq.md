@@ -315,3 +315,7 @@ The table 'xxx' is full 还有一种特殊的情况是 table 使用了 memory �
 tmp_table_size = 256M
 max_heap_table_size = 256M
 ```
+
+这个值设置成多少合适呢？这个需要根据实际情况处理
+- 当前 MySQL 实例拥有的内存大小是多少，则该值为上限
+- memory 引擎表期望存储的数据量大小是多少

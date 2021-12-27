@@ -303,6 +303,54 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 2. 重新运行 UDTS 任务
 
+#### 20 问：源库是MySQL，增量同步时出现 ERROR 1236 (HY000): The slave is connecting using CHANGE MASTER TO MASTER_AUTO_POSITION = 1, but the master has purged binary logs containing GTIDs that the slave requires
+
+这是因为增量同步需要的binlog同步点，无法在源库中找到。可能的原因有以下四种：
+- 1 用户是全+增任务，全量的时间超过了binlog的最大过期时间，导致全量结束时，记录的binlog同步点被过期清除了。这种情况需要调大源库binlog的过期时间。
+- 2 用户源库的binlog被手动清除。
+- 3 用户的任务中途暂停或者失败过，然后间隔一段时间后再启动的任务，在此期间binlog过期被清除了。
+- 4 用户增量同步没有使用GTID进行同步，并且发生主从切换。
+
+解决方法：以上情况都需要重新执行一次 UDTS 的 全量 + 增量，直接重启任务无法解决该问题。
+步骤：
+- 对于全量 + 增量任务，在任务详情页点击编辑任务，填入相关任务信息，然后选择保存任务。当前任务的进度会被清除，启动任务后会重新从全量开始。
+- 对于直接创建增量任务的，需要重新做一次全量迁移，然后重新填写正确的`BinlogName`、`BinlogPos`、`GTID`，启动任务之后会从指定的 binlog 位置开始同步。
+
+关于如何修改binlog日志过期时间有以下两种方式:
+- 1  临时生效，重启数据库后失效<br/><br/>  
+  
+  查看默认设置的过期时间
+    ```sql
+    show variables like "%expire_logs%";
+    ```
+  设置保留 15 天
+    ```sql
+    set global expire_logs_days=15
+    ```
+  刷新日志
+    ```sql
+    flush logs；
+    ```
+  查看新生成的 binlog 日志
+    ```sql
+    show master status\G:
+    ```
+  注意：以上命令在数据库执行会立即生效，请确定设置数据的保留日期，以免误删
+ 
+
+- 2 修改配置文件，永久生效 <br /><br /> 
+
+  MySQL 配置文件的位置请根据实际情况进行修改
+    ```shell
+    vim /etc/my.cnf
+    ```
+  修改有关binlog过期相关的配置
+    ```
+    [mysqld]
+    expire_logs_days=15
+    ```
+  注意：在配置文件修改后，需要重启才能永久生效。设置为 0 表示永不过期，单位是天。
+
 
 ## 21 问： The table 'xxx' is full 或者 No space left on device
 

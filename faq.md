@@ -351,7 +351,6 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
     ```
   注意：在配置文件修改后，需要重启才能永久生效。设置为 0 表示永不过期，单位是天。
 
-
 #### 21 问： The table 'xxx' is full 或者 No space left on device
 
 一般情况是目标磁盘空间不足导致的，需要升级目标磁盘空间，或者清理目标数据库中的数据。
@@ -367,3 +366,11 @@ max_heap_table_size = 256M
 这个值设置成多少合适呢？这个需要根据实际情况处理
 - 当前 MySQL 实例拥有的内存大小是多少，则该值为上限
 - memory 引擎表期望存储的数据量大小是多少
+
+#### 22 问： Error 1785: When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
+
+在 MySQL 的同一个事务中，如果既操作了支持事务的表(比如 innodb)，又操作了不支持事务的表(比如 myisam)，在数据库开启 gtid 的情况下，会出现该错误。
+
+解决方法，下面选择其一即可
+- 在源数据库中，将非事务引擎的表(一般情况下是 myisam)修改为事务引擎的表(一般情况下是 innodb)
+- 在目标数据库中，关闭 gtid

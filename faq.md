@@ -351,6 +351,21 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
     ```
   注意：在配置文件修改后，需要重启才能永久生效。设置为 0 表示永不过期，单位是天。
 
+#### 21 问： The table 'xxx' is full 或者 No space left on device
+
+一般情况是目标磁盘空间不足导致的，需要升级目标磁盘空间，或者清理目标数据库中的数据。
+
+The table 'xxx' is full 还有一种特殊的情况是 table 使用了 memory 存储引擎  
+可以通过修改 MySQL 的配置文件的下面两个值来解决(或者将 table 修改为其它存储引擎)，该值默认为 16M  
+
+```
+tmp_table_size = 256M
+max_heap_table_size = 256M
+```
+
+这个值设置成多少合适呢？这个需要根据实际情况处理
+- 当前 MySQL 实例拥有的内存大小是多少，则该值为上限
+- memory 引擎表期望存储的数据量大小是多少
 
 #### 22 问： Error 1785: When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
 

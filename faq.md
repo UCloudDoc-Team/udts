@@ -352,7 +352,7 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
   注意：在配置文件修改后，需要重启才能永久生效。设置为 0 表示永不过期，单位是天。
 
 
-## 21 问： The table 'xxx' is full 或者 No space left on device
+#### 21 问： The table 'xxx' is full 或者 No space left on device
 
 一般情况是目标磁盘空间不足导致的，需要升级目标磁盘空间，或者清理目标数据库中的数据。
 

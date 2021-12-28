@@ -374,3 +374,11 @@ max_heap_table_size = 256M
 解决方法，下面选择其一即可
 - 在源数据库中，将非事务引擎的表(一般情况下是 myisam)修改为事务引擎的表(一般情况下是 innodb)
 - 在目标数据库中，关闭 gtid
+
+#### 23 问： sql_mode may cause error. check sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE in target db
+
+在预检查的过程中，如果目标数据库的 sql_mode 存在 NO_ZERO_DATE 或者 NO_ZERO_IN_DATE，则会提示该信息。是否可以忽略该信息需要确认源数据库中是否存在 0000-00-00 这样的日期值和 00:00:00 这样的时间值，如果存在这样的时间值，在加载数据的时候会出现错误。
+
+解决方法：
+- 如果确认源数据库中没有 0000-00-00 和 00:00:00 这样的日期或时间值，可以忽略该信息
+- 修改目标数据库中的 sql_mode，去掉 NO_ZERO_DATE 和 NO_ZERO_IN_DATE，操作步骤可以参考 FAQ 第 5 条

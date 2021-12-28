@@ -352,7 +352,7 @@ ALTER TABLE `user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
   注意：在配置文件修改后，需要重启才能永久生效。设置为 0 表示永不过期，单位是天。
 
 
-## 22 问： Error 1785: When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
+#### 22 问： Error 1785: When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
 
 在 MySQL 的同一个事务中，如果既操作了支持事务的表(比如 innodb)，又操作了不支持事务的表(比如 myisam)，在数据库开启 gtid 的情况下，会出现该错误。
 

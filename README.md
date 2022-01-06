@@ -10,7 +10,7 @@
     * [使用限制](/udts/introduction/limitation)
 * 计费说明  
     * [计费指南](/udts/introduction/billing)
-    * [回收](/udts/billing/recycle)
+    * [回收与删除](/udts/billing/recycle)
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明

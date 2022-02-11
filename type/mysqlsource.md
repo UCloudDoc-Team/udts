@@ -154,9 +154,11 @@ show global variables like 'gtid_mode';
 
 设置方式：
 ```
+# 方案一：修改源库
 # 将 MyISAM 表 table1 的引擎修改为 InnoDB
 alter table table1 ENGINE = InnoDB;
 
+# 方案二：修改目标库
 # 关闭目标库的 gtid 模式
 set global gtid_mode = "ON_PERMISSIVE";
 set global gtid_mode = "OFF_PERMISSIVE";

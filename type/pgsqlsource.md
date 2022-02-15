@@ -23,10 +23,10 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
   `ALTER TABLE schema.table REPLICA IDENTITY FULL;`
 - 增量同步不支持BIT、VARBIT、GEOMETRY、ARRAY、UUID、TSQUERY、TSVECTOR、TXID_SNAPSHOT类型的数据同步。
 - 从高版本迁移到低版本时，由于数据库自身的限制，不支持以下特性：
-  - Table Partitioning 分区表
-  - Identity columns 自增列
-  - Generated columns 生成列
-  - Pluggable Table Storage Interface 表级存储引擎
+  - Table Partitioning 分区表（10 及以上版本支持）
+  - Identity columns 自增列（10 及以上版本支持）
+  - Generated columns 生成列（12 及以上版本支持）
+  - Pluggable Table Storage Interface 表级存储引擎（12 及以上版本支持）
 
 ## 注意事项
 - 增量同步期间，UDTS会在目标库中创建`public.udts_pgsync_progress`的数据表，用于记录同步的进度等信息，同步过程中请勿删除，否则会导致任务异常.

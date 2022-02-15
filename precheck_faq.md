@@ -1,10 +1,10 @@
 # FAQ
 
-### 1 MySQL
+## 1 MySQL
 
-#### 1.1
+### 1.1
 **错误信息：** 
-
+`log_bin is xxx, and should be ON`
 `binlog_format is xxx, and should be ROW` 或
 `binlog_row_image is %s, and should be FULL`
 
@@ -12,11 +12,14 @@
 
 如果迁移的任务类型为 `增量`、`全量+增量`, 或者全量任务结束后需要进行增量迁移，需要源库开启 binlog，并设置 `binlog_format` 为 `ROW`，`binlog_row_image` 为 `FULL`。可以根据情况选择下面的方式之一来完成 binlog 的变更
 
-###### 1.1.1 修改配置文件（默认为 my.cnf ），重启 MySQL
+备注：如果只进行全量迁移，可以忽略这个问题；如果报错信息为`log_bin is xxx, and should be ON`，只能通过修改配置文件开启 binlog。
+
+#### 1.1.1 修改配置文件（默认为 my.cnf ），重启 MySQL
 
 ```
 [mysqld]
 ...
+log-bin = /data/mysql/logs
 binlog_format = ROW
 binlog_row_image = FULL
 ...
@@ -24,7 +27,7 @@ binlog_row_image = FULL
 
 备注： 如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
 
-###### 1.1.2 通过 MySQL 命令设置
+#### 1.1.2 通过 MySQL 命令设置
 
 需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开后才会生效。
 
@@ -85,7 +88,7 @@ start slave;
 	通过 `SET GLOBAL binlog_format = 'ROW';` 设置参数，  
 	再次通过 `show global variables like 'binlog_format';` 查询到的值还是旧的值，需要重新断开连接再次连接后才会显示变更后的值。
 
-#### 1.2
+### 1.2
 **错误信息：** 
 
 `MyISAM table in the source db and gtid_mode in the target db may conflict`
@@ -125,7 +128,7 @@ set global gtid_mode = "OFF";
 
 
 
-#### 1.3
+### 1.3
 **错误信息：** 
 
 `max_allowed_packet of the source is xxx, which is larger than max_allowed_packet of the target xxx`
@@ -135,6 +138,59 @@ set global gtid_mode = "OFF";
 源库的 `max_allowed_packet` 取值大于目标库的 `max_allowed_packet` 取值，可能导致目标库写入数据失败，建议调整`max_allowed_packet` 取值，使源目保持一致。
 
 在目标数据库中执行语句 `set global max_allowed_packet = 2*1024*1024*10;`
+
+### 1.4
+**错误信息：** 
+
+`table xxx have no primary key or at least a unique key`
+
+**解决方法：** 
+如果迁移的任务类型为 `增量`、`全量+增量`, 或者全量任务结束后需要进行增量迁移，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
+```
+alter table xxx add primary key(xxxx);
+```
+
+### 1.5
+**错误信息：** 
+
+`sql_mode may cause error. check sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE in target db`
+
+**解决方法：** 
+如果源库与目标库的 sql_mode 不一致，可能会导致部分数据无法迁移到目标库。
+```
+# 在源库中查询 sql_mode
+show variables like "sql_mode";
+
+# 在目标库中修改 sql_mode，使其与源库保持一致
+SET @@GLOBAL.sql_mode='xxxx';
+```
+### 1.6
+**错误信息：** 
+
+`log_slave_updates should be ON`
+
+**解决方法：** 
+
+修改配置文件（默认为 my.cnf ），重启 MySQL
+
+```
+[mysqld]
+...
+log_slave_updates = 1
+...
+```
+### 1.7
+**错误信息：** 
+
+`server_id: xxx already in used, please change it`
+
+**解决方法：** 
+
+通过以下命令查看当前已使用的 server_id
+```
+show variables like '%server_id%';
+```
+在创建任务时，填写与查询结果不同的 server_id。
 
 
 ### 2 TiDB

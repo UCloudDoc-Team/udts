@@ -1,21 +1,25 @@
-# FAQ
+# 预检查错误信息及解决方法
 
 ## 1 MySQL
 
 ### 1.1
 **错误信息：** 
-`log_bin is xxx, and should be ON`
+`log_bin is xxx, and should be ON`、
 `binlog_format is xxx, and should be ROW` 或
-`binlog_row_image is %s, and should be FULL`
+`binlog_row_image is xxx, and should be FULL`
 
 **解决方法：** 
 
-如果迁移的任务类型为 `增量`、`全量+增量`, 或者全量任务结束后需要进行增量迁移，需要源库开启 binlog，并设置 `binlog_format` 为 `ROW`，`binlog_row_image` 为 `FULL`。可以根据情况选择下面的方式之一来完成 binlog 的变更
+如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，要求源数据库开启 binlog 功能，且
 
-备注：如果只进行全量迁移，可以忽略这个问题；如果报错信息为`log_bin is xxx, and should be ON`，只能通过修改配置文件开启 binlog。
+- `binlog_format` 为 `ROW`
+- `binlog_row_image` 为 `FULL`
 
-#### 1.1.1 修改配置文件（默认为 my.cnf ），重启 MySQL
+备注：
+	如果只进行全量迁移，可以忽略这个问题
 
+#### 1.1.1 源库未开启过 binlog
+修改配置文件（默认为 my.cnf ），重启 MySQL
 ```
 [mysqld]
 ...
@@ -25,9 +29,12 @@ binlog_row_image = FULL
 ...
 ```
 
-备注： 如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
+如果您使用的是云厂商的 db，需要复制对应的配置文件，并修改相应的值，使用修改后的配置重新启动 db。
 
-#### 1.1.2 通过 MySQL 命令设置
+备注： 
+	如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
+
+#### 1.1.2 源库开启过 binlog，但是 binlog_format 或 binlog_row_image 值不对
 
 需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开后才会生效。
 
@@ -55,8 +62,8 @@ UNLOCK TABLES;
 
 -- 通过 kill 断开所有 session，如果能确认哪些连接有写操作，可以只 kill 这些连接
 > kill 497
-
-FLUSH LOGS;
+-- kill 掉老的 session 之后，flush logs 保证新的 binlog 格式为 ROW
+> FLUSH LOGS;
 ```
 
 
@@ -135,9 +142,21 @@ set global gtid_mode = "OFF";
 
 **解决方法：** 
 
-源库的 `max_allowed_packet` 取值大于目标库的 `max_allowed_packet` 取值，可能导致目标库写入数据失败，建议调整`max_allowed_packet` 取值，使源目保持一致。
+源库的 `max_allowed_packet` 值大于目标库的 `max_allowed_packet` 时，可能导致目标库写入数据失败，建议调整目标数据库的 `max_allowed_packet` 值，使源目保持一致。
 
-在目标数据库中执行语句 `set global max_allowed_packet = 2*1024*1024*10;`
+在源库中执行
+```
+> show global variables like "max_allowed_packet";
++--------------------+---------+
+| Variable_name      | Value   |
++--------------------+---------+
+| max_allowed_packet | 4194304 |
++--------------------+---------+
+```
+然后使用获取的 max_allowed_packet 值，在目标数据库中执行，比如
+```
+set global max_allowed_packet = 4194304;
+```
 
 ### 1.4
 **错误信息：** 
@@ -145,7 +164,7 @@ set global gtid_mode = "OFF";
 `table xxx have no primary key or at least a unique key`
 
 **解决方法：** 
-如果迁移的任务类型为 `增量`、`全量+增量`, 或者全量任务结束后需要进行增量迁移，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
+如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
 ```
 alter table xxx add primary key(xxxx);
 ```
@@ -170,6 +189,7 @@ SET @@GLOBAL.sql_mode='xxxx';
 `log_slave_updates should be ON`
 
 **解决方法：** 
+如果您使用从库作为迁移的源，那么要求从库开启 log_slave_updates，否则从库中没有 binlog 日志，导致无法迁移
 
 修改配置文件（默认为 my.cnf ），重启 MySQL
 
@@ -186,11 +206,18 @@ log_slave_updates = 1
 
 **解决方法：** 
 
-通过以下命令查看当前已使用的 server_id
+server_id 要求和当前主库和从库的 server_id 不同
+
+#### 1.7.1 查询当前主库的 server_id
 ```
 show variables like '%server_id%';
 ```
-在创建任务时，填写与查询结果不同的 server_id。
+#### 1.7.2 查询从库的 server_id
+```
+SHOW SLAVE HOSTS;
+```
+
+在创建任务时，需要填写和上面查询结果不同的 server_id。
 
 
 ### 2 TiDB
@@ -203,9 +230,13 @@ show variables like '%server_id%';
 
 **解决方法：** 
 
-如果迁移的任务类型为 `全量`、`全量+增量`, 如果全量迁移的数据量较大，建议将 `tikv_gc_life_time` 值设置为 1h 以上
+如果迁移的任务类型为 `全量`、`全量+增量`,  且迁移的数据量较大时，需要要求 `tikv_gc_life_time` 的值大于 `转存` 时间。
+一般情况下 1.8T 的数据，大约需要 40min，我们建议将该值设置为 1h 以上
 
-在数据库中执行语句 `update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_time";`
+在 TiDB 中执行以下语句
+```sql
+update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time";
+```
 
 #### 2.2
 **错误信息：** 

@@ -15,7 +15,7 @@ UDTS支持 TiDB 作为数据传输源/目标，支持版本 3.* 和 4.*
 
 ## 预检查项
 
-以TiDB为源库时，TiDB参数`tikv_gc_life_time`需大于1小时，以避免迁移过程中发生 GC 导致迁移失败。
+以TiDB为源库时，TiDB参数`tikv_gc_life_time`建议大于1小时，以避免迁移过程中发生 GC 导致迁移失败。
 
 查询方式：
 ```

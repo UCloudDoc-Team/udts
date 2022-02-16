@@ -107,6 +107,7 @@ start slave;
 When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
 ```
 建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 gtid 模式。
+
 查询方式：
 ```
 # 在源库中查询数据库db1中是否存在 MyISAM 表
@@ -164,7 +165,7 @@ set global max_allowed_packet = 4194304;
 `table xxx have no primary key or at least a unique key`
 
 **解决方法：** 
-如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
+如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
 ```
 alter table xxx add primary key(xxxx);
 ```
@@ -208,12 +209,11 @@ log_slave_updates = 1
 
 server_id 要求和当前主库和从库的 server_id 不同
 
-#### 1.7.1 查询当前主库的 server_id
 ```
+# 查询当前主库的 server_id
 show variables like '%server_id%';
-```
-#### 1.7.2 查询从库的 server_id
-```
+
+# 查询从库的 server_id
 SHOW SLAVE HOSTS;
 ```
 

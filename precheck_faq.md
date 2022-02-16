@@ -10,7 +10,7 @@
 
 **解决方法：** 
 
-如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，要求源数据库开启 binlog 功能，且
+如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`、`双向同步`的任务，要求源数据库开启 binlog 功能，且
 
 - `binlog_format` 为 `ROW`
 - `binlog_row_image` 为 `FULL`
@@ -36,7 +36,7 @@ binlog_row_image = FULL
 
 #### 1.1.2 源库开启过 binlog，但是 binlog_format 或 binlog_row_image 值不对
 
-需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是老的值，需要将连接断开后才会生效。
+需要特别注意的是，如果通过 MySQL 命令设置 binlog_format，当 MySQL 存在连接往数据库中写入数据时，写入的 binlog_format 还是原值，需要将连接断开后才会生效。
 
 ```sql
 FLUSH TABLES WITH READ LOCK;
@@ -62,7 +62,7 @@ UNLOCK TABLES;
 
 -- 通过 kill 断开所有 session，如果能确认哪些连接有写操作，可以只 kill 这些连接
 > kill 497
--- kill 掉老的 session 之后，flush logs 保证新的 binlog 格式为 ROW
+-- kill 掉原来的 session 之后，flush logs 保证新的 binlog 格式为 ROW
 > FLUSH LOGS;
 ```
 
@@ -102,11 +102,11 @@ start slave;
 
 **解决方法：** 
 
-如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 gtid ，可能导致 MySQL 1785 错误，报错信息如下：
+如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致 MySQL 1785 错误，报错信息如下：
 ```
 When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
 ```
-建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 gtid 模式。
+建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 GTID 模式。
 
 查询方式：
 ```
@@ -117,7 +117,7 @@ select table_schema, table_name
 		and table_type = 'BASE TABLE'
 		and table_schema in (db1);
 
-# 在目标库中查询是否开启了 gtid
+# 在目标库中查询是否开启了 GTID
 show global variables like 'gtid_mode';
 ```
 
@@ -128,7 +128,7 @@ show global variables like 'gtid_mode';
 alter table table1 ENGINE = InnoDB;
 
 # 方案二：修改目标库
-# 关闭目标库的 gtid 模式
+# 关闭目标库的 GTID 模式
 set global gtid_mode = "ON_PERMISSIVE";
 set global gtid_mode = "OFF_PERMISSIVE";
 set global gtid_mode = "OFF";
@@ -165,7 +165,7 @@ set global max_allowed_packet = 4194304;
 `table xxx have no primary key or at least a unique key`
 
 **解决方法：** 
-如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`的任务，需要为每张表设置主键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
+如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`、`双向同步`的任务，需要为每张表设置主键或唯一键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
 ```
 alter table xxx add primary key(xxxx);
 ```
@@ -207,7 +207,7 @@ log_slave_updates = 1
 
 **解决方法：** 
 
-server_id 要求和当前主库和从库的 server_id 不同
+server_id 要求与当前主库和从库的 server_id 不同
 
 ```
 # 查询当前主库的 server_id

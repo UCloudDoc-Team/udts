@@ -66,7 +66,7 @@ UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包�
 
 - 连接性检查，包括主机地址、端口、用户名和密码等信息的正确性。
 - 权限检查，检查迁移时需要的权限。
-- 设置检查，如 sql_mode、 binlog 格式、唯一键检查等。
+- 配置检查，如 sql_mode、 binlog 格式、唯一键检查等。
 
 ### 连接性检查
 连接性检查会对填写的 `主机地址`,`端口`，`用户名`，`密码`进行检查
@@ -134,11 +134,11 @@ set global binlog_row_image = "FULL" ;
 
 ### MyISAM 引擎表检查
 
-如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 gtid ，可能导致 MySQL 1785 错误，报错信息如下：
+如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致 MySQL 1785 错误，报错信息如下：
 ```
 When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
 ```
-建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 gtid 模式。
+建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 GTID 模式。
 查询方式：
 ```
 # 在源库中查询数据库db1中是否存在 MyISAM 表
@@ -148,7 +148,7 @@ select table_schema, table_name
 		and table_type = 'BASE TABLE'
 		and table_schema in (db1);
 
-# 在目标库中查询是否开启了 gtid
+# 在目标库中查询是否开启了 GTID
 show global variables like 'gtid_mode';
 ```
 
@@ -159,7 +159,7 @@ show global variables like 'gtid_mode';
 alter table table1 ENGINE = InnoDB;
 
 # 方案二：修改目标库
-# 关闭目标库的 gtid 模式
+# 关闭目标库的 GTID 模式
 set global gtid_mode = "ON_PERMISSIVE";
 set global gtid_mode = "OFF_PERMISSIVE";
 set global gtid_mode = "OFF";

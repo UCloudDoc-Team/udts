@@ -2,8 +2,11 @@
 * [概览](/udts/README)
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
-    * [计费说明](/udts/introduction/billing)
+    * [实例类型](/udts/introduction/instancetype)
     * [使用限制](/udts/introduction/limitation)
+* 计费说明  
+    * [计费指南](/udts/introduction/billing)
+    * [回收与删除](/udts/billing/recycle)
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
@@ -45,9 +48,9 @@
 * [FAQ](/udts/faq)
 * [预检查FAQ](udts/precheck_faq)
 * 最佳实践
-    * [如何从阿里云RDS MySQL迁移至UCloud UDB](/udts/practice/alitouclud)
-    * [如何从阿里云 云数据库Redis 迁移至UCloud 云内存Redis](/udts/practice/aliredis)
-    * [自建IDC如何传输数据至UCloud](/udts/practice/connect)
-    * [托管云如何传输数据至公有云区域](/udts/practice/hybrid)
+    * [如何从阿里云RDS MySQL迁移到UCloud UDB](/udts/practice/alitouclud)
+    * [如何从阿里云云数据库Redis迁移到UCloud云内存Redis](/udts/practice/aliredis)
+    * [自建IDC如何传输数据到UCloud](/udts/practice/connect)
+    * [托管云如何传输数据到公有云区域](/udts/practice/hybrid)
     * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
 

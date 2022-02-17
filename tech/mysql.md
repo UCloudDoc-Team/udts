@@ -39,10 +39,10 @@ UDTS 模拟一个Slave节点，通过Binlog从全量导出点开始获取增量�
 | AWS RDS for MySQL南美    | UCloud 巴西 MySQL        | 全量导入       | 200                            | 13                     | 40                                         |
 | 新加坡 MySQL             | 越南MySQL                | 全量导出       | 800                            | 10                     | 800                                        |
 | 新加坡MySQL              | 越南 MySQL               | 全量导入       | 800                            | 10                     | 80                                         |
-| UCloud 华北（北京） UDB 8GB HA | UCloud 华北（北京） UDB 8GB HA | 全量导出       | 200                            | 19                     | 200                                        |
-| UCloud 华北（北京） UDB 8GB HA | UCloud 华北（北京） UDB 8GB HA | 全量导入       | 200                            | 19                     | 64                                         |
-| UCloud 华北（北京） UDB 8GB HA | UCloud 华北（北京） UDB 8GB HA | 全量导出       | 内网                           | 19                     | 2104                                       |
-| UCloud 华北（北京） UDB 8GB HA | UCloud 华北（北京） UDB 8GB HA | 全量导入       | 内网                           | 19                     | 578                                        |
+| UCloud 华北一 UDB 8GB HA | UCloud 华北一 UDB 8GB HA | 全量导出       | 200                            | 19                     | 200                                        |
+| UCloud 华北一 UDB 8GB HA | UCloud 华北一 UDB 8GB HA | 全量导入       | 200                            | 19                     | 64                                         |
+| UCloud 华北一 UDB 8GB HA | UCloud 华北一 UDB 8GB HA | 全量导出       | 内网                           | 19                     | 2104                                       |
+| UCloud 华北一 UDB 8GB HA | UCloud 华北一 UDB 8GB HA | 全量导入       | 内网                           | 19                     | 578                                        |
 
 
 单向增量同步峰值支持2W OPS （insert, update, delete）

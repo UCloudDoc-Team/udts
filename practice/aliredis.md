@@ -1,6 +1,6 @@
-# 如何从阿里云 云数据库Redis 迁移至UCloud 云内存Redis
+# 如何从阿里云 云数据库Redis 迁移到 UCloud 云内存Redis
 
-适用场景：通过UDTS将阿里云 云数据库Redis迁移至 云内存Redis上（暂不支持UCloud 分布式Redis 作为目标）。
+适用场景：通过UDTS将阿里云 云数据库Redis迁移到云内存Redis上。
 
 注：阿里云 Redis 2.8如果要增量同步需要升级到4.0版本才可执行。
 

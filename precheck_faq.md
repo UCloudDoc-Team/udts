@@ -29,10 +29,10 @@ binlog_row_image = FULL
 ...
 ```
 
-如果您使用的是云厂商的 db，需要复制对应的配置文件，并修改相应的值，使用修改后的配置重新启动 db。
+如果您使用的是云厂商的数据库服务，需要修改对应的配置文件，使用修改后的配置重新启动数据库。
 
 备注： 
-	如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
+	MySQL 5.5 没有 binlog_row_image 这个变量，不需要设置
 
 #### 1.1.2 源库开启过 binlog，但是 binlog_format 或 binlog_row_image 值不对
 
@@ -42,7 +42,7 @@ binlog_row_image = FULL
 FLUSH TABLES WITH READ LOCK;
 FLUSH LOGS;
 SET GLOBAL binlog_format = 'ROW';
--- 同样的，如果是 MySQL 5.5 ，不需要设置 binlog_row_image
+-- 同样的，MySQL 5.5 不需要设置 binlog_row_image
 SET GLOBAL binlog_row_image = 'FULL';
 FLUSH LOGS;
 UNLOCK TABLES;
@@ -110,7 +110,7 @@ When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables 
 
 查询方式：
 ```
-# 在源库中查询数据库db1中是否存在 MyISAM 表
+# 在源数据库（db1）中查询是否存在 MyISAM 表
 select table_schema, table_name
 	from information_schema.tables
 	where engine = 'MyISAM'
@@ -133,8 +133,6 @@ set global gtid_mode = "ON_PERMISSIVE";
 set global gtid_mode = "OFF_PERMISSIVE";
 set global gtid_mode = "OFF";
 ```
-
-
 
 ### 1.3
 **错误信息：** 
@@ -165,7 +163,7 @@ set global max_allowed_packet = 4194304;
 `table xxx have no primary key or at least a unique key`
 
 **解决方法：** 
-如果迁移的任务类型为 `增量`，包括 `增量`、`全量+增量`、`全量之后需要进行增量迁移`、`双向同步`的任务，需要为每张表设置主键或唯一键，否则在增量阶段可能出现数据重复的问题。如果只进行全量迁移，可以忽略这个问题。
+如果迁移涉及到增量同步，包括 `增量任务`、`全量+增量任务`、`双向同步`以及`全量任务`之后再进行`增量任务`的场景，需要为每张表设置主键或唯一键，否则在增量同步阶段可能出现重复数据。如果只进行全量迁移，可以忽略这个问题。
 ```
 alter table xxx add primary key(xxxx);
 ```
@@ -200,6 +198,7 @@ SET @@GLOBAL.sql_mode='xxxx';
 log_slave_updates = 1
 ...
 ```
+
 ### 1.7
 **错误信息：** 
 
@@ -230,8 +229,8 @@ SHOW SLAVE HOSTS;
 
 **解决方法：** 
 
-如果迁移的任务类型为 `全量`、`全量+增量`,  且迁移的数据量较大时，需要要求 `tikv_gc_life_time` 的值大于 `转存` 时间。
-一般情况下 1.8T 的数据，大约需要 40min，我们建议将该值设置为 1h 以上
+如果迁移的任务类型为 `全量任务`、`全量+增量任务`,  且迁移的数据量较大时，需要 `tikv_gc_life_time` 的值大于 `转存` 时间。
+一般情况下 2T 的数据，大约需要 45min，我们建议将该值设置为 1h 以上
 
 在 TiDB 中执行以下语句
 ```sql

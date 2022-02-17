@@ -46,6 +46,7 @@
         * [删除任务](/udts/inti/guide/deletetask)
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
+* [预检查FAQ](udts/precheck_faq)
 * 最佳实践
     * [如何从阿里云RDS MySQL迁移至UCloud UDB](/udts/practice/alitouclud)
     * [如何从阿里云 云数据库Redis 迁移至UCloud 云内存Redis](/udts/practice/aliredis)

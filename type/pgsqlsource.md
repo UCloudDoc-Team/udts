@@ -22,6 +22,7 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 - 在增量同步的过程中，如果要将源库中创建的新表作为同步对象，您需要对该表执行如下操作以保障该表数据同步的一致性。
   `ALTER TABLE schema.table REPLICA IDENTITY FULL;`
 - 增量同步不支持BIT、VARBIT、GEOMETRY、ARRAY、UUID、TSQUERY、TSVECTOR、TXID_SNAPSHOT类型的数据同步。
+- 由于数据库自身的特性，不支持从高版本迁移到低版本。
 
 ## 注意事项
 - 增量同步期间，UDTS会在目标库中创建`public.udts_pgsync_progress`的数据表，用于记录同步的进度等信息，同步过程中请勿删除，否则会导致任务异常.

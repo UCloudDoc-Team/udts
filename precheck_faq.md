@@ -93,7 +93,7 @@ start slave;
 
 备注：  
 	通过 `SET GLOBAL binlog_format = 'ROW';` 设置参数，  
-	再次通过 `show global variables like 'binlog_format';` 查询到的值还是旧的值，需要重新断开连接再次连接后才会显示变更后的值。
+	再次通过 `show global variables like 'binlog_format';` 查询到的值还是原值，需要断开连接后重新连接才会显示变更后的值。
 
 ### 1.2
 **错误信息：** 

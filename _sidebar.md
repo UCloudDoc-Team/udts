@@ -3,8 +3,10 @@
 * 产品简介
     * [什么是数据传输服务](/udts/introduction/concept)
     * [实例类型](/udts/introduction/instancetype)
-    * [计费说明](/udts/introduction/billing)
     * [使用限制](/udts/introduction/limitation)
+* 计费说明  
+    * [计费指南](/udts/introduction/billing)
+    * [回收与删除](/udts/billing/recycle)
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
@@ -44,6 +46,7 @@
         * [删除任务](/udts/inti/guide/deletetask)
 * [任务失败通知](/udts/guide/notice) 
 * [FAQ](/udts/faq)
+* [预检查FAQ](udts/precheck_faq)
 * 最佳实践
     * [如何从阿里云RDS MySQL迁移到UCloud UDB](/udts/practice/alitouclud)
     * [如何从阿里云云数据库Redis迁移到UCloud云内存Redis](/udts/practice/aliredis)

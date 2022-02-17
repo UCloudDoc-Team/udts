@@ -66,7 +66,7 @@ UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包�
 
 - 连接性检查，包括主机地址、端口、用户名和密码等信息的正确性。
 - 权限检查，检查迁移时需要的权限。
-- 设置检查，如 sql_mode、 binlog 格式、唯一键检查等。
+- 配置检查，如 sql_mode、 binlog 格式、唯一键检查等。
 
 ### 连接性检查
 连接性检查会对填写的 `主机地址`,`端口`，`用户名`，`密码`进行检查
@@ -93,9 +93,7 @@ UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包�
 
 ### sql_mode 检查
 
-为了保证迁移能正确执行，最好保持 源和目标数据库的 sql_mode 一致，可以通过一下命令查询 sql_mode
-
-如果 sql_mode 不一致，可以通过以下命令查看和修改 sql_mode
+为了保证迁移能正确执行，最好保持 源和目标数据库的 sql_mode 一致，可以通过以下命令查询 sql_mode
 
 ```
 select @@sql_mode;
@@ -134,6 +132,58 @@ set global binlog_row_image = "FULL" ;
 ```
 
 备注： 如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
+
+### MyISAM 引擎表检查
+
+如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致 MySQL 1785 错误，报错信息如下：
+```
+When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
+```
+建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 GTID 模式。
+查询方式：
+```
+# 在源库中查询数据库db1中是否存在 MyISAM 表
+select table_schema, table_name
+	from information_schema.tables
+	where engine = 'MyISAM'
+		and table_type = 'BASE TABLE'
+		and table_schema in (db1);
+
+# 在目标库中查询是否开启了 GTID
+show global variables like 'gtid_mode';
+```
+
+设置方式：
+```
+# 方案一：修改源库
+# 将 MyISAM 表 table1 的引擎修改为 InnoDB
+alter table table1 ENGINE = InnoDB;
+
+# 方案二：修改目标库
+# 关闭目标库的 GTID 模式
+set global gtid_mode = "ON_PERMISSIVE";
+set global gtid_mode = "OFF_PERMISSIVE";
+set global gtid_mode = "OFF";
+```
+
+### 从MySQL迁移到TiDB时，检查源库字符集
+
+TiDB目前支持的字符集包括`ascii/latin1/binary/utf8/utf8mb4`。
+从MySQL迁移到TiDB时，如果源库中需要迁移的表或表中某一字段采用的字符集不包含在上述字符集之中，则无法迁移。
+
+查询方式：
+```
+show create table table1;
+```
+
+设置方式：
+```
+# 将表 table1 的字符集修改为 utf8
+alter table task character set utf8;
+
+# 将表 table1 中 column1 字段的字符集修改为 utf8
+alter table table1 change column1 column1 varchar(200) character set utf8;
+```
 
 ## 功能限制
 ### MyISAM 引擎表

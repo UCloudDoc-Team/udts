@@ -219,10 +219,10 @@ SHOW SLAVE HOSTS;
 在创建任务时，需要填写和上面查询结果不同的 server_id。
 
 
-### 2 TiDB
+## 2 TiDB
 
 
-#### 2.1
+### 2.1
 **错误信息：** 
 
 `tikv_gc_life_time is %s, and should be great than 1h`
@@ -237,7 +237,7 @@ SHOW SLAVE HOSTS;
 update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time";
 ```
 
-#### 2.2
+### 2.2
 **错误信息：** 
 
 `TiDB dose not support charset in table %s. Please change charset to any one of '%s'.`

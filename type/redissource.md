@@ -1,6 +1,6 @@
 # Redis
 
-UDTS 可以将 Redis 作为数据源/目标 进行全量+增量任务的传输。
+UDTS 可以将原生 Redis 作为数据源/目标 进行全量+增量任务的传输， 也支持使用代理的分布式版本（包括 UCloud Redis 分布式版、Codis、Twemproxy）作为数据源。
 
 ## 功能限制
 - 暂时不支持 UCloud Redis 分布式版作为源。
@@ -10,7 +10,7 @@ UDTS 可以将 Redis 作为数据源/目标 进行全量+增量任务的传输�
 - 对于源和目的集群节点数目不需要一致
 - 当 Redis 源为公网端，且为集群模式的情况下，需要将目标端 VPC 下的子网 ID 绑定 NATGW 方能完成传输任务
 - 需要确保源库的 `repl-diskless-sync` 配置为 `NO`
-- 如果源库为分布式版（包括 UCloud Redis 分布式版、Codis、Twemproxy），可以创建多个任务，每个任务的源库填写一个分布式节点的地址，类型选择主备版。
+- 如果源库为分布式版（包括 UCloud Redis 分布式版、Codis、Twemproxy），需要创建多个任务，每个任务的源库填写一个分布式节点的地址，类型选择主备版。
 
 ## Redis填写表单
 

@@ -18,6 +18,7 @@
         * [US3](/udts/type/ufilesource)
         * [Redis](/udts/type/redissource)
         * [PostgreSQL](/udts/type/pgsqlsource)
+        * [ElasticSearch](/udts/type/essource)
     * 功能原理与传输速度
         * [MySQL迁移](/udts/tech/mysql)
     * 操作指南

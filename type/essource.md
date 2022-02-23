@@ -13,7 +13,7 @@ UDTS 支持 ElasticSearch 作为数据传输源/目标，支持版本 6.5.4 到 
 | 地址类型 | 提供内网地址，外网地址，专线地址三种方式，示例：http://10.9.1.1:9200 |
 | 用户名   | ElasticSearch 连接用户名                                             |
 | 密码     | ElasticSearch 用户名对应密码                                         |
-| 索引     | 需要迁移的 ElasticSearch 索引名称                                    |
+| 索引     | 需要迁移的 ElasticSearch 索引名称，必填项，多个索引之间用`,`分割，暂不支持`*`迁移所有索引，示例：`testdata1,testdata2`          |
 
 传输目标表单
 

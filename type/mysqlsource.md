@@ -122,7 +122,7 @@ binlog_row_image 为 FULL
 查询方式：
 ```
 show global variables like 'binlog_format';
-show global variables like 'binlog_row_image'；
+show global variables like 'binlog_row_image';
 ```
 
 设置方式：

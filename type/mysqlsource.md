@@ -241,6 +241,11 @@ UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证�
 在源或者目标中，将 `SSL 安全连接` 选项打开，同时上传 ca 证书
 ![](http://udts-doc.cn-bj.ufileos.com/create-ssl.png)
 
+## 跨版本迁移
+跨版本迁移时，请注意源库中是否存在与目标库不兼容的特性，例如：
+- MySQL8.0 版本的默认 collation `utf8mb4_0900_ai_ci` 在 MySQL5.x 版本中不兼容。如需从 MySQL8.0 迁移至 MySQL5.x，请修改 collation 为 MySQL5.x 支持的类型，例如 `utf8mb4_general_ci`
+- MySQL5.6 版本支持数据类型 `geometry` 字段为空字符串，MySQL5.7 及以后版本不支持。如需从 MySQL5.6 迁移至更高版本，请确保源库中 `geometry` 字段不为空字符串
+
 ## MySQL 填写表单
 
 数据源表单

@@ -25,6 +25,9 @@ UDTS 对以下表格中所列出的全量传输任务， 提供基于已完成�
 
 ## 步骤三 创建增量任务
 
+填写增量任务的任务名称，并点击编辑进行补充源目数据库的密码
+![](http://udts-doc.cn-bj.ufileos.com/create007-3.png)
+
 填写数据库密码，以及任务名称来完成创建。
 
 ![](http://udts-doc.cn-bj.ufileos.com/create007-2.png)

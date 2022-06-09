@@ -392,3 +392,10 @@ db.runCommand({
     "failIndexKeyTooLong": false}
 );
 ```
+
+## 25 问： OOM command not allowed when used memory > 'maxmemory' or rss_memory not enough.
+
+目标数据库是MongoDB分片集群时，目标分片的容量可能出现内存不够的情况
+
+解决方法：升级目标集群的分片容量
+

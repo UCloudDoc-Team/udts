@@ -25,9 +25,12 @@ UDTS 对以下表格中所列出的全量传输任务， 提供基于已完成�
 
 ## 步骤三 创建增量任务
 
-填写数据库密码，sync data中的ServerID (保证此ID唯一， 即不会与源MySQL及其从库 Server ID 重复)，以及任务名称来完成创建。
+填写增量任务的任务名称，并点击编辑进行补充源目数据库的密码
+![](http://udts-doc.cn-bj.ufileos.com/create007-3.png)
 
-![](http://udts-doc.cn-bj.ufileos.com/create007.png)
+填写数据库密码，以及任务名称来完成创建。
+
+![](http://udts-doc.cn-bj.ufileos.com/create007-2.png)
 
 
 

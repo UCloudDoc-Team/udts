@@ -381,8 +381,21 @@ max_heap_table_size = 256M
 - 如果确认源数据库中没有 0000-00-00 和 00:00:00 这样的日期或时间值，可以忽略该信息
 - 修改目标数据库中的 sql_mode，去掉 NO_ZERO_DATE 和 NO_ZERO_IN_DATE，操作步骤可以参考 FAQ 第 5 条
 
+## 24 问： error creating indexes for xx.xx: createIndex error: WiredTigerIndex::insert: key too large to index, failing  1089
+
+MongoDB 在2.6 版本引入 failIndexKeyTooLong 参数，在4.2版本之后废弃该参数，用于限制 index 的长度
+
+解决方法：在目标数据库执行
+```
+db.runCommand({
+    "setParameter": 1,
+    "failIndexKeyTooLong": false}
+);
+```
+
 ## 25 问： OOM command not allowed when used memory > 'maxmemory' or rss_memory not enough.
 
-目标数据库是分片集群时，目标分片的容量可能出现内存不够的情况
+目标数据库是MongoDB分片集群时，目标分片的容量可能出现内存不够的情况
 
 解决方法：升级目标集群的分片容量
+

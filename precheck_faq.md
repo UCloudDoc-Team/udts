@@ -218,6 +218,24 @@ SHOW SLAVE HOSTS;
 
 在创建任务时，需要填写和上面查询结果不同的 server_id。
 
+### 1.8
+**错误信息：** 
+
+`please stop event: 'db1':event1`
+
+**解决方法：** 
+
+- 增量同步开启之前，需要关闭 event
+```
+# 停止所有 event
+SET GLOBAL event_scheduler = OFF;
+
+# 如果按库迁移，停止指定库的 event 即可
+# 查找对应的 event 并停止
+USE db1;
+SHOW EVENTS;
+ALTER EVENT event1 DISABLE;
+```
 
 ## 2 TiDB
 

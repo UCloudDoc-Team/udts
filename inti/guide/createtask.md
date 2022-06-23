@@ -4,28 +4,23 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create001.png)
 
-## 填写任务基本信息
+## 填写任务名称
+- 支持设置任务备注，最大长度不超过255
 
-任务名称，选择数据源/目标的类型（当前只支持mysql->mysql），点击下一步
-
-![](http://udts-doc.cn-bj.ufileos.com/integration/create002.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create008.png)
 
 ## 添加数据源
 
-点击添加数据源
-
-![](http://udts-doc.cn-bj.ufileos.com/integration/create003.png)
-
-填写源库信息
-![](http://udts-doc.cn-bj.ufileos.com/integration/create-src.png)
+点击添加数据源，填写源库信息
+![](http://udts-doc.cn-bj.ufileos.com/integration/create009.png)
 
 进行[预检查](/udts/inti/guide/precheck)，成功通过后点击【确定】
 
 可按需添加多个数据源
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/create005.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create010.png)
 
-点击ETL设置，选择需要迁移的库与表，点击"->"，将自动填写映射值，若有需要，可更改目标库的映射库名与表名。完成源库信息填写后，点击下一步
+点击【ETL】，选择需要迁移的库与表，将自动填写映射值，若有需要，可更改目标库的映射库名与表名。
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create006.png)
 
@@ -33,5 +28,5 @@
 
 填写目标库信息，完成[预检查](/udts/inti/guide/precheck)后，点击确认
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/create007.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create011.png)
 

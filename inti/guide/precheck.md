@@ -4,7 +4,7 @@
 
 ## 数据源预检查
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/precheck-src.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create009.png)
 
 检查结果
 
@@ -12,7 +12,7 @@
 
 ## 目标预检查
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/precheck-tgt.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create010.png)
 
 检查结果
 
@@ -28,6 +28,5 @@
 - 出现权限错误，请对应[FAQ](https://docs.ucloud.cn/udts/faq?id=%e9%97%ae%ef%bc%9amysql-%e5%85%a8%e9%87%8f%e8%bf%81%e7%a7%bb%e9%9c%80%e8%a6%81%e6%bb%a1%e8%b6%b3%e5%93%aa%e4%ba%9b%e6%9d%a1%e4%bb%b6)，查询该任务类型所需权限。
 
 ### 配置检查失败
-错误信息会提示出有问题的配置项， 按提示修正即可。
-
+出现配置检查失败，请参考[预检查FAQ](https://docs.ucloud.cn/udts/precheck_faq)。
 

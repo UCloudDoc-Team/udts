@@ -12,7 +12,7 @@
 
 ## 目标预检查
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/create010.png)
+![](http://udts-doc.cn-bj.ufileos.com/integration/create011.png)
 
 检查结果
 

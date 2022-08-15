@@ -251,7 +251,7 @@ ALTER EVENT event1 DISABLE;
 一般情况下 2T 的数据，大约需要 45min，我们建议将该值设置为 1h 以上
 
 在 TiDB 中执行以下语句
-```sql
+```
 update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time";
 ```
 

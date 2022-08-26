@@ -4,7 +4,7 @@
 
 ## 迁移内容
 
-数据集成当前只迁移 Database、Table 及其数据，不迁移视图(View)、函数(Function)、存储过程(Procedure)等其它内容。
+数据集成当前只迁移 Database、Table 及其数据，不迁移视图(View)等其它内容。
 
 ## 功能说明
 

@@ -399,3 +399,8 @@ db.runCommand({
 
 解决方法：升级目标集群的分片容量
 
+## 26 问： ddtLog.v_HBUSer: error creating collection ddtLog.v_HBUSer: error running create command: Cannot create view when the featureCompatibilityVersion is 3.X.
+
+MongoDB 迁移时，以上报错说明源库与目标库的 featureCompatibilityVersion 取值不一致，且源库中存在与目标库不兼容的特性，例如视图、排序规则等
+
+解决方法：检查并调整源库与目标库不兼容的内容

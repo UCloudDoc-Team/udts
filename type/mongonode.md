@@ -6,6 +6,7 @@ UDTS 支持 MongoDB（自建/UDB MongoDB/其它云厂商提供的标准MongoDB�
 
 1. 不迁移系统内置库，config/local/admin
 2. 增量仅支持迁移数据，不同步DDL
+3. 增量迁移源库必须开启oplog
 
 ### 副本集的迁移
 1. 当目标地址是单地址时，目标集群发生主从切换之后，任务会失败

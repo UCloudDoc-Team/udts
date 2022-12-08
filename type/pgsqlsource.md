@@ -7,8 +7,8 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 ## 前提条件
 
 - 增量同步时用户需要开启数据日志，`wal_level`需要设置为`logical`, `max_replication_slots`需要大于1
-- 待迁移的表需具备主键或唯一键，否则增量同步可能会导致目标数据库中出现重复数据。
-- 如果用户待迁移表中有外键约束, 可能会因为表之间数据的依赖关系导致导入数据失败，需要在目标库禁用所有表的外键约束。
+- 待迁移的表需具备主键，否则无法做增量迁移。
+
 
 ### 所需权限
 
@@ -26,6 +26,26 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 ## 注意事项
 - 增量同步期间，UDTS会在目标库中创建`public.udts_pgsync_progress`的数据表，用于记录同步的进度等信息，同步过程中请勿删除，否则会导致任务异常.
 - 增量同步期间，UDTS会在源库中创建前缀为`udts_`的`replication slot`用于复制数据。
+- 客户暂停同步任务后，由于源库中存在前缀为`udts_`的`replication slot`用于复制数据, 会导致wal清理不掉持续占用磁盘，如果需要长时间停止任务建议删除此slot,并删除任务。
+- 客户删除任务后，需要手动在源库删除对应 `slot`，操作步骤如下:
+```
+1. 例如使用UDTS增量迁移的数据库为 db_service_car
+2. 执行 select * from pg_replication_slots ，返回结果如下:
+-------------------------------------------------------------------------------------------------------------------------------
+| slot_name                               |   plugin        |   slot_type   |   datoid      |   database         |   active   |
+-------------------------------------------------------------------------------------------------------------------------------
+| udts_dd27ef9195294b49a5d424eda8f399f7   |   test_decoding |   logical     |   4839920     |   db_service_car   |   f        |
+| udts_050a1f4b1cc84b4bb6460e5477ec3d79   |   test_decoding |   logical     |   2695822     |   db_service_xxx   |   t        |
+
+3. 找到 database 为 db_service_car 的 slot_name
+4. 执行 select pg_drop_replication_slot('udts_dd27ef9195294b49a5d424eda8f399f7');
+
+5. 再执行一次 select * from pg_replication_slots, 确认已删除
+```
+
+
+
+
 
 ## PostgreSQL 填写表单
 

@@ -36,6 +36,8 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 -------------------------------------------------------------------------------------------------------------------------------
 | udts_dd27ef9195294b49a5d424eda8f399f7   |   test_decoding |   logical     |   4839920     |   db_service_car   |   f        |
 | udts_050a1f4b1cc84b4bb6460e5477ec3d79   |   test_decoding |   logical     |   2695822     |   db_service_xxx   |   t        |
+-------------------------------------------------------------------------------------------------------------------------------
+
 
 3. 找到 database 为 db_service_car 并且前缀为 udts 的 slot_name。
 4. 执行 select pg_drop_replication_slot('udts_dd27ef9195294b49a5d424eda8f399f7');

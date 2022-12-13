@@ -37,6 +37,7 @@
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 数据类型说明
         * [MySQL](/udts/inti/type/mysql)
+        * [TiDB](/udts/inti/type/tidb)
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [预检查](/udts/inti/guide/precheck)

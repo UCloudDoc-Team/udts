@@ -7,15 +7,15 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 ## 前提条件
 
 - 增量同步时用户需要开启数据日志，`wal_level`需要设置为`logical`, `max_replication_slots`需要大于1
-- 待迁移的表需具备主键，否则无法做增量迁移。
+- 待迁移的表需具备主键或着唯一索引，否则可能会产生重复数据。具体参考[增量同步处理表没有主键或者没有唯一索引的情况](#增量同步处理表没有主键或者没有唯一索引的情况)
 
 
 ### 所需权限
 
-|  类型    | 源库                   | 目标库                                                                                                      |
-|-------| --------------------- | --------------------------------------------------------------------------------------------------------- |
-|  全  量  | SELECT                | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE     |
-|  全量+增量 | SELECT,REPLICATION    | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE |
+| 类型      | 源库               | 目标库                                                                                                    |
+| --------- | ------------------ | --------------------------------------------------------------------------------------------------------- |
+| 全  量    | SELECT             | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE |
+| 全量+增量 | SELECT,REPLICATION | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE |
 
 ## 功能限制
 - 一个“全量+增量”任务只能同步一个数据库，如果有多个数据库需要同步，则需要为每个数据库创建任务。
@@ -24,10 +24,27 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 - 由于数据库自身的特性，不支持从高版本迁移到低版本。
 
 ## 注意事项
+
+### 增量同步处理表没有主键或者没有唯一索引的情况
+
+- 如果待迁移的表即没有主键也没有唯一索引，需要执行 `ALTER TABLE tb_xxx REPLICA IDENTITY FULL`，否则无法进行增量迁移。
+- 如果待迁移的表没有主键但是有唯一索引比如`idx_unq_name`，这种情况有两种处理方式:
+
+```
+1. 与没有主键的处理方式一样，执行 ALTER TABLE tb_xxx REPLICA IDENTITY FULL， 这种方式复制效率比较低。
+2. 手动指定复制的唯一索引, ALTER TABLE tb_xxx REPLICA IDENTITY USING INDEX idx_unq_name, 这种方式复制效率较高。
+```
+
+- 如果待迁移的表没有主键但是有唯一索引，并且在任务的运行过程中更换了用于复制的唯一索引，需要重启任务否则任务可能会失败。
+
+### 增量同步进度保存与复制槽 slot 说明
 - 增量同步期间，UDTS会在目标库中创建`public.udts_pgsync_progress`的数据表，用于记录同步的进度等信息，同步过程中请勿删除，否则会导致任务异常.
 - 增量同步期间，UDTS会在源库中创建前缀为`udts_`的`replication slot`用于复制数据。
 - 客户暂停同步任务后，由于源库中存在前缀为`udts_`的`replication slot`用于复制数据, 会导致wal清理不掉持续占用磁盘，如果需要长时间停止任务建议删除此slot,并删除任务。
 - 客户删除任务后，需要手动在源库删除对应 `slot`，操作步骤如下:
+
+** 操作步骤: **       
+                                              
 ```
 1. 例如使用UDTS增量迁移的数据库为 db_service_car。
 2. 执行 select * from pg_replication_slots ，返回结果如下:
@@ -45,12 +62,9 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 ```
 
 
-
-
-
 ## PostgreSQL 填写表单
 
-数据源表单
+### 数据源表单
 
 | 参数名   | 说明                                                                                                                 |
 | -------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -58,11 +72,11 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 | 端口     | PostgreSQL 连接端口                                                                                                  |
 | 用户名   | PostgreSQL 连接用户名                                                                                                |
 | 密码     | PostgreSQL 数据库对应用户密码                                                                                        |
-| 数据库名 | PostgreSQL 数据库名称                                                                                                |
-| 表名     | PostgreSQL 传输表名，可选项。 若不填，整库迁移； 若填写，只迁移指定的一张表                                          |
+| 数据库名 | PostgreSQL 待迁移数据库名称                                                                                          |
+| 表名     | PostgreSQL 传输表名，可选项。 若不填，整库迁移； 若填写，迁移或者过滤指定的表. 具体参考 [表单表名填写规则](#表单表名填写规则)           |
 | 最大速率 | 外网/专线的速率范围为 1-256 MB/s，默认40 MBps (即 320 Mbps); 内网的速率范围为 1-1024 MB/s，默认 80 MBps(即 640 Mbps) |
 
-传输目标表单
+### 传输目标表单
 
 | 参数名   | 说明                                                    |
 | -------- | ------------------------------------------------------- |
@@ -71,3 +85,11 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 | 用户名   | PostgreSQL连接用户名                                    |
 | 密码     | PostgreSQL数据库对应用户密码                            |
 | 最大速率 | 内网的速率范围为 1-1024 MB/s，默认 80 MBps(即 640 Mbps) |
+
+### 表单表名填写规则
+
+- 1. 表名仅支持[a-z][A-Z][0-9]以及_等字符。
+- 2. 多个表名以 ,隔开
+- 3. 表名没有添加schema的默认追加 `public.` schema。
+- 4. 表名填写 `public.tb_test01, schema01.tb_test02`，表示只迁移 `public.tb_test01, schema01.tb_test02` 这两张表。
+- 5. 表名填写规则支持过滤，以!开头表示迁移过程中过滤掉当前表，如: `!public.tb_filter01` 表示迁移过程中过滤掉 public.tb_filter01。

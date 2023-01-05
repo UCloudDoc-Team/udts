@@ -381,7 +381,17 @@ max_heap_table_size = 256M
 - 如果确认源数据库中没有 0000-00-00 和 00:00:00 这样的日期或时间值，可以忽略该信息
 - 修改目标数据库中的 sql_mode，去掉 NO_ZERO_DATE 和 NO_ZERO_IN_DATE，操作步骤可以参考 FAQ 第 5 条
 
-## 24 问： error creating indexes for xx.xx: createIndex error: WiredTigerIndex::insert: key too large to index, failing  1089
+
+## 23 问： 迁移报错 Invalid default value for 'xxxx_time'
+
+在迁移的过程中，如果目标数据库的 sql_mode 存在 NO_ZERO_DATE 或者 NO_ZERO_IN_DATE，并且源数据库中存在 0000-00-00 这样的日期值和 00:00:00 这样的时间值，如果存在这样的时间值，在加载数据的时候会出现错误。
+
+解决方法：
+- 修改目标数据库中的 sql_mode，去掉 NO_ZERO_DATE 和 NO_ZERO_IN_DATE， 增加 ALLOW_INVALID_DATES 操作步骤可以参考 FAQ 第 5 条
+- 如果目标库sql_mode 中有 STRICT_TRANS_TABLES 避免产生其他问题也可以先去掉，等迁移完成后再添加回来
+
+
+## 25 问： error creating indexes for xx.xx: createIndex error: WiredTigerIndex::insert: key too large to index, failing  1089
 
 MongoDB 在2.6 版本引入 failIndexKeyTooLong 参数，在4.2版本之后废弃该参数，用于限制 index 的长度
 
@@ -393,13 +403,13 @@ db.runCommand({
 );
 ```
 
-## 25 问： OOM command not allowed when used memory > 'maxmemory' or rss_memory not enough.
+## 26 问： OOM command not allowed when used memory > 'maxmemory' or rss_memory not enough.
 
 目标数据库是MongoDB分片集群时，目标分片的容量可能出现内存不够的情况
 
 解决方法：升级目标集群的分片容量
 
-## 26 问： ddtLog.v_HBUSer: error creating collection ddtLog.v_HBUSer: error running create command: Cannot create view when the featureCompatibilityVersion is 3.X.
+## 27 问： ddtLog.v_HBUSer: error creating collection ddtLog.v_HBUSer: error running create command: Cannot create view when the featureCompatibilityVersion is 3.X.
 
 MongoDB 迁移时，以上报错说明源库与目标库的 featureCompatibilityVersion 取值不一致，且源库中存在与目标库不兼容的特性，例如视图、排序规则等
 

@@ -219,6 +219,23 @@ SHOW EVENTS;
 ALTER EVENT event1 DISABLE;
 ```
 
+### 1.8
+**错误信息：** 
+
+`源库与目标库的参数 XXX 取值不同，建议修改参数保持一致`
+
+**解决方法：** 
+
+- 源库与目标库的 innodb 相关参数不一致，可能导致数据迁移报错，建议修改目标库参数，与源库保持一致
+
+```
+# 在目标库中修改不一致的参数取值
+set GLOBAL innodb_file_format_max = 'Barracuda';
+set GLOBAL innodb_file_format = 'Barracuda';
+set GLOBAL innodb_file_per_table = ON;
+set GLOBAL innodb_strict_mode = OFF;
+```
+
 ## 2 TiDB
 
 

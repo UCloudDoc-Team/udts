@@ -171,7 +171,7 @@ alter table xxx add primary key(xxxx);
 ### 1.5
 **错误信息：** 
 
-`源库与目标库的 sql_mode 不一致，可能导致部分数据无法迁移到目标库。`
+`sql_mode 可能导致报错，检查目标库的 sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE。`
 
 **解决方法：** 
 如果源库与目标库的 sql_mode 不一致，可能会导致部分数据无法迁移到目标库。

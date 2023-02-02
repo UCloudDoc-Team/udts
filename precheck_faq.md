@@ -185,7 +185,7 @@ SET @@GLOBAL.sql_mode='xxxx';
 ### 1.6
 **错误信息：** 
 
-`log_slave_updates: xxx，需要修改为 ON`
+`log_slave_updates 需要修改为 ON`
 
 **解决方法：** 
 如果您使用从库作为迁移的源，那么要求从库开启 log_slave_updates，否则从库中没有 binlog 日志，导致无法迁移

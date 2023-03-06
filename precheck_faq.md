@@ -4,9 +4,9 @@
 
 ### 1.1
 **错误信息：** 
-`log_bin is xxx, and should be ON`、
-`binlog_format is xxx, and should be ROW` 或
-`binlog_row_image is xxx, and should be FULL`
+`log_bin: xxx，需要修改为 ON`、
+`binlog_format: xxx，需要修改为 ROW` 或
+`binlog_row_image: xxx，需要修改为 FULL`
 
 **解决方法：** 
 
@@ -98,7 +98,7 @@ start slave;
 ### 1.2
 **错误信息：** 
 
-`MyISAM table in the source db and gtid_mode in the target db may conflict`
+`源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致迁移失败`
 
 **解决方法：** 
 
@@ -137,7 +137,7 @@ set global gtid_mode = "OFF";
 ### 1.3
 **错误信息：** 
 
-`max_allowed_packet of the source is xxx, which is larger than max_allowed_packet of the target xxx`
+`源库 max_allowed_packet 值 xxx 大于目标库 max_allowed_packet 值 yyy`
 
 **解决方法：** 
 
@@ -160,7 +160,7 @@ set global max_allowed_packet = 4194304;
 ### 1.4
 **错误信息：** 
 
-`table xxx have no primary key or at least a unique key`
+`表：xxx 需要主键或唯一键`
 
 **解决方法：** 
 如果迁移涉及到增量同步，包括 `增量任务`、`全量+增量任务`、`双向同步`以及`全量任务`之后再进行`增量任务`的场景，需要为每张表设置主键或唯一键，否则在增量同步阶段可能出现重复数据。如果只进行全量迁移，可以忽略这个问题。
@@ -171,7 +171,7 @@ alter table xxx add primary key(xxxx);
 ### 1.5
 **错误信息：** 
 
-`sql_mode may cause error. check sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE in target db`
+`sql_mode 可能导致报错，检查目标库的 sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE。`
 
 **解决方法：** 
 如果源库与目标库的 sql_mode 不一致，可能会导致部分数据无法迁移到目标库。
@@ -185,7 +185,7 @@ SET @@GLOBAL.sql_mode='xxxx';
 ### 1.6
 **错误信息：** 
 
-`log_slave_updates should be ON`
+`log_slave_updates 需要修改为 ON`
 
 **解决方法：** 
 如果您使用从库作为迁移的源，那么要求从库开启 log_slave_updates，否则从库中没有 binlog 日志，导致无法迁移
@@ -202,30 +202,12 @@ log_slave_updates = 1
 ### 1.7
 **错误信息：** 
 
-`server_id: xxx already in used, please change it`
-
-**解决方法：** 
-
-server_id 要求与当前主库和从库的 server_id 不同
-
-```
-# 查询当前主库的 server_id
-show variables like '%server_id%';
-
-# 查询从库的 server_id
-SHOW SLAVE HOSTS;
-```
-
-在创建任务时，需要填写和上面查询结果不同的 server_id。
-
-### 1.8
-**错误信息：** 
-
-`please stop event: 'db1':event1`
+`增量同步前，需要关闭 event: 'db1':event1`
 
 **解决方法：** 
 
 - 增量同步开启之前，需要关闭 event
+
 ```
 # 停止所有 event
 SET GLOBAL event_scheduler = OFF;
@@ -237,13 +219,30 @@ SHOW EVENTS;
 ALTER EVENT event1 DISABLE;
 ```
 
+### 1.8
+**错误信息：** 
+
+`源库与目标库的参数 XXX 取值不同，建议修改参数保持一致`
+
+**解决方法：** 
+
+- 源库与目标库的 innodb 相关参数不一致，可能导致数据迁移报错，建议修改目标库参数，与源库保持一致
+
+```
+# 在目标库中修改不一致的参数取值
+set GLOBAL innodb_file_format_max = 'Barracuda';
+set GLOBAL innodb_file_format = 'Barracuda';
+set GLOBAL innodb_file_per_table = ON;
+set GLOBAL innodb_strict_mode = OFF;
+```
+
 ## 2 TiDB
 
 
 ### 2.1
 **错误信息：** 
 
-`tikv_gc_life_time is %s, and should be great than 1h`
+`tikv_gc_life_time: xxx，需要不小于 1h`
 
 **解决方法：** 
 
@@ -258,7 +257,7 @@ update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time
 ### 2.2
 **错误信息：** 
 
-`TiDB dose not support charset in table %s. Please change charset to any one of '%s'.`
+`TiDB 不支持此表采用的字符集 xxx ，请修改字符集为 'ascii/latin1/binary/utf8/utf8mb4' 中任意一种`
 
 **解决方法：** 
 

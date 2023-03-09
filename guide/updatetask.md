@@ -11,27 +11,19 @@
 ![](http://antman-docs.cn-bj.ufileos.com/update001.png)
 
 
-进入任务表单对参数进行修改。
+进入任务表单对参数进行修改，可修改资源类型、任务名称、数据源/目标的信息等。
 
-![](http://antman-docs.cn-bj.ufileos.com/update002.png)
+![](http://antman-docs.cn-bj.ufileos.com/update004.png)
 
-被修改的任务状态，会初始化为 “已创建”。
-
-![](http://antman-docs.cn-bj.ufileos.com/update003.png)
+被修改的任务状态，会初始化为 “已创建”，全+增任务修改后重新启动时，会从全量阶段开始。
 
 备注：目前不提供修改 数据源目类型 和 传输任务类型。
 
 ## 更新任务备注
 
-更新任务备注现在有以下两种途径
-
-- 1 在任务列表页面编辑UDTS迁移任务备注
+在任务列表页面编辑UDTS迁移任务备注
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark001.png)
-
-- 2 在编辑任务详情页面进行修改
-
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark003.png)
 
 最大支持备注长度255字节
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark002.png)

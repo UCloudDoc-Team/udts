@@ -110,7 +110,7 @@ show variables like "sql_mode";
 通过以下命令对 sql_mode 进行修改
 
 ```
-SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
+SET GLOBAL sql_mode='xxxx,ALLOW_INVALID_DATES';
 ```
 
 这里的 xxxx 是指原有查询出来的 sql_mode 值

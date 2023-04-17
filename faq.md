@@ -104,16 +104,16 @@ select @@sql_mode;
 --- 或者
 show variables like "sql_mode";
 ```
-
-通过增加 ALLOW_INVALID_DATES 来允许插入这种无效的日期, 在查询出来的 sql_mode 值的后面，加上 ALLOW_INVALID_DATES
+如果当前 sql_mode 中包括 NO_ZERO_IN_DATE、 NO_ZERO_DATE，将其删除，
+并在查询出来的 sql_mode 值的后面，增加 ALLOW_INVALID_DATES 来允许插入这种无效的日期
 
 通过以下命令对 sql_mode 进行修改
 
 ```
-SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
+SET GLOBAL sql_mode='xxxx,ALLOW_INVALID_DATES';
 ```
 
-这里的 xxxx 是指原有查询出来的 sql_mode 值
+这里的 xxxx 是指原有查询出来的 sql_mode 值（需要删去 NO_ZERO_IN_DATE 和 NO_ZERO_DATE ）
 
 ## 6 问： 如何判断MySQL-MySQL增量任务中，源目数据库已经同步完成
 

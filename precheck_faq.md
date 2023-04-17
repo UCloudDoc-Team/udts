@@ -180,7 +180,7 @@ alter table xxx add primary key(xxxx);
 show variables like "sql_mode";
 
 # 在目标库中修改 sql_mode，使其与源库保持一致
-SET @@GLOBAL.sql_mode='xxxx';
+SET GLOBAL sql_mode='xxxx';
 ```
 ### 1.6
 **错误信息：** 

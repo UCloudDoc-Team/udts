@@ -45,9 +45,13 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 
 ** 操作步骤: **       
                                               
+ 
 ```
+
 1. 例如使用UDTS增量迁移的数据库为 db_service_car。
 2. 执行 select * from pg_replication_slots ，返回结果如下:
+
+
 -------------------------------------------------------------------------------------------------------------------------------
 | slot_name                               |   plugin        |   slot_type   |   datoid      |   database         |   active   |
 -------------------------------------------------------------------------------------------------------------------------------
@@ -59,6 +63,7 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 3. 找到 database 为 db_service_car 并且前缀为 udts 的 slot_name。
 4. 执行 select pg_drop_replication_slot('udts_dd27ef9195294b49a5d424eda8f399f7');
 5. 再执行一次 select * from pg_replication_slots, 确认已删除。
+
 ```
 
 

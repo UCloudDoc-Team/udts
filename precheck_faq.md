@@ -206,7 +206,7 @@ log_slave_updates = 1
 
 **解决方法：** 
 
-- 增量同步开启之前，需要关闭 event
+增量同步开启之前，需要关闭 event
 
 ```
 # 停止所有 event
@@ -226,7 +226,7 @@ ALTER EVENT event1 DISABLE;
 
 **解决方法：** 
 
-- 源库与目标库的 innodb 相关参数不一致，可能导致数据迁移报错，建议修改目标库参数，与源库保持一致
+源库与目标库的 innodb 相关参数不一致，可能导致数据迁移报错，建议修改目标库参数，与源库保持一致
 
 ```
 # 在目标库中修改不一致的参数取值
@@ -279,3 +279,14 @@ alter table task character set utf8;
 # 将表 table1 中 column1 字段的字符集修改为 utf8
 alter table table1 change column1 column1 varchar(200) character set utf8;
 ```
+
+## 3 MongoDB
+
+### 3.1
+**错误信息：** 
+
+`源库与目标库版本不匹配，源库： 3.6.23 ，目标库： 5.0.14`
+
+**解决方法：** 
+
+Mongo 暂不支持跨大版本迁移，从3.x迁移到5.x时，需要创建4.x版本的中转库，先从3.x迁移到4.x，再从4.x迁移到5.x。

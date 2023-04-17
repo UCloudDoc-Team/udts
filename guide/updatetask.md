@@ -19,11 +19,11 @@
 
 备注：目前不提供修改 数据源目类型 和 传输任务类型。
 
-## 更新任务备注
+## 更新任务名称和备注
 
-在任务列表页面编辑UDTS迁移任务备注
+在任务列表页面编辑UDTS迁移任务的名称和备注
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark001.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark004.png)
 
 最大支持备注长度255字节
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark002.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark005.png)

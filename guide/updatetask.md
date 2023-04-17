@@ -25,5 +25,6 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark004.png)
 
-最大支持备注长度255字节
+名称只能包含中英文、数字以及`-_,.[:]`最大支持长度128字节；备注最大支持长度255字节
+
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transform_update_remark005.png)

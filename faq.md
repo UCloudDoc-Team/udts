@@ -406,3 +406,12 @@ db.runCommand({
 MongoDB 迁移时，以上报错说明源库与目标库的 featureCompatibilityVersion 取值不一致，且源库中存在与目标库不兼容的特性，例如视图、排序规则等
 
 解决方法：检查并调整源库与目标库不兼容的内容
+
+## 27 问： 源库是Redis，报错信息：[PANIC] read error, please check source redis log or network
+
+Redis 迁移时，以上报错说明源库写入数据量大于缓冲区大小
+
+解决方法：执行以下命令修改源库 client-output-buffer-limit 参数取值
+```
+config set client-output-buffer-limit 'slave 536870912 0 0'
+```

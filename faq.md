@@ -415,3 +415,11 @@ Redis 迁移时，以上报错说明源库写入数据量大于缓冲区大小
 ```
 config set client-output-buffer-limit 'slave 536870912 0 0'
 ```
+## 28 问： 源库是MongoDB，报错信息：Failed: error creating intents to dump: error creating intents for database config: error getting collections for database config: (Unauthorized) not authorized on config to execute command { listCollections: 1, filter: {}, cursor: {}, lsid: { id: UUID("12d62805-acea-472f-9862-ca27253c107e") }, $db: "config" }
+
+MongoDB 全量迁移时，以上报错说明源库用户缺少备份权限。
+
+解决方法：执行以下命令修改源库用户权限
+```
+db.grantRolesToUser("root",[{role:"backup",db:"admin"}])
+```

@@ -290,3 +290,25 @@ alter table table1 change column1 column1 varchar(200) character set utf8;
 **解决方法：** 
 
 Mongo 暂不支持跨大版本迁移，从3.x迁移到5.x时，需要创建4.x版本的中转库，先从3.x迁移到4.x，再从4.x迁移到5.x。
+
+## 4 Redis
+
+### 4.1
+**错误信息：** 
+
+`Source and target version do not match, source verion is 4.0, and target version is 7.0`
+`源库与目标库版本不匹配，源库： 4.0 ，目标库： 7.0`
+
+**解决方法：** 
+
+Redis 跨大版本迁移可能存在兼容性问题，建议通过中转库迁移，例如，从3.x/4.x迁移到7.x时，需要创建5.x/6.x版本的中转库，先从3.x/4.x迁移到5.x/6.x，再从5.x/6.x迁移到7.x。
+
+### 4.2
+**错误信息：** 
+
+`The source database version is 7.0, and does not support rump mode`
+`源库版本 7.0 不支持 rump 模式`
+
+**解决方法：** 
+
+Redis 7.0 版本不支持 rump 模式，建议源库开启 psync 权限再进行迁移。

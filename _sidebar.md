@@ -49,7 +49,7 @@
 * 监控告警
     * [监控](/udts/monitor/monitor)
     * [告警](/udts/monitor/alarm)
-* [任务失败通知](/udts/guide/notice) 
+    * [任务失败通知](/udts/monitor/notice)
 * [FAQ](/udts/faq)
 * [预检查FAQ](udts/precheck_faq)
 * 最佳实践

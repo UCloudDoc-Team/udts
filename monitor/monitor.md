@@ -20,3 +20,4 @@
 在任务详情界面查看监控信息。
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor5.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor6.png)

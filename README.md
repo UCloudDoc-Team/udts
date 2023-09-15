@@ -47,9 +47,9 @@
         * [停止任务](/udts/inti/guide/stoptask) 
         * [删除任务](/udts/inti/guide/deletetask)
 * 监控告警
-    * [监控](/udts/monitor/monitor)
-    * [告警](/udts/monitor/alarm)
-    * [任务失败通知](/udts/monitor/notice)
+    * [监控指标](/udts/monitor/monitor)
+    * [监控指标告警](/udts/monitor/alarm)
+    * [消息订阅通知](/udts/monitor/notice)
 * [FAQ](/udts/faq)
 * [预检查FAQ](udts/precheck_faq)
 * 最佳实践

@@ -19,7 +19,7 @@
 
 在任务详情界面查看监控信息。
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor1.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor5.png)
 
 
 ## 告警配置

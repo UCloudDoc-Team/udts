@@ -1,4 +1,4 @@
-# 监控告警
+# 监控
 
 ## 监控项
 | 指标名                 | 单位 | 适用数据库                 | 说明                                                                                                                                                                                                                                                                       |
@@ -20,12 +20,3 @@
 在任务详情界面查看监控信息。
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor5.png)
-
-
-## 告警配置
-
-在任务详情界面点击`告警模版`，选择默认告警模版或自定义模版。
-
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor4.png)
-
-默认模版监控对象为`剩余数据变化量`，告警方式为小于 0 时告警，为避免数据波动带来的误告警，设置触发周期为 3 次，即`剩余数据变化量`连续 3 次小于 0 时触发告警。

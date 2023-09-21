@@ -105,7 +105,7 @@ show variables like "sql_mode";
 如果目标数据库和源数据的 sql_mode 不一致，可以通过下面的命令进行修改
 
 ```
-SET @@GLOBAL.sql_mode='xxxx';
+SET GLOBAL sql_mode='xxxx';
 ```
 
 其中具体的值，可以通过连接源数据库查询。

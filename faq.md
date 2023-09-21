@@ -104,16 +104,16 @@ select @@sql_mode;
 --- 或者
 show variables like "sql_mode";
 ```
-
-通过增加 ALLOW_INVALID_DATES 来允许插入这种无效的日期, 在查询出来的 sql_mode 值的后面，加上 ALLOW_INVALID_DATES
+如果当前 sql_mode 中包括 NO_ZERO_IN_DATE、 NO_ZERO_DATE，将其删除，
+并在查询出来的 sql_mode 值的后面，增加 ALLOW_INVALID_DATES 来允许插入这种无效的日期
 
 通过以下命令对 sql_mode 进行修改
 
 ```
-SET @@GLOBAL.sql_mode='xxxx,ALLOW_INVALID_DATES';
+SET GLOBAL sql_mode='xxxx,ALLOW_INVALID_DATES';
 ```
 
-这里的 xxxx 是指原有查询出来的 sql_mode 值
+这里的 xxxx 是指原有查询出来的 sql_mode 值（需要删去 NO_ZERO_IN_DATE 和 NO_ZERO_DATE ）
 
 ## 6 问： 如何判断MySQL-MySQL增量任务中，源目数据库已经同步完成
 
@@ -406,3 +406,20 @@ db.runCommand({
 MongoDB 迁移时，以上报错说明源库与目标库的 featureCompatibilityVersion 取值不一致，且源库中存在与目标库不兼容的特性，例如视图、排序规则等
 
 解决方法：检查并调整源库与目标库不兼容的内容
+
+## 27 问： 源库是Redis，报错信息：[PANIC] read error, please check source redis log or network
+
+Redis 迁移时，以上报错说明源库写入数据量大于缓冲区大小
+
+解决方法：执行以下命令修改源库 client-output-buffer-limit 参数取值
+```
+config set client-output-buffer-limit 'slave 536870912 0 0'
+```
+## 28 问： 源库是MongoDB，报错信息：Failed: error creating intents to dump: error creating intents for database config: error getting collections for database config: (Unauthorized) not authorized on config to execute command { listCollections: 1, filter: {}, cursor: {}, lsid: { id: UUID("12d62805-acea-472f-9862-ca27253c107e") }, $db: "config" }
+
+MongoDB 全量迁移时，以上报错说明源库用户缺少备份权限。
+
+解决方法：执行以下命令修改源库用户权限
+```
+db.grantRolesToUser("root",[{role:"backup",db:"admin"}])
+```

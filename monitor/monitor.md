@@ -21,3 +21,8 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor5.png)
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_monitor6.png)
+
+## 适用范围
+所有的数据传输任务，以及2023年6月1日以后创建的数据集成任务均支持监控。
+
+2023年6月1日以前创建的数据集成任务不支持监控，如有需要，可以重新创建数据集成任务。

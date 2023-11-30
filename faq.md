@@ -423,3 +423,9 @@ MongoDB 全量迁移时，以上报错说明源库用户缺少备份权限。
 ```
 db.grantRolesToUser("root",[{role:"backup",db:"admin"}])
 ```
+
+## 29 问： 源库是 MySQL，报错信息：Deadlock found when trying to get lock; try restarting transaction
+
+MySQL 全量迁移， load 阶段出现以上报错，说明全量数据加载到目标库时，多线程并发运行导致死锁。
+
+解决方法：将目标库限速值修改为 1

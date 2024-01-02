@@ -4,8 +4,17 @@
 
 ### 1.1
 **错误信息：** 
-`log_bin: xxx，需要修改为 ON`、
-`binlog_format: xxx，需要修改为 ROW` 或
+
+`log_bin is xxx, and should be ON`
+
+`binlog_format is xxx, and should be ROW`
+
+`binlog_row_image is xxx, and should be FULL`
+
+`log_bin: xxx，需要修改为 ON`
+
+`binlog_format: xxx，需要修改为 ROW` 
+
 `binlog_row_image: xxx，需要修改为 FULL`
 
 **解决方法：** 
@@ -98,6 +107,8 @@ start slave;
 ### 1.2
 **错误信息：** 
 
+`The tables that need to be migrated from the source database include MyISAM engine tables, while the target database has GTID enabled, which may result in migration task failure.`
+
 `源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致迁移失败`
 
 **解决方法：** 
@@ -137,6 +148,8 @@ set global gtid_mode = "OFF";
 ### 1.3
 **错误信息：** 
 
+`max_allowed_packet of the source is xxx, which is larger than max_allowed_packet of the target yyy`
+
 `源库 max_allowed_packet 值 xxx 大于目标库 max_allowed_packet 值 yyy`
 
 **解决方法：** 
@@ -160,6 +173,8 @@ set global max_allowed_packet = 4194304;
 ### 1.4
 **错误信息：** 
 
+`table xxx have no primary key or at least a unique key`
+
 `表：xxx 需要主键或唯一键`
 
 **解决方法：** 
@@ -170,6 +185,8 @@ alter table xxx add primary key(xxxx);
 
 ### 1.5
 **错误信息：** 
+
+`sql_mode may cause error. Please check sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE in target db`
 
 `sql_mode 可能导致报错，检查目标库的 sql_mode NO_ZERO_DATE/NO_ZERO_IN_DATE。`
 
@@ -184,6 +201,8 @@ SET GLOBAL sql_mode='xxxx';
 ```
 ### 1.6
 **错误信息：** 
+
+`log_slave_updates should be ON`
 
 `log_slave_updates 需要修改为 ON`
 
@@ -201,6 +220,8 @@ log_slave_updates = 1
 
 ### 1.7
 **错误信息：** 
+
+`please stop event: 'db1':event1`
 
 `增量同步前，需要关闭 event: 'db1':event1`
 
@@ -222,6 +243,8 @@ ALTER EVENT event1 DISABLE;
 ### 1.8
 **错误信息：** 
 
+`The variable xxx has different values in source and target. Please modify the variables to ensure consistency.`
+
 `源库与目标库的参数 XXX 取值不同，建议修改参数保持一致`
 
 **解决方法：** 
@@ -242,6 +265,8 @@ set GLOBAL innodb_strict_mode = OFF;
 ### 2.1
 **错误信息：** 
 
+`tikv_gc_life_time is xxx, and should be great than 1h`
+
 `tikv_gc_life_time: xxx，需要不小于 1h`
 
 **解决方法：** 
@@ -256,6 +281,8 @@ update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time
 
 ### 2.2
 **错误信息：** 
+
+`TiDB dose not support charset in table xxx. Please change charset to any one of 'ascii/latin1/binary/utf8/utf8mb4'.`
 
 `TiDB 不支持此表采用的字符集 xxx ，请修改字符集为 'ascii/latin1/binary/utf8/utf8mb4' 中任意一种`
 
@@ -285,6 +312,8 @@ alter table table1 change column1 column1 varchar(200) character set utf8;
 ### 3.1
 **错误信息：** 
 
+`Source and target version do not match, source verion is 3.0, and target version is 5.0`
+
 `源库与目标库版本不匹配，源库： 3.6.23 ，目标库： 5.0.14`
 
 **解决方法：** 
@@ -297,6 +326,7 @@ Mongo 暂不支持跨大版本迁移，从3.x迁移到5.x时，需要创建4.x�
 **错误信息：** 
 
 `Source and target version do not match, source verion is 4.0, and target version is 7.0`
+
 `源库与目标库版本不匹配，源库： 4.0 ，目标库： 7.0`
 
 **解决方法：** 
@@ -307,6 +337,7 @@ Redis 跨大版本迁移可能存在兼容性问题，建议通过中转库迁�
 **错误信息：** 
 
 `The source database version is 7.0, and does not support rump mode`
+
 `源库版本 7.0 不支持 rump 模式`
 
 **解决方法：** 

@@ -89,7 +89,7 @@ start slave;
 
 ### 3. 云数据
 
-如果你使用的是云数据，可以通过复制当前使用的`配置文件`，修改对应的 `binlog_format` 和 `binlog_row_image` 配置项，然后使用该配置重新应用数据库。
+如果你使用的是云数据，可以通过复制当前使用的配置文件，修改对应的 `binlog_format` 和 `binlog_row_image` 配置项，然后使用该配置重新应用数据库。
 
 
 ## 5 问：ERROR 1292 (22007): Incorrect date value: '0000-00-00' for column

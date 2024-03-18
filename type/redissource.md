@@ -8,7 +8,6 @@ UDTS 可以将原生 Redis 或使用代理的分布式版本（包括 UCloud Red
 
 ## 注意事项
 - 对于源和目的集群节点数目不需要一致
-- 当 Redis 源为公网端，且为集群模式的情况下，需要将目标端 VPC 下的子网 ID 绑定 NATGW 方能完成传输任务
 - 需要确保源库的 `repl-diskless-sync` 配置为 `NO`
 - 如果源库为分布式版（包括 UCloud Redis 分布式版、Codis、Twemproxy），需要创建多个任务，每个任务的源库填写一个分布式节点的地址，类型选择主备版。
 - 目标库为 UCloud Redis 分布式版时，目标库类型选择分布式版，地址为代理地址。

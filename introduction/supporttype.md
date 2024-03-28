@@ -16,3 +16,4 @@
 | Redis         | Redis         | 支持     | 支持全量+增量 |
 | Dynamodb      | MongoDB       | 支持     | 支持全量+增量 |
 | ElasticSearch | ElasticSearch | 支持     | 暂不支持      |
+| SqlServer     | MySQL         | 支持     | 支持          |

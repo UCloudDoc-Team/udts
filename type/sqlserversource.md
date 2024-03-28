@@ -24,6 +24,7 @@ exec sys.sp_cdc_enable_table @source_schema = 'dbo',@source_name = 'tablename',@
 select is_tracked_by_cdc from sys.tables where name = 'tablename'
 ```
 5. 由于 SQLServer 与 MySQL 支持的数据类型有一定差异，部分数据类型需要转换，部分数据类型不支持迁移，具体情况如下：
+
 | SQLServer 数据类型 | MySQL 数据类型      |
 | ------------------ | ------------------- |
 | bigint(i)          | bigint(i)           |
@@ -54,6 +55,7 @@ select is_tracked_by_cdc from sys.tables where name = 'tablename'
 | varbinary(n)       | varbinary(n)        |
 | image              | blob                |
 | 其余数据类型       | 不支持迁移          |
+
 6. 待迁移的表必须存在主键或唯一索引
 7. 不支持迁移外键和 check 约束
 

@@ -58,6 +58,8 @@ select is_tracked_by_cdc from sys.tables where name = 'tablename'
 
 6. 待迁移的表必须存在主键或唯一索引
 7. 不支持迁移外键和 check 约束
+8. 全量迁移时，源库需要待迁移库表的 select 权限；增量迁移时，源库需要待迁移库表的 db_owner 权限
+9. 目标库需要待迁移库表的这些权限：SELECT, INSERT, UPDATE, CREATE, DROP, DELETE
 
 ## 填写表单
 

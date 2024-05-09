@@ -1,6 +1,6 @@
 # SQLServer
 
-UDTS 支持从 SQLServer 2008及以后版本到 MySQL 5.5及以后各版本的全量与全+增迁移任务。
+UDTS 支持从 SQLServer 2008及以后版本到 MySQL 5.5及以后各版本（包括MySQL兼容类产品，如OceanBase）的全量与全+增迁移任务。
 
 ## 功能限制
 1. 仅支持单库单表迁移

@@ -12,10 +12,10 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 
 ### 所需权限
 
-| 类型      | 源库               | 目标库                                                                                                    |
-| --------- | ------------------ | --------------------------------------------------------------------------------------------------------- |
-| 全  量    | SELECT             | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE |
-| 全量+增量 | SELECT,REPLICATION | SELECT，INSERT，UPDATE，DELETE，TRUNCATE，REFERENCES，TRIGGER，CREATE，CONNECT，TEMPORARY，EXECUTE，USAGE |
+| 类型      | 源库               | 目标库 |
+| --------- | ------------------ | ------ |
+| 全  量    | SELECT             | 待迁移库的 owner 权限，或 rolcreatedb 权限 |
+| 全量+增量 | SELECT,REPLICATION | 待迁移库的 owner 权限，或 rolcreatedb 权限 |
 
 ## 功能限制
 - 一个“全量+增量”任务只能同步一个数据库，如果有多个数据库需要同步，则需要为每个数据库创建任务。
@@ -78,7 +78,7 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 | 用户名   | PostgreSQL 连接用户名                                                                                                |
 | 密码     | PostgreSQL 数据库对应用户密码                                                                                        |
 | 数据库名 | PostgreSQL 待迁移数据库名称                                                                                          |
-| 表名     | PostgreSQL 传输表名，可选项。 若不填，整库迁移； 若填写，迁移或者过滤指定的表. 具体参考 [表单表名填写规则](#表单表名填写规则)           |
+| 表名     | PostgreSQL 传输表名，可选项。 若不填，整库迁移； 若填写，迁移指定的表. 具体参考 [表单表名填写规则](#表单表名填写规则)           |
 | 最大速率 | 外网/专线的速率范围为 1-256 MB/s，默认40 MBps (即 320 Mbps); 内网的速率范围为 1-1024 MB/s，默认 80 MBps(即 640 Mbps) |
 
 ### 传输目标表单
@@ -94,7 +94,6 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
 ### 表单表名填写规则
 
 - 1. 表名仅支持[a-z][A-Z][0-9]以及_等字符。
-- 2. 多个表名以 ,隔开
+- 2. 多个表名以,隔开
 - 3. 表名没有添加schema的默认追加 `public.` schema。
-- 4. 表名填写 `public.tb_test01, schema01.tb_test02`，表示只迁移 `public.tb_test01, schema01.tb_test02` 这两张表。
-- 5. 表名填写规则支持过滤，以!开头表示迁移过程中过滤掉当前表，如: `!public.tb_filter01` 表示迁移过程中过滤掉 public.tb_filter01。
+- 4. 表名填写 `public.tb_test01,schema01.tb_test02`，表示只迁移 `public.tb_test01,schema01.tb_test02` 这两张表。

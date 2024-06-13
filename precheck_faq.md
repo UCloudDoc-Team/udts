@@ -243,7 +243,7 @@ ALTER EVENT event1 DISABLE;
 ### 1.8
 **错误信息：** 
 
-`The variable xxx has different values in source and target. Please modify the variables to ensure consistency.`
+`The variable innodb_xxx has different values in source and target. Please modify the variables to ensure consistency.`
 
 `源库与目标库的参数 XXX 取值不同，建议修改参数保持一致`
 
@@ -258,6 +258,27 @@ set GLOBAL innodb_file_format = 'Barracuda';
 set GLOBAL innodb_file_per_table = ON;
 set GLOBAL innodb_strict_mode = OFF;
 ```
+
+### 1.9
+**错误信息：** 
+
+`The variable lower_case_table_names has different values in source and target. Please modify the variables to ensure consistency.`
+
+`源库与目标库的参数 lower_case_table_names 取值不同，建议修改参数保持一致`
+
+**解决方法：** 
+
+源库与目标库的 lower_case_table_names 参数不一致，可能导致数据迁移报错，建议修改目标库参数，与源库保持一致
+
+修改配置文件（默认为 my.cnf ），重启 MySQL
+```
+[mysqld]
+...
+lower_case_table_names = 0
+...
+```
+
+如果您使用的是云厂商的数据库服务，需要修改对应的配置文件，使用修改后的配置重新启动数据库。
 
 ## 2 TiDB
 

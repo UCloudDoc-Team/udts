@@ -429,3 +429,10 @@ db.grantRolesToUser("root",[{role:"backup",db:"admin"}])
 MySQL 全量迁移， load 阶段出现以上报错，说明全量数据加载到目标库时，多线程并发运行导致死锁。
 
 解决方法：将目标库限速值修改为 1
+
+## 30 问： load: return result; END; This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable
+
+目标库执行以下命令后重试：      
+```
+set global log_bin_trust_function_creators="ON";
+```

@@ -2,7 +2,7 @@
 
 # PostgreSQL
 
-UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到13.x。
+UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到16.x。
 
 ## 前提条件
 

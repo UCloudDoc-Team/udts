@@ -19,10 +19,9 @@ exec sys.sp_cdc_enable_table @source_schema = 'dbo',@source_name = 'tablename',@
 select is_tracked_by_cdc from sys.tables where name = 'tablename'
 ```
 
-4. 待迁移的表必须存在主键或唯一索引
+4. 待迁移的表必须存在主键或唯一索引，建议采用 int 类型作为主键。主键为 string 类型且数据量较大时，迁移速度会受到影响。
 5. 不支持迁移自增主键
-
-
+6. 目标库为 MySQL 时，不迁移源库的 schema 名，如果源库中存在不同 schema 中的同名表，只会迁移其中一张表。
 
 
 ## 填写表单

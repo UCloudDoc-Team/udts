@@ -42,6 +42,7 @@ select is_tracked_by_cdc from sys.tables where name = 'tablename'
 传输目标表单
 
 目标库为 SQLServer 时
+
 | 参数名   | 说明                     |
 | -------- | ------------------------ |
 | 地址类型 | 目标暂时只支持内网       |
@@ -51,6 +52,7 @@ select is_tracked_by_cdc from sys.tables where name = 'tablename'
 
 
 目标库为 MySQL 时
+
 | 参数名   | 说明                     |
 | -------- | ------------------------ |
 | 地址类型 | 目标暂时只支持内网       |

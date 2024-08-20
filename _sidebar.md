@@ -10,7 +10,10 @@
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
-        * [MySQL](/udts/type/mysqlsource)
+        * [源为MySQL](/udts/type/mysql_source)
+            *[MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
+            *[MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
+            *[MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
         * [TiDB](/udts/type/tidb)
         * [CSV](/udts/type/csvsource)
         * [MongoDB](/udts/type/mongonode)

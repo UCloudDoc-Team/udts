@@ -18,7 +18,7 @@ show global variables like 'binlog_row_image';
 set global binlog_format = "ROW" ;
 set global binlog_row_image = "FULL" ;
 ```
-4. 目标库仅支持集群版的 ClickHouse。
+4. 目标库仅支持集群版的 ClickHouse，迁移库表也仅支持集群表。
 5. 选择“手动创建库表”时，UDTS 将不会在目标库创建库表，请您在目标库中提前创建待迁移库表，再启动迁移任务。
 6. 选择“自动创建库表”时，如果待迁移的库表在目标库中不存在，UDTS 将在目标库中自动创建待迁移的库表；如果待迁移的库表在目标库中已经存在，UDTS 不会重新创建表结构。
 7. 选择“自动创建库表”时，要求待迁移的库表必须有主键或唯一索引，如果不满足要求，请选择“手动创建库表”，并在目标库中提前创建待迁移库表。

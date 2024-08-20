@@ -11,12 +11,14 @@ UDTS 支持 SQL Server 2008及以后版本之间的互相迁移，支持 SQL Ser
 use dbname
 -- 开启cdc功能
 exec sys.sp_cdc_enable_db
--- 查看 test 库是否开启cdc，返回值为 1 表示已开启
+-- 查看 dbname 库是否开启cdc，返回值为 1 表示已开启
 select is_cdc_enabled from sys.databases where name = "dbname";
 -- 给 dbo.tablename 表开启cdc
 exec sys.sp_cdc_enable_table @source_schema = 'dbo',@source_name = 'tablename',@role_name = null;
 -- 查看 dbo.tablename 表是否开启cdc，返回值为 1 表示已开启
 select is_tracked_by_cdc from sys.tables where name = 'tablename'
+-- 修改 cdc 数据保留时间，至少修改为1440分钟（1天）或以上，建议14400分钟（7天）。
+EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 ```
 
 4. 待迁移的表必须存在主键或唯一索引，建议采用 int 类型作为主键。主键为 string 类型且数据量较大时，迁移速度会受到影响。

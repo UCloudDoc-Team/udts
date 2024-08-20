@@ -11,7 +11,7 @@
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 数据类型说明
-        * [源为MySQL](/udts/type/mysql_source)
+        * [源为MySQL]
             * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
             * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
         * [TiDB](/udts/type/tidb)

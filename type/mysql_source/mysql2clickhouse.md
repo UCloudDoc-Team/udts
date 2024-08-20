@@ -1,12 +1,13 @@
-# Mysql 迁移到 ClickHouse
+# MySQL 迁移到 ClickHouse
 UDTS 支持 从 MySQL 迁移到 ClickHouse。
-MySQL支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及PolarDB(MySQL兼容版本)。
-CLickHouse支持版本 21.3 至 22.8。
+ MySQL 支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及PolarDB(MySQL兼容版本)。
+ ClickHouse 支持版本 21.3 至 22.8。
 
 ## 功能限制
 1. 支持单库迁移，可迁移整库或指定表，不支持迁移存储过程、触发器、视图等。
 2. 不支持迁移 DDL 语句。
 3. 增量/全+增迁移时，源库需要开启 binlog，且格式设置为ROW, image设置为FULL。
+
 查询方式：
 ```
 show global variables like 'binlog_format';
@@ -18,6 +19,7 @@ show global variables like 'binlog_row_image';
 set global binlog_format = "ROW" ;
 set global binlog_row_image = "FULL" ;
 ```
+
 4. 目标库仅支持集群版的 ClickHouse，迁移库表也仅支持集群表。
 5. 选择“手动创建库表”时，UDTS 将不会在目标库创建库表，请您在目标库中提前创建待迁移库表，再启动迁移任务。
 6. 选择“自动创建库表”时，如果待迁移的库表在目标库中不存在，UDTS 将在目标库中自动创建待迁移的库表；如果待迁移的库表在目标库中已经存在，UDTS 不会重新创建表结构。

@@ -1,4 +1,4 @@
-# SQL Server
+# SQL Server 迁移到 SQL Server
 
 UDTS 支持 SQL Server 2008及以后版本之间的互相迁移，支持 SQL Server 2008及以后版本到 MySQL 5.5及以后各版本的全量与全+增迁移任务。
 
@@ -35,11 +35,11 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | 参数名   | 说明                                                                                                                            |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | 地址     | 支持内网地址，专线地址两种方式。内网地址需要填写VPC和子网信息；专线地址既支持IP，也支持域名，如果使用域名需要用户网络有外网出口 |
-| 端口     | SQLServer 连接端口                                                                                                              |
-| 用户名   | SQLServer 连接用户名                                                                                                            |
-| 密码     | SQLServer 数据库对应用户密码                                                                                                    |
-| 数据库名 | SQLServer 数据库名，仅支持单库迁移                                                                                              |
-| 表名     | SQLServer 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2`                             |
+| 端口     | SQL Server 连接端口                                                                                                              |
+| 用户名   | SQL Server 连接用户名                                                                                                            |
+| 密码     | SQL Server 数据库对应用户密码                                                                                                    |
+| 数据库名 | SQL Server 数据库名，仅支持单库迁移                                                                                              |
+| 表名     | SQL Server 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2`                             |
 
 
 传输目标表单

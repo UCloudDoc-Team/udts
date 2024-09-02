@@ -1,11 +1,11 @@
-# SQLServer 迁移到 Kafka
-UDTS 支持 从 SQLServer 迁移到 Kafka。
- SQLServer 支持版本为 2008以上。
+# SQL Server 迁移到 Kafka
+UDTS 支持 从 SQL Server 迁移到 Kafka。
+ SQL Server 支持版本为 SQL Server 2008 R2及以上。
  Kafka 支持版本 2.x：包括 2.0、2.1、2.2、2.3、2.4、2.5、2.6、2.7、2.8 等。
 
 ## 1. 功能限制
 
-### 1.1 源SQLServer限制
+### 1.1 源SQL Server限制
 1. 源库和待迁移的表需要开启cdc功能。
 
 ```sql
@@ -46,11 +46,11 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | 参数名   | 说明                                                                                                                            |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | 地址     | 支持内网地址，专线地址两种方式。内网地址需要填写VPC和子网信息；专线地址既支持IP，也支持域名，如果使用域名需要用户网络有外网出口 |
-| 端口     | SQLServer 连接端口                                                                                                              |
-| 用户名   | SQLServer 连接用户名                                                                                                            |
-| 密码     | SQLServer 数据库对应用户密码                                                                                                    |
-| 数据库名 | SQLServer 数据库名，仅支持单库迁移                                                                                              |
-| 表名     | SQLServer 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2`                             |
+| 端口     | SQL Server 连接端口                                                                                                              |
+| 用户名   | SQL Server 连接用户名                                                                                                            |
+| 密码     | SQL Server 数据库对应用户密码                                                                                                    |
+| 数据库名 | SQL Server 数据库名，仅支持单库迁移                                                                                              |
+| 表名     | SQL Server 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2`                             |
 
 
 ###  传输目标表单

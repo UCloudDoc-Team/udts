@@ -13,6 +13,10 @@
         * 源为MySQL
             * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
             * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
+            * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
+        * 源为SQLServer
+            * [SQLServer迁移到SQLServer](/udts/type/sqlserver_source/sqlserversource)   
+            * [SQLServer迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
         * [TiDB](/udts/type/tidb)
         * [CSV](/udts/type/csvsource)
         * [MongoDB](/udts/type/mongonode)
@@ -20,7 +24,6 @@
         * [Redis](/udts/type/redissource)
         * [PostgreSQL](/udts/type/pgsqlsource)
         * [ElasticSearch](/udts/type/essource)
-        * [SQLServer](/udts/type/sqlserversource)
     * 功能原理与传输速度
         * [MySQL迁移](/udts/tech/mysql)
     * 操作指南        

@@ -16,8 +16,8 @@
             * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
             * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
         * 源为SQLServer
-            * [SQLServer迁移到SQLServer](/udts/type/sqlserver_source/sqlserversource)   
-            * [SQLServer迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
+            * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserversource)   
+            * [SQL Server迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
         * [TiDB](/udts/type/tidb)
         * [CSV](/udts/type/csvsource)
         * [MongoDB](/udts/type/mongonode)

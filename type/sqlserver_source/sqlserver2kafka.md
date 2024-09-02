@@ -1,6 +1,6 @@
 # SQL Server 迁移到 Kafka
-UDTS 支持 从 SQLServer 迁移到 Kafka。
- SQLServer 支持版本为 2008以上。
+UDTS 支持 从 SQL Server 迁移到 Kafka。
+ SQL Server 支持版本为 SQL Server 2008 R2及以上。
  Kafka 支持版本 2.x：包括 2.0、2.1、2.2、2.3、2.4、2.5、2.6、2.7、2.8 等。
 
 ## 1. 功能限制

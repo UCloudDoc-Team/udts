@@ -1,6 +1,7 @@
-# MySQL 迁移到 MAXIR
+# MySQL 迁移到 PostgreSQL
 UDTS 支持 从 MySQL 迁移到 MAXIR。
   MySQL 支持版本有 MySQL(包含Percona版) 5.5/5.6/5.7/8.x。
+  PostgreSQL 支持版本 9.4到16.x。
  
 
 ## 1. 功能限制
@@ -71,7 +72,7 @@ set global binlog_row_image = "FULL" ;
     <thead>
         <tr>
             <th>MySQL数据类型</th>
-            <th>MAXIR数据类型</th>
+            <th>PostgreSQL数据类型</th>
         </tr>
     </thead>
     <tbody>

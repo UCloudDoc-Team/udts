@@ -7,6 +7,7 @@ UDTS 支持 从 SQLServer 迁移到 Kafka。
 
 ### 1.1 源SQLServer限制
 1. 源库和待迁移的表需要开启cdc功能。
+
 ```sql
 -- 指定库名
 use dbname

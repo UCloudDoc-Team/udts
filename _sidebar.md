@@ -14,6 +14,7 @@
             * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
             * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
             * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
+            * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
         * 源为SQLServer
             * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserversource)   
             * [SQL Server迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)

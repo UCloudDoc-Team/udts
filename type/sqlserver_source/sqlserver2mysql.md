@@ -1,6 +1,6 @@
-# SQL Server 迁移到 SQL Server
+# SQL Server 迁移到 MySQL
 
-UDTS 支持 SQL Server 2008及以后版本之间的互相迁移，支持 SQL Server 2008及以后版本到 MySQL 5.5及以后各版本的全量与全+增迁移任务。
+UDTS 支持 SQL Server 2008及以后版本到 MySQL 5.5及以后各版本的全量与全+增迁移任务。
 
 ## 功能限制
 1. 支持单库迁移，可迁移整库或指定表，不支持迁移存储过程、触发器、视图等。
@@ -51,19 +51,7 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | 表名     | SQL Server 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2`                             |
 
 
-传输目标表单
-
-目标库为 SQLServer 时
-
-| 参数名   | 说明                     |
-| -------- | ------------------------ |
-| 地址类型 | 目标暂时只支持内网       |
-| 端口     | SQLServer 连接端口           |
-| 用户名   | SQLServer 连接用户名         |
-| 密码     | SQLServer 数据库对应用户密码 |
-
-
-目标库为 MySQL 时
+传输目标MySQL表单
 
 | 参数名   | 说明                     |
 | -------- | ------------------------ |

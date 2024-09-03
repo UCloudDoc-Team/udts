@@ -27,6 +27,15 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 6. 待迁移的表中 rowversion 字段无法迁移
 7. 目标库为 MySQL 时，不迁移源库的 schema 名，如果源库中存在不同 schema 中的同名表，只会迁移其中一张表。
 
+## 迁移内容
+
+| 迁移内容 | 说明                                                                |
+| -------- | ------------------------------------------------------------------- |
+| 迁移结构 | Database、Table 结构及数据                                          |
+| 迁移范围 | 仅迁移创建任务时可以查到的库表， 任务运行中新增的表暂时不会自动迁移 |
+| DDL      | 不支持                                                              |
+| DML      | insert/update/delete                                                |
+
 
 ## 填写表单
 

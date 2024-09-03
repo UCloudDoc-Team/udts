@@ -9,20 +9,27 @@
     * [回收与删除](/udts/billing/recycle)
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
-    * 数据类型说明
-        * 源为MySQL
-            * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
-            * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
-            * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
-        * 源为SQLServer
-            * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserversource)   
-            * [SQL Server迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
+    * 源为MySQL
+        * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
+        * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
+        * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
+        * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
+    * 源为SQLServer
+        * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserversource)   
+        * [SQL Server迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
+    * 源为TiDB
         * [TiDB](/udts/type/tidb)
+    * 源为CSV
         * [CSV](/udts/type/csvsource)
+    * 源为MongoDB
         * [MongoDB](/udts/type/mongonode)
+    * 源为US3
         * [US3](/udts/type/ufilesource)
+    * 源为Redis
         * [Redis](/udts/type/redissource)
+    * 源为PostgresSQL
         * [PostgreSQL](/udts/type/pgsqlsource)
+    * 源为ElasticSearch
         * [ElasticSearch](/udts/type/essource)
     * 功能原理与传输速度
         * [MySQL迁移](/udts/tech/mysql)

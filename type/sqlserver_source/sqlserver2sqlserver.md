@@ -25,7 +25,7 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 4. 待迁移的表必须存在主键或唯一索引，建议采用 int 类型作为主键。主键为 string 类型且数据量较大时，迁移速度会受到影响。
 5. 待迁移的表中主键的自增属性无法迁移
 6. 待迁移的表中 rowversion 字段无法迁移
-7. 目标库为 MySQL 时，不迁移源库的 schema 名，如果源库中存在不同 schema 中的同名表，只会迁移其中一张表。
+
 
 ## 迁移内容
 

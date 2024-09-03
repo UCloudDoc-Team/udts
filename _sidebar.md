@@ -15,7 +15,8 @@
         * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
         * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
     * 源为SQLServer
-        * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserversource)   
+        * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserver2sqlserver)
+        * [SQL Server迁移到MySQL](/udts/type/sqlserver_source/sqlserver2mysql)
         * [SQL Server迁移到Kafka](/udts/type/sqlserver_source/sqlserver2kafka)
     * 源为TiDB
         * [TiDB](/udts/type/tidb)

@@ -130,7 +130,7 @@ set global binlog_row_image = "FULL" ;
         </tr>
         <tr>
             <td>BINARY<br>VARBINAR<br>BIT(p)<br>TINYBLOB<br>MEDIUMBLOB<br>BLOB<br>LONGBLOB <br>GEOMETRY</td>
-            <td>BYTA</td>
+            <td>BYTEA</td>
         </tr>
     </tbody>
 </table>

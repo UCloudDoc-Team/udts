@@ -15,6 +15,7 @@
         * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
         * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
         * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
+        * [MySQL双向同步](/udts/type/mysql_source/mysql_synchronization)
     * 源为SQLServer
         * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserver2sqlserver)   
         * [SQL Server迁移到MySQL](/udts/type/sqlserver_source/sqlserver2mysql)
@@ -46,7 +47,6 @@
         * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
         * [删除任务](/udts/guide/deletetask)
-    * [双向同步](/udts/synchronization)
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 数据类型说明

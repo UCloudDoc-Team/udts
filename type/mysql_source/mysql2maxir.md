@@ -6,7 +6,8 @@ UDTS 支持 从 MySQL 迁移到 MAXIR。
 ## 1. 功能限制
 
 ### 1.1 源MySQL限制
-1. 增量/全+增迁移时，源库需要开启binlog，且格式设置为ROW, image设置为FULL。
+
+#### 1.1.1 增量/全+增迁移时，源库需要开启binlog，且格式设置为ROW, image设置为FULL。
 
 ```
 查询方式:
@@ -17,17 +18,44 @@ show global variables like 'binlog_row_image';
 set global binlog_format = "ROW" ;
 set global binlog_row_image = "FULL" ;
 ```
+#### 1.1.2 源待迁移表必须要有主键。
 
+### 1.2 目标MAXIR限制
+
+#### 1.2.1 MAXIR建表时需要指定Distribute by 和cluster by 列属性，例如:
+   
+```sql
+    CREATE TABLE trade (
+        id bigint,
+        "date" date,
+        shopid int NOT NULL,
+        sku varchar NOT NULL,
+        price decimal(18, 4),
+        primary key(date, id)
+    ) DISTRIBUTED BY (id) cluster by (date, id);
+
+
+a. cluster by 列建议需要跟primary key 相同，或者是pimary key的⼀部分，例如是 date 或者是 {date, id}
+b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinality ⼤的列，在本例中只能是id，不能
+是date
+```
+
+#### 1.2.2 UDTS迁移到MAXIR，如果目标库中表不存在则会自动建表，建表规则如下，客户需要提前评估，如果不满足业务要求客户可以在目标库中提前建表:
+
+```
+1. cluster by 会和表的主键保持一致。
+2. DISTRIBUTED BY 会使用主键， 如果是联合主键则会使用第一个字段。
+```
 
 ## 2. 迁移内容
 
   
-| 迁移内容 | 说明                                                                |
-| -------- | ------------------------------------------------------------------- |
-| 迁移结构 | Database、Table 结构及数据                                          |
-| 迁移范围 | 仅迁移创建任务时可以查到的库表， 任务运行中新增的表暂时不会自动迁移 |
-| DDL      | 不支持                                                              |
-| DML      | insert/update/delete                                                |
+| 迁移内容 | 说明                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------ |
+| 迁移结构 | Database、Table 结构及数据，任务启动不会删除目标库已存在的表及数据，用户如果不需要可以手动在目标库删除 |
+| 迁移范围 | 仅迁移创建任务时可以查到的库表， 任务运行中新增的表暂时不会自动迁移                                    |
+| DDL      | 不支持                                                                                                 |
+| DML      | insert/update/delete                                                                                   |
 
 
 ## 3. 表单填写

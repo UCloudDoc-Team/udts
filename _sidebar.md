@@ -13,6 +13,7 @@
         * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
         * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
         * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
+        * [MySQL迁移到PostgreSQL](/udts/type/mysql_source/mysql2postgres)
         * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
         * [MySQL双向同步](/udts/type/mysql_source/mysql_synchronization)
     * 源为SQLServer

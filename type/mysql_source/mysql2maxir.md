@@ -22,7 +22,7 @@ set global binlog_row_image = "FULL" ;
 
 ### 1.2 目标MAXIR限制
 
-#### 1.2.1 MAXIR建表时需要指定Distribute by 和cluster by 列属性，例如:
+#### 1.2.1 MAXIR建表时需要指定DISTRIBUTED BY 和CLUSTER BY 列属性，例如:
    
 ```sql
     CREATE TABLE trade (
@@ -32,18 +32,17 @@ set global binlog_row_image = "FULL" ;
         sku varchar NOT NULL,
         price decimal(18, 4),
         primary key(date, id)
-    ) DISTRIBUTED BY (id) cluster by (date, id);
+    ) DISTRIBUTED BY (id) CLUSTER BY (date, id);
 
 
-a. cluster by 列建议需要跟primary key 相同，或者是pimary key的⼀部分，例如是 date 或者是 {date, id}
-b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinality ⼤的列，在本例中只能是id，不能
-是date
+a. CLUSTER BY 列建议需要跟primary key 相同，或者是pimary key的⼀部分，例如是 date 或者是 {date, id}
+b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinality ⼤的列，在本例中只能是id，不能是date
 ```
 
 #### 1.2.2 UDTS迁移到MAXIR，如果目标库中表不存在则会自动建表，建表规则如下，客户需要提前评估，如果不满足业务要求客户可以在目标库中提前建表:
 
 ```
-1. cluster by 会和表的主键保持一致。
+1. CLUSTER BY 会和表的主键保持一致。
 2. DISTRIBUTED BY 会使用主键， 如果是联合主键则会使用第一个字段。
 ```
 

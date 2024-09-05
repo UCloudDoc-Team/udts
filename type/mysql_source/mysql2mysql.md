@@ -26,39 +26,40 @@ UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percon
 
 - 1、 假设在源库上执行 SHOW DATABASES 的内容如下
 
-        ```sql
-        > SHOW databases;
-        
-        INFORMATION_SCHEMA
-        PERFORMANCE_SCHEMA
-        mysql
-        sys
-        mydb1
-        mydb2
-        ```
+```
+> SHOW databases;
 
-        当前的内置库为 `mysql`、`sys`、`INFORMATION_SCHEMA`、`PERFORMANCE_SCHEMA`，排除这些 DB 后，剩余 `mydb1`和`mydb2`，则在迁移任务运行时，会在目标数据库中执行
+INFORMATION_SCHEMA
+PERFORMANCE_SCHEMA
+mysql
+sys
+mydb1
+mydb2
+```
 
-        ```sql
-        DROP DATABASE IF EXISTS `mydb1`;
-        DROP DATABASE IF EXISTS `mydb2`;
-        ```
+当前的内置库为 `mysql`、`sys`、`INFORMATION_SCHEMA`、`PERFORMANCE_SCHEMA`，排除这些 DB 后，剩余 `mydb1`和`mydb2`，则在迁移任务运行时，会在目标数据库中执行
+
+```sql
+DROP DATABASE IF EXISTS `mydb1`;
+DROP DATABASE IF EXISTS `mydb2`;
+```
 
 - 2、 迁移任务配置的 `数据库名`为 db1,db2,db3，则在目标数据库中会执行
 
-        ```
-        DROP DATABASE IF EXISTS `db1`;
-        DROP DATABASE IF EXISTS `db2`;
-        DROP DATABASE IF EXISTS `db3`;
-        ```
+
+```sql
+DROP DATABASE IF EXISTS `db1`;
+DROP DATABASE IF EXISTS `db2`;
+DROP DATABASE IF EXISTS `db3`;
+```
 
 - 3、 迁移任务配置的 `数据库名`为 db1, 迁移的 `表名` 为 table1,table2,table3，则在目标数据库中会执行
 
-        ```sql
-        DROP TABLE IF EXISTS `db1`.`table1`;
-        DROP TABLE IF EXISTS `db1`.`table2`;
-        DROP TABLE IF EXISTS `db1`.`table3`;
-        ```
+```sql
+DROP TABLE IF EXISTS `db1`.`table1`;
+DROP TABLE IF EXISTS `db1`.`table2`;
+DROP TABLE IF EXISTS `db1`.`table3`;
+```
 
 ## 前提条件
 

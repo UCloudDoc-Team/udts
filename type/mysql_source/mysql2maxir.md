@@ -25,14 +25,14 @@ set global binlog_row_image = "FULL" ;
 #### 1.2.1 MAXIR建表时需要指定DISTRIBUTED BY 和CLUSTER BY 列属性，例如:
    
 ```sql
-    CREATE TABLE trade (
-        id bigint,
-        "date" date,
-        shopid int NOT NULL,
-        sku varchar NOT NULL,
-        price decimal(18, 4),
-        primary key(date, id)
-    ) DISTRIBUTED BY (id) CLUSTER BY (date, id);
+CREATE TABLE trade (
+    id bigint,
+    "date" date,
+    shopid int NOT NULL,
+    sku varchar NOT NULL,
+    price decimal(18, 4),
+    primary key(date, id)
+) DISTRIBUTED BY (id) CLUSTER BY (date, id);
 
 
 a. CLUSTER BY 列建议需要跟primary key 相同，或者是pimary key的⼀部分，例如是 date 或者是 {date, id}
@@ -80,7 +80,7 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
 | 端口     | MAXIR 连接端口                                                                                                                                                                                                                                                   |
 | 用户名   | MAXIR 连接用户名                                                                                                                                                                                                                                                 |
 | 密码     | MAXIR 数据库对应用户密码                                                                                                                                                                                                                                         |
-| 数据库名 | 迁移到MAXIR 目标库中的 Database名称。 源MySQL的多个Database名称，会分别创建为目标MAXIR指定Database下的Schema。例如: 源MySQL迁移 A.t1,A.t2,B.t1,B.t2 到目标MAXIR的 target数据库下， 则在MAXIR中看到的迁移结果为： target.A.t1,target.A.t2,target.B.t1,target.B.t2 |
+| 数据库名 | 迁移到MAXIR 目标库中的 Database名称。 <br> 源MySQL的多个Database名称，会分别创建为目标MAXIR指定Database下的Schema。例如:<br>  `源MySQL迁移 A.t1,A.t2,B.t1,B.t2 到目标MAXIR的 target数据库下， 则在MAXIR中看到的迁移结果为：`<br> `target.A.t1,target.A.t2,target.B.t1,target.B.t2` |
 
 
 ## 4. 权限要求

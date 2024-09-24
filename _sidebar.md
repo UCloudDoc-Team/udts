@@ -50,8 +50,8 @@
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 源为MySQL
-        * [[MySQL迁移到MySQL]](/udts/inti/type/mysql_source/mysql2mysql)
-        * [[MySQL迁移到TiDB]](/udts/inti/type/mysql_source/mysql2tidb)
+        * [MySQL迁移到MySQL](/udts/inti/type/mysql_source/mysql2mysql)
+        * [MySQL迁移到TiDB](/udts/inti/type/mysql_source/mysql2tidb)
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [预检查](/udts/inti/guide/precheck)

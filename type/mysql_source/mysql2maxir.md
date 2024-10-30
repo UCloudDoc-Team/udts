@@ -123,7 +123,7 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
         </tr>
         <tr>
             <td>BIGINT UNSIGNED</td>
-            <td>NUMERIC(20,0)</td>
+            <td>INT8</td>
         </tr>
         <tr>
             <td>DECIMAL(p, s) <br>DECIMAL(p, s) UNSIGNED <br>NUMERIC(p, s) <br>NUMERIC(p, s) UNSIGNED</td>

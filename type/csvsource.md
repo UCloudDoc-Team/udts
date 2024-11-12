@@ -2,7 +2,7 @@
 
 # CSV源 
 
-UDTS可以将UFile上保存的csv文件，传输至mysql或udw的数据类型。
+UDTS可以将US3上保存的CSV文件，传输至MySQL的数据类型。
 
 ## CSV源填写表单
 
@@ -14,4 +14,5 @@ UDTS可以将UFile上保存的csv文件，传输至mysql或udw的数据类型。
 | 列顺序调整       | 可依次填写数据目标的字段名，UDTS会根据CSV的列顺序依次匹配字段顺序用以调整传输的列顺序。 |
 | 更新策略         | 当重复数据处理类型选择 "更新"，Type:"CSVData"CSV文件列的索引号，对应的Data为整型，从0开始；"Function" SQL支持的函数如now（） ； "Fixed" 固定值如"people"。 |
 | 赋值策略         | 当重复数据处理类型选择 "更新"，Type:"CSVData"CSV文件列的索引号，对应的Data为整型，从0开始；"Function" SQL支持的函数如now（） ； "Fixed" 固定值如"people"。 |
+
 

@@ -26,8 +26,8 @@
         * [CSV](/udts/type/csvsource)
     * 源为MongoDB
         * [MongoDB](/udts/type/mongonode)
-    * 源为US3
-        * [US3](/udts/type/ufilesource)
+    * 源为 AWS DynamoDB
+        * [DynamoDB](/udts/type/dynamodbsource)
     * 源为Redis
         * [Redis](/udts/type/redissource)
     * 源为PostgresSQL

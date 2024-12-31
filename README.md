@@ -8,6 +8,8 @@
 * 计费说明  
     * [计费指南](/udts/introduction/billing)
     * [回收与删除](/udts/billing/recycle)
+* 公网迁移
+    * [NAT网关实现公网迁移](/udts/inti/guide/nat_pub_dts) 
 * 数据传输
     * [支持数据类型](/udts/introduction/supporttype)
     * 源为MySQL

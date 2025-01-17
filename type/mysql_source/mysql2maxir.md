@@ -102,27 +102,23 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
     </thead>
     <tbody>
         <tr>
-            <td>BIT(1)<br>TINYINT(1)</td>
+            <td>BIT(1)</td>
             <td>BOOL</td>
         </tr>
         <tr>
-            <td>TINYINT</td>
+            <td>TINYINT<br>SMALLINT</td>
             <td>INT2</td>
         </tr>
         <tr>
-            <td>TINYINT UNSIGNED<br>SMALLINT</td>
-            <td>INT2</td>
-        </tr>
-        <tr>
-            <td>SMALLINT UNSIGNED<br>MEDIUMINT<br>MEDIUMINT UNSIGNED<br>INT<br>INTEGER<br>YEAR</td>
+            <td>MEDIUMINT<br> INT<br> INTEGER<br> YEAR</td>
             <td>INT4</td>
         </tr>
         <tr>
-            <td>INT UNSIGNED<br>INTEGER UNSIGNED<br>BIGINT</td>
-            <td>INT8</td>
+            <td>TINYINT UNSIGNED<br>SMALLINT UNSIGNED<br>MEDIUMINT UNSIGNED<br>INT UNSIGNED<br>INTEGER UNSIGNED<br>BIGINT UNSIGNED</td>
+            <td>NUMERIC(20, 0)</td>
         </tr>
         <tr>
-            <td>BIGINT UNSIGNED</td>
+            <td>BIGINT</td>
             <td>INT8</td>
         </tr>
         <tr>
@@ -138,24 +134,32 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
             <td>FLOAT8</td>
         </tr>
         <tr>
-            <td>CHAR<br>VARCHAR<br>TINYTEXT<br>MEDIUMTEXT<br>TEXT<br>LONGTEXT<br>ENUM<br>JSON<br>ENUM</td>
-            <td>VARCHAR/TEXT</td>
+            <td>CHAR<br>VARCHAR</td>
+            <td>VARCHAR</td>
+        </tr>
+        <tr>
+            <td>TINYTEXT<br>MEDIUMTEXT<br>TEXT<br>LONGTEXT<br>ENUM<br>JSON</td>
+            <td>TEXT</td>
         </tr>
         <tr>
             <td>DATE</td>
             <td>DATE</td>
         </tr>
         <tr>
-            <td>TIME(s)</td>
-            <td>TIME(s)</td>
+            <td>TIME</td>
+            <td>TIME</td>
         </tr>
         <tr>
-            <td>DATETIME<br>TIMESTAMP(s)</td>
-            <td>TIMESTAMP(s)</td>
+            <td>DATETIME</td>
+            <td>TIMESTAMP</td>
+        </tr>
+        <tr>
+            <td>TIMESTAMP</td>
+            <td>TIMESTAMPTZ</td>
         </tr>
         <tr>
             <td>BINARY<br>VARBINAR<br>BIT(p)<br>TINYBLOB<br>MEDIUMBLOB<br>BLOB<br>LONGBLOB <br>GEOMETRY</td>
-            <td>不支持</td>
+            <td>BYTEA(但不支持写入数据)</td>
         </tr>
     </tbody>
 </table>

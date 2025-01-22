@@ -49,7 +49,7 @@
         * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
         * [删除任务](/udts/guide/deletetask)
-        * [数据校验](/udts/inti/guide/validation)
+        * [数据校验](/udts/guide/validation)
 * 数据集成
     * [支持数据类型](/udts/inti/introduction/supporttype)
     * 源为MySQL

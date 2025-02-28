@@ -20,6 +20,10 @@ set global binlog_row_image = "FULL" ;
 
 ```
 
+2. 源库不能存在同名但大小写不一致的库或表，否则同步可能会异常， 建议全部采用小写格式。
+3. 源库不能有超过4G的binlog文件， 建议大小是1G, 否则同步会出错或失败。
+4. 不支持 MySQL 8.0 的新特性 binlog 事务压缩 Transaction_payload_event。使用 binlog 事务压缩有导致上下游数据不一致的风险。
+
 ### 1.2 目标Kafka限制
 
 1. 设置 `auto.create.topics.enable` 为true。 

@@ -51,11 +51,17 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
 
 ## 2. 迁移内容
 
-| 迁移内容 | 说明                                                                                                                                                                  |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 迁移范围 | 1. Database、Table 结构(索引只迁移主键，MAXIR只需要主键)及数据 <br>  2. 迁移开始前不会清理目标库已存在的库表结构，如果自动建表不满足要求，客户可以提前在目标库手动建表 <br>  3. 迁移开始前会清空目标库待迁移库表的数据 |
-| DDL      | create/drop schema <br> create/drop/rename table <br> alter table add/drop/modify/change column <br> alter table 时，不支持同时修改数据类型和字段名  |
-| DML      | insert/update/delete                                                                                                                                                  |
+### 2.1 全量迁移
+1. 全量迁移会迁移任务指定的源库中的表结构和数据到目标库。
+2. 表结构中索引仅迁移主键信息(MAXIR仅支持主键)。
+3. 全量迁移会清理指定库表在目标库中的数据，但不会删除表结构，如果需要重建表结构需要客户自己在目标库删除或重建。
+
+
+### 2.2 增量迁移
+1. 增量迁移会实时解析源库binlog，将增量数据同步到目标库。
+2. DML操作支持INSERT、UPDATE、DELETE。
+3. DDL操作支持 1. CREATE/DROP DATABASE; 2. CREATE/DROP/RENAME TABLE; 3. ALTER TABLE ADD/DROP/MODIFY/CHANGE COLUMN。 ALTER TABLE时，不支持同时修改数据类型和字段名。
+4. 增量迁移会将源库的binlog位点信息记录在UDTS的任务中，下次增量迁移时会从上次的binlog位点开始解析。
 
 ## 3. 表单填写
 

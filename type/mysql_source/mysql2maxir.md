@@ -47,6 +47,7 @@ b. DISTRIBUTED BY 的列需要是primary key中⼀列，并且需要是 cardinal
 ```
 1. CLUSTER BY 会和表的主键保持一致。
 2. DISTRIBUTED BY 会使用主键， 如果是联合主键则会使用第一个字段。
+3. 自动创建的表结构会去掉字段的 NOT NULL 属性。
 ```
 
 ## 2. 迁移内容

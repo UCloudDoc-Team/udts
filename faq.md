@@ -148,9 +148,7 @@ show variables like '%max_connections%';
 在目标库执行
 
 ```
-set GLOBAL innodb_file_format_max = 'Barracuda';
 set GLOBAL innodb_file_format = 'Barracuda';
-set GLOBAL  innodb_file_per_table = ON;
 set GLOBAL innodb_strict_mode = OFF;
 ```
 

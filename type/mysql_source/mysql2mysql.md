@@ -223,6 +223,7 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 - 不支持 MySQL 8.0 的新特性 binlog 事务压缩 Transaction_payload_event。使用 binlog 事务压缩有导致上下游数据不一致的风险。
 - 如果源是阿里云 MySQL RDS, 所有表必须要有显式主键， 否则增量同步功能不支持。
 - 数据库名中包含特殊字符'$'时，只支持单库迁移。
+- 表名或者库名不能包含特殊字符'.'， 否则迁移失败。
 - 增量迁移时，DDL 语句仅支持字符集`ascii/latin1/binary/utf8/utf8mb4`。
 
 

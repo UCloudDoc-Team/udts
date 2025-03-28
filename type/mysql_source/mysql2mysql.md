@@ -167,24 +167,6 @@ set global gtid_mode = "OFF_PERMISSIVE";
 set global gtid_mode = "OFF";
 ```
 
-### 从MySQL迁移到TiDB时，检查源库字符集
-
-TiDB目前支持的字符集包括`ascii/latin1/binary/utf8/utf8mb4`。
-从MySQL迁移到TiDB时，如果源库中需要迁移的表或表中某一字段采用的字符集不包含在上述字符集之中，则无法迁移。
-
-查询方式：
-```
-show create table table1;
-```
-
-设置方式：
-```
-# 将表 table1 的字符集修改为 utf8
-alter table task character set utf8;
-
-# 将表 table1 中 column1 字段的字符集修改为 utf8
-alter table table1 change column1 column1 varchar(200) character set utf8;
-```
 
 ## 功能限制
 ### MyISAM 引擎表

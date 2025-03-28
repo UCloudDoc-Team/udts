@@ -151,6 +151,16 @@ alter table task character set utf8;
 alter table table1 change column1 column1 varchar(200) character set utf8;
 ```
 
+### lower_case_table_names 检查
+TiDB 的lower_case_table_names值为2，并且只能为2，意思是表名和字段名默认大小写不敏感。如果源MySQL lower_case_table_names值为0（大小写敏感），并且存在表名相同但是大小写不同的表，迁移会出错，需要提前在源库修改此类表名。
+建议库名，表名，字段名等统一采用小写形式。
+
+查询方式：
+```
+show global variables like 'lower_case_table_names';
+```
+
+
 ## 功能限制
 ### MyISAM 引擎表
 
@@ -331,3 +341,4 @@ Your query has been cancelled due to exceeding the allowed memory limit for a si
 
 导入较大数据量时，请使用UDTS或者执行脚本分批次导入。
 ``` 
+- TiDB 的lower_case_table_names值为2，并且只能为2，意思是表名和字段名默认大小写不敏感。如果源MySQL lower_case_table_names值为0（大小写敏感），并且存在表名相同但是大小写不同的表，迁移会出错，需要提前在源库修改此类表名。 

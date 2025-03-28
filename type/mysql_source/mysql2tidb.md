@@ -324,10 +324,10 @@ CREATE TABLE `test` (
 1. mysql utf8mb4完全兼容utf8, 可以统一修改源库的表字符集为utf8mb4，此操作会锁表不影响读，会阻塞写操作：
 alter table table_name convert to character set utf8mb4 collate utf8mb4_general_ci;
 
-1. 源库如果单独指定字段的字符集为utf8， 也需要单独修改字段的字符集为utf8mb4排序规则为utf8mb4_general_ci：
+2. 源库如果单独指定字段的字符集为utf8， 也需要单独修改字段的字符集为utf8mb4排序规则为utf8mb4_general_ci：
 alter table table_name modify column_name varchar(200) character set utf8mb4 collate utf8mb4_general_ci;
 
-1. 设置目标TiDB default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
+3. 设置目标TiDB default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
 
 TiDB sererless 版本执行 set global default_collation_for_utf8mb4="utf8mb4_general_ci";
 TiDB 固定规格版本在参数管理中修改 default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;

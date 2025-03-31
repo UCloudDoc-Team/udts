@@ -1,15 +1,13 @@
 
-# MySQL 迁移到 MySQL
+# MySQL 迁移到 TiDB
 
-UDTS支持MySQL作为数据传输源/目标，支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及兼容MySQL的数据库， 像PolarDB等。
+UDTS支持MySQL作为数据传输源传输到TiDB，支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及兼容MySQL的数据库， 像PolarDB等。
 
 
 ## 迁移内容
 
 全量和增量迁移以下内容
 - Database、Table 结构及数据
-- 视图(View)
-- 函数(Function)、存储过程(Procedure)
 
 在全量迁移时，为了保证数据的一致性，防止数据冲突，会在迁移前清理目标库中的数据，清理的内容为本次迁移对应的 Database 和 Table，具体如下
 
@@ -88,9 +86,9 @@ UDTS 在迁移时，可以通过`预检查`完成对需要条件的检查，包�
 
 | 类型/权限 | 源库权限(开启 NoLocks)                                                          | 源库权限(未开启 NoLocks)                                                                                 | 目标库权限                                                                                                                   |
 |---------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| 全量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE"                  |
-| 增量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"             | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"                                      | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
-| 全+增     | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW", "CREATE ROUTINE", "ALTER ROUTINE" |
+| 全量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW"              |
+| 增量      | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"             | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW"                                      | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW" |
+| 全+增     | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW" , "PROCESS" | "SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT", "SHOW VIEW", "RELOAD", "LOCK TABLES" , "PROCESS" | "SELECT", "INSERT", "UPDATE", "CREATE", "DROP", "ALTER", "DELETE", "INDEX", "CREATE VIEW"|
 
 ### sql_mode 检查
 
@@ -134,37 +132,32 @@ set global binlog_row_image = "FULL" ;
 
 备注： 如果是 MySQL 5.5 ，没有 binlog_row_image 这个变量，不需要设置
 
-### MyISAM 引擎表检查
+### 从MySQL迁移到TiDB时，检查源库字符集
 
-如果源库需要迁移的表中包括 MyISAM 引擎表，同时目标库开启了 GTID ，可能导致 MySQL 1785 错误，报错信息如下：
-```
-When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, updates to non-transactional tables can only be done in either autocommitted statements or single-statement transactions, and never in the same statement as updates to transactional tables
-```
-建议用户将 MyISAM 引擎表转换为 InnoDB 引擎表，或者关闭目标库的 GTID 模式。
+TiDB目前支持的字符集包括`ascii/latin1/binary/utf8/utf8mb4`。
+从MySQL迁移到TiDB时，如果源库中需要迁移的表或表中某一字段采用的字符集不包含在上述字符集之中，则无法迁移。
+
 查询方式：
 ```
-# 在源库中查询数据库db1中是否存在 MyISAM 表
-select table_schema, table_name
-	from information_schema.tables
-	where engine = 'MyISAM'
-		and table_type = 'BASE TABLE'
-		and table_schema in (db1);
-
-# 在目标库中查询是否开启了 GTID
-show global variables like 'gtid_mode';
+show create table table1;
 ```
 
 设置方式：
 ```
-# 方案一：修改源库
-# 将 MyISAM 表 table1 的引擎修改为 InnoDB
-alter table table1 ENGINE = InnoDB;
+# 将表 table1 的字符集修改为 utf8
+alter table task character set utf8;
 
-# 方案二：修改目标库
-# 关闭目标库的 GTID 模式
-set global gtid_mode = "ON_PERMISSIVE";
-set global gtid_mode = "OFF_PERMISSIVE";
-set global gtid_mode = "OFF";
+# 将表 table1 中 column1 字段的字符集修改为 utf8
+alter table table1 change column1 column1 varchar(200) character set utf8;
+```
+
+### lower_case_table_names 检查
+TiDB 的lower_case_table_names值为2，并且只能为2，意思是表名和字段名默认大小写不敏感。如果源MySQL lower_case_table_names值为0（大小写敏感），并且存在表名相同但是大小写不同的表，迁移会出错，需要提前在源库修改此类表名。
+建议库名，表名，字段名等统一采用小写形式。
+
+查询方式：
+```
+show global variables like 'lower_case_table_names';
 ```
 
 
@@ -188,7 +181,7 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 - 源库不能存在同名但大小写不一致的库或表，否则同步可能会异常， 建议全部采用小写格式。
 - 不迁移除 test 以外的内置数据库。
 - 在转储过程中，如果待迁移的数据库上有执行 DDL 语句，UDTS 任务会失败，用户可以选择一个不会执行 DDL 语句的时间段重启任务。
-- 全量和增量阶段暂时不支持 event 和 trigger。
+- 全量和增量阶段不支持 event, trigger, procedure, function。
 - 增量同步开启之前，需要关闭 event.
         ```
         -- 停止所有 event
@@ -210,14 +203,6 @@ UDTS 支持 MyISAM 引擎表的全量迁移及增量同步，但是有以下限�
 
 
 ## 注意事项
-### 存储空间
-
-如果迁移目标MySQL数据库开启了Binlog， 目标数据库产生的 Binlog 会占用存储空间。 当数据量较大时（超过200G）， 建议用户打开 NoBinlog 选项，这样在全量迁移的过程中目标数据库不会产生Binlog，减少迁移对磁盘的额外需求，也可加快全量迁移速度。 如果在迁移的过程中一定要开启Binlog， 请为目标数据库创建较大的存储空间或者定时清理不需要的Binlog文件，以免存储空间不足导致任务失败（根据经验，迁移3TB的数据会产生约3TB的Binlog文件， 即源数据库存储空间为3TB， 目标需要6TB存储空间）。
-
-UDB MySQL 支持按保留时长和磁盘使用百分比设置Binlog自动清理策略，[详情参考UDB文档](https://docs.ucloud.cn/udb-mysql/guide/backup?id=binlog本地日志管理)。目标库如果是高可用UDB， 在开启 NoBinlog 后会产生高可用告警，用户可以忽略此告警，等待全量任务完成后重做目标库高可用即可。
-
-如果任务失败，在调整好目标数据库配置之后，可以重新启动任务，任务会重新开始。
-
 ### 主从切换
 
 如果源MySQL数据库是主从结构，当主从发生切换时，对UDTS产生的影响如下：
@@ -234,10 +219,6 @@ UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证�
 在源或者目标中，将 `SSL 安全连接` 选项打开，同时上传 ca 证书
 ![](http://udts-doc.cn-bj.ufileos.com/create-ssl.png)
 
-## 跨版本迁移
-跨版本迁移时，请注意源库中是否存在与目标库不兼容的特性，例如：
-- MySQL8.0 版本的默认 collation `utf8mb4_0900_ai_ci` 在 MySQL5.x 版本中不兼容。如需从 MySQL8.0 迁移至 MySQL5.x，请修改 collation 为 MySQL5.x 支持的类型，例如 `utf8mb4_general_ci`
-- MySQL5.6 版本支持数据类型 `geometry` 字段为空字符串，MySQL5.7 及以后版本不支持。如需从 MySQL5.6 迁移至更高版本，请确保源库中 `geometry` 字段不为空字符串
 
 ## MySQL 填写表单
 
@@ -260,12 +241,12 @@ UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证�
 | 参数名       | 说明                                                                                  |
 |--------------|-------------------------------------------------------------------------------------|
 | 地址类型     | 目标暂时只支持内网                                                                    |
-| 端口         | MySQL连接端口                                                                         |
-| 用户名       | MySQL连接用户名                                                                       |
-| 密码         | MySQL数据库对应用户密码                                                               |
+| 端口         | TiDB 连接端口                                                                         |
+| 用户名       | TiDB 连接用户名                                                                       |
+| 密码         | TiDB 数据库对应用户密码                                                               |
 | 最大速率     | 内网的速率范围为 1-1024 MB/s                                   |
-| NoBinlog     | 当数据源和目标都是MySQL时，在全量阶段可以设置关闭目标端binlog文件的写入，默认不关闭。开启NoBinlog需要当前用户拥有 SUPER 权限。  |
-| SSL 安全连接 | 默认关闭，当您需要使用证书连接数据库时，可以打开该选项，具体可以[参考](#ssl-安全连接) |
+| 兼容MySQL自增模式 | 默认关闭，TiDB默认自增ID和MySQl行为不一样， 开启此选项可以在大多数情况下兼容MySQL自增模式， 具体区别请参考: https://docs.pingcap.com/zh/tidb/stable/auto-increment/#mysql-%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F |
+
 
 ### 建议速率配置表
 
@@ -286,20 +267,78 @@ UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证�
 | >=100             | 100      | 56            |
 
 
-目标限速配置参考值
+## MySQL与TiDB兼容性说明
 
-| 数据库可用内存大小 (G) | 内网建议值 (MB/s) | 
-| ------------------ | ---------- | 
-| (0, 1)            | 1       |
-| [1, 2)            | 2        | 
-| [2, 4)           | 5        |
-| [4, 6)           | 10       |
-| [6, 8)           | 20       |
-| [8, 10)          | 30       |
-| [10, 20)         | 50       |
-| [20, 40)         | 60       |
-| [40, 60)         | 70       |
-| [60, 80)         | 80       |
-| [80, 100)        | 90       |
-| >=100             | 100      |
+TiDB 高度兼容MySQL协议、MySQL 常用的功能及语法。MySQL 生态中的系统工具（PHPMyAdmin、Navicat、MySQL Workbench、mysqldump、Mydumper/Myloader）、客户端等均适用于 TiDB。
 
+> 但 TiDB 尚未支持一些 MySQL 功能，可能的原因如下：
+
+有更好的解决方案，例如 JSON 取代 XML 函数。
+目前对这些功能的需求度不高，例如存储过程和函数。
+一些功能在分布式系统上的实现难度较大。
+
+> 不支持的功能特性
+
+https://docs.pingcap.com/zh/tidb/stable/mysql-compatibility/
+
+- 存储过程与函数
+- 触发器
+- 事件
+- 自定义函数
+- 全文语法与索引 
+- 空间类型的函数（即 GIS/GEOMETRY）、数据类型和索引 
+- 非 ascii、latin1、binary、utf8、utf8mb4、gbk 的字符集
+- SYS schema
+- MySQL 追踪优化器
+- XML 函数
+- X-Protocol 
+- 列级权限 
+- XA 语法（TiDB 内部使用两阶段提交，但并没有通过 SQL 接口公开）
+- CREATE TABLE tblName AS SELECT stmt 语法 
+- CHECK TABLE 语法 
+- CHECKSUM TABLE 语法 
+- REPAIR TABLE 语法
+- OPTIMIZE TABLE 语法
+- HANDLER 语句
+- CREATE TABLESPACE 语句
+- "Session Tracker: 将 GTID 上下文信息添加到 OK 包中"
+- JOIN 的 ON 子句的子查询 
+
+> 不兼容的特性
+
+- TiDB 的自增列可以保证唯一，但只能能保证在单个 TiDB server 中自增， 在使用UDTS迁移时打开`兼容MySQL自增模式`选项，能保证在多个 TiDB server 中自增，但不保证自动分配的值的连续性。
+```
+在后续TiDB使用时建表语句需要添加 AUTO_ID_CACHE 1， 如:
+
+CREATE TABLE `test` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `age` int(11) NOT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_ID_CACHE 1;
+```
+
+- TiDB 可通过 tidb_allow_remove_auto_inc 系统变量开启或者关闭允许移除列的 AUTO_INCREMENT 属性。删除列属性的语法是：ALTER TABLE MODIFY 或 ALTER TABLE CHANGE。
+- TiDB 不支持添加列的 AUTO_INCREMENT 属性，移除该属性后不可恢复。
+- TiDB 中utf8与utf8mb4的默认排序规则分别为utf8_bin和utf8mb4_bin，与MySQL的默认排序规则utf8_general_ci和utf8mb4_general_ci不同，MySQL源为5.7时字符集为utf8排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8_bin，字符集为utf8mb4排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8mb4_bin， 如果业务强制要求大小写不敏感，请参照以下步骤修改:
+```
+1. mysql utf8mb4完全兼容utf8, 可以统一修改源库的表字符集为utf8mb4，此操作会锁表不影响读，会阻塞写操作：
+alter table table_name convert to character set utf8mb4 collate utf8mb4_general_ci;
+
+2. 源库如果单独指定字段的字符集为utf8， 也需要单独修改字段的字符集为utf8mb4排序规则为utf8mb4_general_ci：
+alter table table_name modify column_name varchar(200) character set utf8mb4 collate utf8mb4_general_ci;
+
+3. 设置目标TiDB default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
+
+TiDB sererless 版本执行 set global default_collation_for_utf8mb4="utf8mb4_general_ci";
+TiDB 固定规格版本在参数管理中修改 default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
+```
+- TiDB 默认单条SQL使用内存上限最大为1G，可以通过修改`tidb_mem_quota_query`调整，默认当SQL语句超过1G时，会报错：
+```
+INSERT INTO db1.tbl_test01 SELECT * FROM db2.tbl_test02;
+
+数据量较小的情况下TiDB 可以执行， 但是当事务占用内存超过1G, TiDB会取消SQl执行并报错：
+Your query has been cancelled due to exceeding the allowed memory limit for a single SQL query. Please try narrowing your query scope or increase the tidb_mem_quota_query limit and try again.
+
+导入较大数据量时，请使用UDTS或者执行脚本分批次导入。
+``` 
+- TiDB 的lower_case_table_names值为2，并且只能为2，意思是表名和字段名默认大小写不敏感。如果源MySQL lower_case_table_names值为0（大小写敏感），并且存在表名相同但是大小写不同的表，迁移会出错，需要提前在源库修改此类表名。 

@@ -187,7 +187,7 @@ SELECT
 - 对于 MyISAM表，正在转储中的表允许读，不允许写，直到表转储完毕
 - 对于 InnoDB表，正在转储中的表允许读写。
 
-Nolock 模式下： 不会对任何数据库及表加锁。
+Nolock 模式下： 不会执行FTWRL（`FLUSH TABLES WITH READ LOCK`)，对于 MyISAM表，正在转储中的表允许读，不允许写，并且写SQL会阻塞之后的读SQL直到表转储完毕。
 
 ## 12 问：Redis 迁移出现 ERR illegal address 
 

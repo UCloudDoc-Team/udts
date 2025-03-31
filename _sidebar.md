@@ -13,6 +13,7 @@
     * [支持数据类型](/udts/introduction/supporttype)
     * 源为MySQL
         * [MySQL迁移到MySQL](/udts/type/mysql_source/mysql2mysql)
+        * [MySQL迁移到TiDB](/udts/type/mysql_source/mysql2tidb)
         * [MySQL迁移到ClickHouse](/udts/type/mysql_source/mysql2clickhouse)
         * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
         * [MySQL迁移到PostgreSQL](/udts/type/mysql_source/mysql2postgres)
@@ -33,7 +34,8 @@
     * 源为Redis
         * [Redis](/udts/type/redissource)
     * 源为PostgresSQL
-        * [PostgreSQL](/udts/type/pgsqlsource)
+        * [PostgreSQL迁移到PostgreSQL](/udts/type/pgsqlsource/pgsqlsource)
+        * [PostgreSQL迁移到MAXIR](/udts/type/pgsqlsource/pgsql2maxir)
     * 源为ElasticSearch
         * [ElasticSearch](/udts/type/essource)
     * 功能原理与传输速度

@@ -306,7 +306,8 @@ https://docs.pingcap.com/zh/tidb/stable/mysql-compatibility/
 
 > 不兼容的特性
 
-- TiDB 的自增列可以保证唯一，但只能能保证在单个 TiDB server 中自增， 在使用UDTS迁移时打开`兼容MySQL自增模式`选项，能保证在多个 TiDB server 中自增，但不保证自动分配的值的连续性。
+- TiDB 的自增列可以保证唯一，但只能能保证在单个 TiDB server 中自增， 在使用UDTS迁移时打开`兼容MySQL自增模式`选项，能保证在多个 TiDB server 中自增，但不保证自动分配的值的连续性。  
+
 ```
 在后续TiDB使用时建表语句需要添加 AUTO_ID_CACHE 1， 如:
 
@@ -319,20 +320,24 @@ CREATE TABLE `test` (
 
 - TiDB 可通过 tidb_allow_remove_auto_inc 系统变量开启或者关闭允许移除列的 AUTO_INCREMENT 属性。删除列属性的语法是：ALTER TABLE MODIFY 或 ALTER TABLE CHANGE。
 - TiDB 不支持添加列的 AUTO_INCREMENT 属性，移除该属性后不可恢复。
-- TiDB 中utf8与utf8mb4的默认排序规则分别为utf8_bin和utf8mb4_bin，与MySQL的默认排序规则utf8_general_ci和utf8mb4_general_ci不同，MySQL源为5.7时字符集为utf8排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8_bin，字符集为utf8mb4排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8mb4_bin， 如果业务强制要求大小写不敏感，请参照以下步骤修改:
+- TiDB 中utf8与utf8mb4的默认排序规则分别为utf8_bin和utf8mb4_bin，与MySQL的默认排序规则utf8_general_ci和utf8mb4_general_ci不同，MySQL源为5.7时字符集为utf8排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8_bin，字符集为utf8mb4排序规则为utf8_general_ci的表迁移到TiDB时，默认排序规则为utf8mb4_bin， 如果业务强制要求大小写不敏感，请参照以下步骤修改:   
+
+
 ```
 1. mysql utf8mb4完全兼容utf8, 可以统一修改源库的表字符集为utf8mb4，此操作会锁表不影响读，会阻塞写操作：
 alter table table_name convert to character set utf8mb4 collate utf8mb4_general_ci;
 
-2. 源库如果单独指定字段的字符集为utf8， 也需要单独修改字段的字符集为utf8mb4排序规则为utf8mb4_general_ci：
+1. 源库如果单独指定字段的字符集为utf8， 也需要单独修改字段的字符集为utf8mb4排序规则为utf8mb4_general_ci：
 alter table table_name modify column_name varchar(200) character set utf8mb4 collate utf8mb4_general_ci;
 
-3. 设置目标TiDB default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
+1. 设置目标TiDB default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
 
 TiDB sererless 版本执行 set global default_collation_for_utf8mb4="utf8mb4_general_ci";
 TiDB 固定规格版本在参数管理中修改 default_collation_for_utf8mb4 参数值为 utf8mb4_general_ci;
 ```
-- TiDB 默认单条SQL使用内存上限最大为1G，可以通过修改`tidb_mem_quota_query`调整，默认当SQL语句超过1G时，会报错：
+
+- TiDB 默认单条SQL使用内存上限最大为1G，可以通过修改`tidb_mem_quota_query`调整，默认当SQL语句超过1G时，会报错：  
+
 ```
 INSERT INTO db1.tbl_test01 SELECT * FROM db2.tbl_test02;
 
@@ -341,4 +346,5 @@ Your query has been cancelled due to exceeding the allowed memory limit for a si
 
 导入较大数据量时，请使用UDTS或者执行脚本分批次导入。
 ``` 
+
 - TiDB 的lower_case_table_names值为2，并且只能为2，意思是表名和字段名默认大小写不敏感。如果源MySQL lower_case_table_names值为0（大小写敏感），并且存在表名相同但是大小写不同的表，迁移会出错，需要提前在源库修改此类表名。 

@@ -105,6 +105,8 @@ start slave;
 	再次通过 `show global variables like 'binlog_format';` 查询到的值还是原值，需要断开连接后重新连接才会显示变更后的值。
 
 ### 1.2
+
+#### 1.2.1
 **错误信息：** 
 
 `The tables that need to be migrated from the source database include MyISAM engine tables, while the target database has GTID enabled, which may result in migration task failure.`
@@ -145,6 +147,18 @@ set global gtid_mode = "OFF_PERMISSIVE";
 set global gtid_mode = "OFF";
 ```
 
+#### 1.2.2
+**错误信息：** 
+
+`The source database contains a large number of tables, and the check for table engine timeout. Please check if there are any MyISAM engine tables in the tables to be migrated.`
+
+`源库中表的数量太多，检查表引擎超时。请自行检查要迁移的库表中是否存在 MyISAM 引擎表。`
+
+**解决方法：** 
+
+参考 1.2.1 解决方法。
+
+
 ### 1.3
 **错误信息：** 
 
@@ -171,6 +185,8 @@ set global max_allowed_packet = 4194304;
 ```
 
 ### 1.4
+
+#### 1.4.1
 **错误信息：** 
 
 `table xxx have no primary key or at least a unique key`
@@ -182,6 +198,34 @@ set global max_allowed_packet = 4194304;
 ```
 alter table xxx add primary key(xxxx);
 ```
+
+#### 1.4.2
+**错误信息：** 
+
+`The source database contains a large number of tables, and the check for table primary key timeout. Please check if there are any primary keys or unique keys in the tables to be migrated.`
+
+`源库中表的数量太多，检查主键超时。请自行检查要迁移的库表中是否存在无主键和唯一键的表。`
+
+**解决方法：** 
+
+在源库中执行如下命令，检查无主键和唯一键的表。请拆分待迁移库表，分批执行查询语句以避免影响源库性能。
+```sql
+SELECT
+  t1.table_schema,
+  t1.table_name
+FROM
+  information_schema.TABLES t1
+  LEFT OUTER JOIN information_schema.TABLE_CONSTRAINTS t2 ON t1.table_schema = t2.table_schema
+  AND t1.table_name = t2.TABLE_NAME
+  AND t2.CONSTRAINT_TYPE IN ('PRIMARY KEY', 'UNIQUE')
+WHERE
+  t2.table_name IS NULL
+  AND t1.table_type = 'BASE TABLE'
+  AND t1.table_schema in ("dbname1", "dbname2") --- 此处替换为待迁移的库名
+  AND t1.table_name in ("tablename1", "tablename2") --- 指定表迁移时，此处替换为待迁移的表名。整库迁移时，删除这一行。
+;
+```
+如果源库中存在无主键和唯一键的表，参考 1.4.1 解决方法。
 
 ### 1.5
 **错误信息：** 
@@ -278,6 +322,57 @@ lower_case_table_names = 0
 
 如果您使用的是云厂商的数据库服务，需要修改对应的配置文件，使用修改后的配置重新启动数据库。
 
+### 1.10
+
+#### 1.10.1
+**错误信息：** 
+
+`The size of the source database xxxGB has exceeded the limit of service type.`
+
+**解决方法：**
+
+源库数据量超过资源类型限制。请参考 [实例类型](/udts/introduction/instancetype) 选择合适的资源类型。
+
+#### 1.10.2
+**错误信息：** 
+
+`The size of the source database xxxGB has exceeded the limit of target database disk size. Please expand target database disk.`
+
+**解决方法：**
+
+目标库为 UDB 时，UDTS 会检查目标库硬盘容量。源库数据量超过目标库硬盘容量，请扩容目标库硬盘。
+
+#### 1.10.3
+**错误信息：** 
+
+`The size of the source database xxxGB has exceeded half of target database disk size. Please use NoBinlog mode or expand target database disk.`
+
+**解决方法：**
+
+目标库为 UDB 时，UDTS 会检查目标库硬盘容量。源库数据量超过目标库硬盘容量的一半，请采用 “NoBinlog” 模式或扩容目标库硬盘。
+
+#### 1.10.4
+**错误信息：** 
+
+`The source database contains a large number of tables, and the check for table data size timeout. Please check if the data size of the tables to be migrated exceeds the service type limit.`
+
+`源库中表的数量太多，检查数据量超时。请自行检查要迁移的数据量是否超过资源类型限制。`
+
+**解决方法：**
+
+在源库中执行如下命令，检查源库中待迁移的库表数据量。请拆分待迁移库表，分批执行查询语句以避免影响源库性能。
+```sql
+SELECT
+  sum(data_length + index_length) / 1024 / 1024 / 1024 as datasize
+FROM
+  information_schema.tables
+WHERE
+  table_schema IN ("dbname1", "dbname2") --- 此处替换为待迁移的库名
+  AND table_name IN ("tablename1", "tablename2") --- 指定表迁移时，此处替换为待迁移的表名。整库迁移时，删除这一行。
+;
+```
+请参考 [实例类型](/udts/introduction/instancetype) 选择合适的资源类型。
+
 ## 2 TiDB
 
 
@@ -299,6 +394,7 @@ update mysql.tidb set VARIABLE_VALUE="1h" where VARIABLE_NAME="tikv_gc_life_time
 ```
 
 ### 2.2
+#### 2.2.1
 **错误信息：** 
 
 `TiDB dose not support charset in table xxx. Please change charset to any one of 'ascii/latin1/binary/utf8/utf8mb4'.`
@@ -325,6 +421,43 @@ alter table task character set utf8;
 # 将表 table1 中 column1 字段的字符集修改为 utf8
 alter table table1 change column1 column1 varchar(200) character set utf8;
 ```
+
+#### 2.2.2
+**错误信息：** 
+
+`The source database contains a large number of tables, and the check for table charset timeout. Please check if the tables to be migrated are using charsets that are not supported by the target database.`
+
+`源库中表的数量太多，检查表字符集超时。请自行检查要迁移的库表中是否使用了目标库不支持的字符集。`
+
+**解决方法：**
+
+在源库中执行如下命令，检查源库中待迁移的库表字符集。请拆分待迁移库表，分批执行查询语句以避免影响源库性能。
+```sql
+SELECT
+  table_schema,
+  table_name,
+  table_collation
+FROM
+  information_schema.tables
+WHERE
+  table_type = "BASE TABLE"
+  AND table_schema IN ("dbname1", "dbname2") --- 此处替换为待迁移的库名
+  AND table_name IN ("tablename1", "tablename2") --- 指定表迁移时，此处替换为待迁移的表名。整库迁移时，删除这一行。
+;
+
+SELECT
+  table_schema,
+  table_name,
+  column_name,
+  character_set_name
+FROM
+  information_schema.columns
+WHERE
+  table_schema IN ("dbname1", "dbname2") --- 此处替换为待迁移的库名
+  AND table_name IN ("tablename1", "tablename2") --- 指定表迁移时，此处替换为待迁移的表名。整库迁移时，删除这一行。
+;
+```
+TiDB目前支持的字符集包括`ascii/latin1/binary/utf8/utf8mb4`。如果源库中存在目标库不支持的字符集，参考 2.2.1 解决方法。
 
 ## 3 MongoDB
 

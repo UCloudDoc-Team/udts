@@ -13,7 +13,7 @@
 
 填写双库信息（当前不支持2个数据库都是外网数据库的场景）
 
-![](http://antman-docs.cn-bj.ufileos.com/createtype4.png)
+![](http://udts-doc.cn-bj.ufileos.com/createtype4.png)
 
 
 ## 注意事项

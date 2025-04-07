@@ -8,9 +8,7 @@
 
 > 白名单地址请联系技术支持获取
 
-确保UDTS可以从外部访问阿里云的数据库，如图：
-
-![](http://antman-docs.cn-bj.ufileos.com/aliredis001.png)
+确保UDTS可以从外部访问阿里云的数据库
 
 ### 设置账号增量同步权限
 
@@ -20,17 +18,13 @@
 
 进入侧边栏 “账号管理”
 
-![](http://antman-docs.cn-bj.ufileos.com/aliredis002.png)
 
 创建一个有 “复制” 权限的账号。
 
-![](http://antman-docs.cn-bj.ufileos.com/aliredis003.png)
 
 ### 创建UDTS任务
 
 根据需要，选择 全量 或 全量+增量 任务
-
-![](http://antman-docs.cn-bj.ufileos.com/aliredis004.png)
 
 注：增量时 密码 需要填写具有 “复制” 权限的  账号:密码  来作为密码。
 

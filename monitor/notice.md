@@ -8,4 +8,4 @@
 
 打开任务失败通知
 
-![](http://antman-docs.cn-bj.ufileos.com/notice002.png)
+![](http://udts-doc.cn-bj.ufileos.com/notice002.png)

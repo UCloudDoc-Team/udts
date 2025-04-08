@@ -2,19 +2,19 @@
 
 ### 全量迁移
 
-![](http://antman-docs.cn-bj.ufileos.com/udtstechmysql001.png)
+![](http://udts-doc.cn-bj.ufileos.com/udtstechmysql001.png)
 
 UDTS在全球很多个地域部署了服务，会根据源目位置来就近选择运行位置来保证迁移效率。
 
 ### 单向增量同步
 
-![](http://antman-docs.cn-bj.ufileos.com/udtstechmysql002.png)
+![](http://udts-doc.cn-bj.ufileos.com/udtstechmysql002.png)
 
 UDTS 模拟一个Slave节点，通过Binlog从全量导出点开始获取增量数据。
 
 ### 双向增量同步
 
-![](http://antman-docs.cn-bj.ufileos.com/udtstechmysql003.png)
+![](http://udts-doc.cn-bj.ufileos.com/udtstechmysql003.png)
 
 与单向增量同步类似， 模拟Slave来获取增量数据。 同时UDTS对写下去的数据做标记，当有新的Binlog Event的时候， 会先检查是否有标记。 如果有标记则说明是循环数据，直接丢弃，如果没有标记则加上标记写到对端。
 

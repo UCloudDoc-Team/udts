@@ -8,12 +8,12 @@
 
 用户无法对同步中的任务进行修改参数。目前开放的修改状态和类型为，全量任务/全量+增量任务 ，状态为“已创建”，“停止”，“失败”，“成功”的任务。
 
-![](http://antman-docs.cn-bj.ufileos.com/update001.png)
+![](http://udts-doc.cn-bj.ufileos.com/update001.png)
 
 
 进入任务表单对参数进行修改，可修改资源类型、任务名称、数据源/目标的信息等。
 
-![](http://antman-docs.cn-bj.ufileos.com/update004.png)
+![](http://udts-doc.cn-bj.ufileos.com/update004.png)
 
 被修改的任务状态，会初始化为 “已创建”，全+增任务修改后重新启动时，会从全量阶段开始。
 

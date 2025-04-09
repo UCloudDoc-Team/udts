@@ -69,7 +69,7 @@
 * 监控告警
     * [监控指标](/udts/monitor/monitor)
     * [监控指标告警](/udts/monitor/alarm)
-    * [消息订阅](/udts/monitor/notice)
+    * [任务失败告警](/udts/monitor/notice)
 * [FAQ](/udts/faq)
 * [预检查FAQ](udts/precheck_faq)
 * 最佳实践

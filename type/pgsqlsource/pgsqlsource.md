@@ -20,7 +20,7 @@ UDTS 支持 PostgreSQL 作为数据传输源/目标，支持版本9.4到16.x。
 ## 功能限制
 - 一个“全量+增量”任务只能同步一个数据库，如果有多个数据库需要同步，则需要为每个数据库创建任务。
 - 同步对象仅支持数据表,暂时不支持DDL语句的同步。如果需要同步DDL语句，需要手动在目标库中执行对应的DDL操作，然后重启数据同步任务。
-- 增量同步不支持GEOMETRY、TSQUERY、TSVECTOR、TXID_SNAPSHOT类型的数据同步。
+- 增量同步不支持GEOMETRY、TSQUERY、TSVECTOR、VECTOR、TXID_SNAPSHOT类型的数据同步。
 - 由于数据库自身的特性，不支持从高版本迁移到低版本。
 - 增量阶段不支持处理generated列。
 

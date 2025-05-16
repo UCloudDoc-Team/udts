@@ -57,6 +57,8 @@
     * 源为MySQL
         * [MySQL迁移到MySQL](/udts/inti/type/mysql_source/mysql2mysql)
         * [MySQL迁移到TiDB](/udts/inti/type/mysql_source/mysql2tidb)
+    * 源为MongoDB
+        * [MongoDB](/udts/inti/type/mongosource)
     * 操作指南
         * [创建任务](/udts/inti/guide/createtask)
         * [预检查](/udts/inti/guide/precheck)

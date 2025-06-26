@@ -4,20 +4,21 @@
 
 UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到16.x。
 
-## 前提条件
+## 1. 前提条件
 
 - 增量同步时用户需要开启数据日志，`wal_level`需要设置为`logical`, `max_replication_slots`需要大于1
 - 待迁移的表需具备主键或着唯一索引，否则可能会产生重复数据。具体参考[增量同步处理表没有主键或者没有唯一索引的情况](#增量同步处理表没有主键或者没有唯一索引的情况)
 
 
-### 所需权限
+## 2. 所需权限
 
 | 类型      | 源库               | 目标库                                     |
 | --------- | ------------------ | ------------------------------------------ |
 | 全  量    | SELECT             | 待迁移库的 owner 权限，或 rolcreatedb 权限 |
 | 全量+增量 | SELECT,REPLICATION | 待迁移库的 owner 权限，或 rolcreatedb 权限 |
+| 全量+增量 | SELECT,REPLICATION，同步ddl需要super权限 | 待迁移库的 owner 权限，或 rolcreatedb 权限 |
 
-## 功能限制
+## 3. 功能限制
 - 源待迁移表必须要有主键。
 - 一个“全量+增量”任务只能同步一个数据库，如果有多个数据库需要同步，则需要为每个数据库创建任务。
 - 同步对象仅支持数据表,暂时不支持DDL语句的同步。如果需要同步DDL语句，需要手动在目标库中执行对应的DDL操作，然后重启数据同步任务。
@@ -25,7 +26,7 @@ UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到1
 - 由于数据库自身的特性，不支持从高版本迁移到低版本。
 - 增量阶段不支持处理generated列。
 
-## 注意事项
+## 4. 注意事项
 
 ### 增量同步进度保存与复制槽 slot 说明
 - 增量同步期间，UDTS会在目标库中创建`public.udts_pgsync_progress`的数据表，用于记录同步的进度等信息，同步过程中请勿删除，否则会导致任务异常.
@@ -54,9 +55,19 @@ UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到1
 5. 再执行一次 select * from pg_replication_slots, 确认已删除。
 
 ```
+### 全+增任务开启DDL同步后， 任务于启动阶段，会在源库分别创建TABLE(udts_ddl_command), FUNCTION(udts_capture_ddl), EVENT TRIGGER(udts_intercept_ddl)，任务同步期间请不要在源库修改这些对象，否则会导致任务异常，任务迁移完成后可手动清理掉这些对象。
 
 
-## PostgreSQL 填写表单
+## 5. 迁移内容
+
+| 迁移内容 | 说明                                                                                               |
+| -------- | -------------------------------------------------------------------------------------------------- |
+| 迁移结构 | DATABASE, TABLE 结构及数据                                                                         |
+| 迁移范围 | 仅迁移创建任务时可以查到的库表， 任务运行中新增的表暂时不会自动迁移                                |
+| DDL      | 开启后迁移 (CREATE TABLE,ALTER TABLE,DROP TABLE,CREATE SCHEMA,DROP SCHEMA,CREATE INDEX,DROP INDEX) |
+| DML      | INSERT/UPDATE/DELETE                                                                               |
+
+## 6.PostgreSQL 填写表单
 
 ### 数据源表单
 
@@ -69,6 +80,7 @@ UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到1
 | 数据库名 | PostgreSQL 待迁移数据库名称                                                                                           |
 | 表名     | PostgreSQL 传输表名，可选项。 若不填，整库迁移； 若填写，迁移指定的表. 具体参考 [表单表名填写规则](#表单表名填写规则) |
 | 最大速率 | 外网/专线的速率范围为 1-256 MB/s，默认40 MBps (即 320 Mbps); 内网的速率范围为 1-1024 MB/s，默认 80 MBps(即 640 Mbps)  |
+| 传输DDL | 控制增量个阶段是否同步DDL，默认关闭，打开需要源库的super权限 |
 
 ###  传输目标表单
   
@@ -88,7 +100,7 @@ UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到1
 - 4. 表名填写 `public.tb_test01,schema01.tb_test02`，表示只迁移 `public.tb_test01,schema01.tb_test02` 这两张表。
 
 
-## 数据类型映射
+## 7. 数据类型映射
 <table>
     <thead>
         <tr>

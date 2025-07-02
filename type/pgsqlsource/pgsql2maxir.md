@@ -64,7 +64,7 @@ UDTS 支持 PostgreSQL 作为数据传输源传输到MAXIR，支持版本9.4到1
 | -------- | -------------------------------------------------------------------------------------------------- |
 | 迁移结构 | DATABASE, TABLE 结构及数据                                                                         |
 | 迁移范围 | 仅迁移创建任务时可以查到的库表， 任务运行中新增的表暂时不会自动迁移                                |
-| DDL      | 开启后迁移 (CREATE TABLE,ALTER TABLE,DROP TABLE,CREATE SCHEMA,DROP SCHEMA,CREATE INDEX,DROP INDEX) |
+| DDL      | 开启后迁移 (CREATE TABLE,ALTER TABLE,DROP TABLE,CREATE SCHEMA,DROP SCHEMA) |
 | DML      | INSERT/UPDATE/DELETE                                                                               |
 
 ## 6.PostgreSQL 填写表单

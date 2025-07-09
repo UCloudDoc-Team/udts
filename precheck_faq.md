@@ -495,3 +495,25 @@ Redis 跨大版本迁移可能存在兼容性问题，建议通过中转库迁�
 **解决方法：** 
 
 Redis 7.0 版本不支持 rump 模式，建议源库开启 psync 权限再进行迁移。
+
+### 4.3
+**错误信息：** 
+
+`In Rump mode, migration from versions above 7.0 to below 7.0 is not supported.`
+
+`Rump 模式下不支持从 redis 7.0 以上版本到redis 7.0 以下版本`
+
+**解决方法：** 
+
+Rump 模式下不支持从 redis 7.0 以上版本到redis 7.0 以下版本，建议迁移到相同版本。
+
+### 4.4
+**错误信息：** 
+
+`The notify-keyspace-events value in the source Redis configuration does not contain 'A' or 'E'.`
+
+`Redis 全+增迁移在 Rump 模式下， 源库notify-keyspace-events配置型必须包含 'A' or 'E' `
+
+**解决方法：** 
+
+设置源库 notify-keyspace-events 配置项， 必须包含 'AE'。

@@ -36,8 +36,6 @@
     * 源为PostgresSQL
         * [PostgreSQL迁移到PostgreSQL](/udts/type/pgsqlsource/pgsqlsource)
         * [PostgreSQL迁移到MAXIR](/udts/type/pgsqlsource/pgsql2maxir)
-    * 源为ElasticSearch
-        * [ElasticSearch](/udts/type/essource)
     * 功能原理与传输速度
         * [MySQL迁移](/udts/tech/mysql)
     * 操作指南        

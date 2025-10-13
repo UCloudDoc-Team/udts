@@ -1,7 +1,7 @@
 
 # MySQL 迁移到 TiDB
 
-UDTS支持MySQL作为数据传输源传输到TiDB，支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及兼容MySQL的数据库， 像PolarDB等。
+UDTS支持MySQL作为数据传输源传输到TiDB，支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0，以及兼容MySQL的数据库， 像PolarDB等。
 
 
 ## 迁移内容

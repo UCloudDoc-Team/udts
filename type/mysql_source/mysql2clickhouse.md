@@ -1,6 +1,6 @@
 # MySQL 迁移到 ClickHouse
 UDTS 支持 从 MySQL 迁移到 ClickHouse。
- MySQL 支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0; MariaDB 10.1.2 及以上，以及PolarDB(MySQL兼容版本)。
+ MySQL 支持版本有 MySQL(包含Percona版)5.5/5.6/5.7/8.0，以及PolarDB(MySQL兼容版本)。
  ClickHouse 支持版本 21.3 至 22.8。
 
 ## 功能限制

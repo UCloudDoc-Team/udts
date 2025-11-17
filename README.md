@@ -79,4 +79,4 @@
     * [托管云如何传输数据至公有云区域](/udts/practice/hybrid)
     * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
     * [MySQL分库分表合并](/udts/practice/merge_table.md)
-    * [使用UDTS迁移之后执行业务切换](/udts/practice/switch.md)
+    * [使用UDTS迁移完成后执行业务切换](/udts/practice/switch.md)

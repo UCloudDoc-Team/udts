@@ -4,4 +4,4 @@
 
 ## 停止UDTS数据集成任务
 
-![](http://udts-doc.cn-bj.ufileos.com/integration/stop001.png)
+![](http://udts-doc.cn-bj.ufileos.com/guide/pause_task.png)

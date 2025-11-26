@@ -6,5 +6,5 @@
 
 ## 停止UDTS迁移任务
 
-![](http://udts-doc.cn-bj.ufileos.com/deleteandstop.png)
+![](http://udts-doc.cn-bj.ufileos.com/guide/pause_task.png)
 

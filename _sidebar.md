@@ -46,7 +46,7 @@
         * [获取任务详情](/udts/guide/getconfig)
         * [查看进度](/udts/guide/getprogress)
         * [查看运行历史](/udts/guide/gethistory)
-        * [停止任务](/udts/guide/stoptask)
+        * [暂停任务](/udts/guide/stoptask)
         * [修改任务](/udts/guide/updatetask)        
         * [基于全量任务创建增量任务](/udts/guide/quickIncremental)
         * [删除任务](/udts/guide/deletetask)
@@ -64,7 +64,7 @@
         * [启动任务](/udts/inti/guide/starttask)               
         * [获取任务详情](/udts/inti/guide/getconfig)
         * [查看进度](/udts/inti/guide/getprogress)
-        * [停止任务](/udts/inti/guide/stoptask)
+        * [暂停任务](/udts/inti/guide/stoptask)
         * [修改任务](/udts/inti/guide/updatetask)
         * [删除任务](/udts/inti/guide/deletetask)
 * 监控告警
@@ -80,4 +80,5 @@
     * [托管云如何传输数据到公有云区域](/udts/practice/hybrid)
     * [跨VPC/跨项目/跨账号数据迁移](/udts/practice/diffvpc)
     * [MySQL分库分表合并](/udts/practice/merge_table.md)
+    * [使用UDTS迁移完成后执行业务切换](/udts/practice/switch.md)
 

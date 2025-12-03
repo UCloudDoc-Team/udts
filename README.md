@@ -19,6 +19,7 @@
         * [MySQL迁移到Kafka](/udts/type/mysql_source/mysql2kafka)
         * [MySQL迁移到PostgreSQL](/udts/type/mysql_source/mysql2postgres)
         * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
+        * [MySQL迁移到Elasticsearch](/udts/type/mysql_source/mysql2elasticsearch)
         * [MySQL双向同步](/udts/type/mysql_source/mysql_synchronization)
     * 源为SQLServer
         * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserver2sqlserver)   

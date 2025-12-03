@@ -104,65 +104,14 @@ UDTS 支持将 MySQL 数据迁移至 Elasticsearch，以下是完整的迁移配
 | 是否保留目标库的原数据 | 默认「否」（删除同名索引）；选择「是」则保留原数据                             |
 
 ## 五、权限要求
-| 迁移类型 | 源库权限（开启 NoLocks 模式）                                     | 源库权限（未开启 NoLocks 模式）                                                        | 目标库权限（Elasticsearch）                                                                            |
-| -------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| 全量     | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、PROCESS | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、RELOAD、LOCK TABLES、PROCESS | SELECT、INSERT、UPDATE、CREATE、DROP、ALTER、DELETE、INDEX、CREATE VIEW、CREATE ROUTINE                |
-| 全+增    | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、PROCESS | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、RELOAD、LOCK TABLES、PROCESS | SELECT、INSERT、UPDATE、CREATE、DROP、ALTER、DELETE、INDEX、CREATE VIEW、CREATE ROUTINE、ALTER ROUTINE |
-
+| 迁移类型 | 源库权限（开启 NoLocks 模式）                                     | 源库权限（未开启 NoLocks 模式）                                                        |
+| -------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 全量     | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、PROCESS | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、RELOAD、LOCK TABLES、PROCESS |
+| 全+增    | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、PROCESS | SELECT、REPLICATION SLAVE、REPLICATION CLIENT、SHOW VIEW、RELOAD、LOCK TABLES、PROCESS |
 > 说明：默认配置需源库账号拥有 SUPER 权限；无 SUPER 权限时，选择「NoLocks」模式
 
-## 六、迁移前置检查
-### 6.1 sql_mode 一致性检查
-1. 查询命令：
-   ```sql
-   select @@sql_mode;
-   -- 或
-   show variables like "sql_mode";
-   ```
-2. 配置要求：源库与目标库 sql_mode 需一致
-3. 修改命令：
-   ```sql
-   SET GLOBAL sql_mode='源库查询到的 sql_mode 值';
-   ```
 
-### 6.2 binlog 格式检查（增量/全+增迁移必做）
-1. 检查命令：
-   ```sql
-   show global variables like 'binlog_format';
-   show global variables like 'binlog_row_image';
-   ```
-2. 要求：
-   - binlog_format = ROW
-   - binlog_row_image = FULL（MySQL 5.5 无此变量，无需设置）
-3. 修改命令：
-   ```sql
-   set global binlog_format = "ROW";
-   set global binlog_row_image = "FULL";
-   ```
-
-### 6.3 引擎与主键检查
-1. MyISAM 表查询：
-   ```sql
-   select table_schema, table_name
-   from information_schema.tables
-   where engine = 'MyISAM'
-     and table_type = 'BASE TABLE'
-     and table_schema in ('目标数据库名');
-   ```
-2. 主键检查：
-   ```sql
-   -- 查询无主键的表
-   select table_schema, table_name
-   from information_schema.tables t
-   left join information_schema.key_column_usage k
-   on t.table_schema = k.table_schema 
-   and t.table_name = k.table_name 
-   and k.constraint_type = 'PRIMARY KEY'
-   where k.constraint_type is null
-     and t.table_schema in ('目标数据库名');
-   ```
-
-## 七、数据类型映射表
+## 六、数据类型映射表
 | MySQL 数据类型                                                                               | Elasticsearch 数据类型                        |
 | -------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | BIT(1)                                                                                       | BOOLEAN                                       |

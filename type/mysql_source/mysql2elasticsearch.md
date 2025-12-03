@@ -21,7 +21,7 @@ UDTS 支持将 MySQL 数据迁移至 Elasticsearch，以下是完整的迁移配
      set global binlog_format = "ROW";
      set global binlog_row_image = "FULL";
      ```
-2. 待迁移表必须包含主键，否则任务直接报错
+2. 待迁移表必须包含主键，否则会导致任务失败。
 3. 库/表名限制：
    - 不得存在同名但大小写不一致的库或表（建议统一使用小写）
    - 不得包含特殊字符 `.`（会导致迁移失败）

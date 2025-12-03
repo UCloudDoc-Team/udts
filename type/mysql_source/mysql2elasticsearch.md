@@ -1,4 +1,4 @@
-# MySQL 迁移到 Elasticsearch（UDTS 工具）
+# MySQL 迁移到 Elasticsearch
 UDTS 支持将 MySQL 数据迁移至 Elasticsearch，以下是完整的迁移配置指南、限制说明及操作规范。
 
 ## 一、支持版本
@@ -41,27 +41,12 @@ UDTS 支持将 MySQL 数据迁移至 Elasticsearch，以下是完整的迁移配
 ### 2.3 其他特殊限制
 #### 2.3.1 MyISAM 引擎表限制
 - 全量迁移时，MyISAM 表仅允许读操作，写操作会阻塞读操作直至转储完成
-- 不支持同一事务中同时更新 MyISAM 和 InnoDB 表
 - 损坏表需修复后再迁移
-- 若目标库开启 GTID，可能触发 MySQL 1785 错误，解决方案：
-  1. 转换引擎：`alter table 表名 ENGINE = InnoDB;`
-  2. 关闭 GTID：
-     ```sql
-     set global gtid_mode = "ON_PERMISSIVE";
-     set global gtid_mode = "OFF_PERMISSIVE";
-     set global gtid_mode = "OFF";
-     ```
+
 
 #### 2.3.2 数据量与任务限制
 - 单个全量迁移任务建议数据量≤200G，最大支持 1000G（超量需拆分任务或联系技术支持）
-- 不支持 event 和 trigger（增量同步前需关闭 event）：
-  ```sql
-  -- 停止所有 event
-  SET GLOBAL event_scheduler = OFF;
-  -- 查找并停止指定 event
-  SHOW EVENTS;
-  ALTER EVENT 事件名 DISABLE;
-  ```
+- 不支持 event 和 trigger
 - 增量迁移时，DDL 语句仅支持字符集：`ascii/latin1/binary/utf8/utf8mb4`
 
 ## 三、迁移内容说明

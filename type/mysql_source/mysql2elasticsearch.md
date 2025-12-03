@@ -36,7 +36,7 @@ UDTS 支持将 MySQL 数据迁移至 Elasticsearch，以下是完整的迁移配
 
 ### 2.2 目标 Elasticsearch 限制
 1. 仅支持 6.x/7.x 版本
-2. 迁移过程中会自动创建前缀为 `udts_`/`syncer_meta_schema_udts` 的系统索引，禁止手动删除（否则任务失败）
+2. 迁移过程中会自动创建前缀为 `udts_`和`syncer_meta_schema_udts` 的系统索引，禁止手动删除（否则任务失败）
 
 ### 2.3 其他特殊限制
 #### 2.3.1 MyISAM 引擎表限制

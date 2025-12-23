@@ -8,21 +8,19 @@ UDTS为全球服务， 不区分地域及可用区。
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create001.png)
 
-## 基本设置
+## 任务设置
+
+### 选择同步类型
+UDTS支持单向同步与双向同步两种。
 
 ### 选择任务类型
-UDTS支持全量迁移任务，单向增量同步任务，全量+增量任务，双向增量同步4种
+UDTS支持全量迁移任务，增量同步任务，全量+增量任务。
 
-### 选择资源类型
-UDTS 资源类型分为旗舰版、轻量版和基础版，详细区别请参考[这里](https://docs.ucloud.cn/udts/introduction/instancetype)
+### 选择数据源类型和传输目标类型
 
-## 填写任务名称
-- 支持设置任务备注，最大长度不超过255
-- 支持设置任务重试次数，任务失败后自动重试，最大重试次数为5次
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create015.png)
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create009.png)
-
-## 填写源目详细信息
+### 填写源目详细信息
 - 数据源
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create010.png)
@@ -31,7 +29,16 @@ UDTS 资源类型分为旗舰版、轻量版和基础版，详细区别请参考
 
 ![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create011.png)
 
+## 选择资源类型
+UDTS 资源类型分为o.udts.small/o.udts.medium/o.udts.xlarge/o.udts.2xlarge/o.udts.4xlarge，详细区别请参考[这里](https://docs.ucloud.cn/udts/introduction/instancetype)
 
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create016.png)
+
+## 更多设置
+- 填写任务名称
+- 支持设置任务标签
+- 支持设置任务重试次数，任务失败后自动重试，最大重试次数为5次，默认重试3次。
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create017.png)
 
 ## 预检查
 

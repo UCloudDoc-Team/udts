@@ -12,18 +12,18 @@
 
 ### 添加数据源
 
-点击添加数据源，填写源库信息，可按需添加多个数据源
+选择资源类型，填写源库信息
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create013.png)
 
 点击“下一步”，执行[预检查](/udts/inti/guide/precheck)
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create014.png)
 
-点击“下一步”，选择需要迁移的库与表，将自动填写映射值，若有需要，可更改目标库的映射库名与表名。
+预检查通过后，点击“下一步”，选择需要迁移的库与表，将自动填写映射值，若有需要，可更改目标库的映射库名与表名。
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create015.png)
 
-点击“确定”，完成一个数据源的添加，若有需要，可添加多个数据源。
+点击“确定”，一个数据源添加完成，若有需要，可添加多个数据源。
 
 ### 添加目标
 
@@ -35,6 +35,7 @@
 
 ![](http://udts-doc.cn-bj.ufileos.com/integration/create017.png)
 
+预检查通过后，点击“提交”，传输目标添加完成。
 
 ## 更多设置
 - 填写任务名称

@@ -23,11 +23,11 @@ UDTS支持全量迁移任务，增量同步任务，全量+增量任务。
 ### 填写源目详细信息
 - 数据源
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create010.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create018.png)
 
 - 数据目标
 
-![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create011.png)
+![](http://udts-doc.cn-bj.ufileos.com/transfer/guide/transfer_create019.png)
 
 ## 选择资源类型
 UDTS 资源类型分为o.udts.small/o.udts.medium/o.udts.xlarge/o.udts.2xlarge/o.udts.4xlarge，详细区别请参考[这里](https://docs.ucloud.cn/udts/introduction/instancetype)

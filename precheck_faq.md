@@ -516,4 +516,4 @@ Rump 模式下不支持从 redis 7.0 以上版本到redis 7.0 以下版本，建
 
 **解决方法：** 
 
-设置源库 notify-keyspace-events 配置项， 必须包含 'AE'。
+设置源库 notify-keyspace-events 配置项， 必须包含 'AE'。 

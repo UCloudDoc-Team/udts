@@ -38,7 +38,7 @@ UDTS 提供五种实例类型供用户选择。
 | TiDB       |  800         |       NA    | 
 | Redis      |  800         |     90000   | 
 | MongoDB    |  800         |     40000   | 
-| PostGre    |  800         |     40000   | 
+| PostGre    |  800         |     20000   | 
 
 ## o.udts.medium
 
@@ -50,7 +50,7 @@ UDTS 提供五种实例类型供用户选择。
 | TiDB       |  240         |       NA    | 
 | Redis      |  400         |     60000   | 
 | MongoDB    |  400         |     20000   | 
-| PostGre    |  400         |     20000   | 
+| PostGre    |  400         |     10000   | 
 
 ## o.udts.small
 
@@ -62,7 +62,7 @@ UDTS 提供五种实例类型供用户选择。
 | TiDB       |  80          |       NA    | 
 | Redis      |  80          |     30000   | 
 | MongoDB    |  80          |     10000   | 
-| PostGre    |  80          |     10000   | 
+| PostGre    |  80          |     5000    | 
 
 
 **说明**

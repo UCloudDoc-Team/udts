@@ -45,5 +45,4 @@ UDTS 模拟一个Slave节点，通过Binlog从全量导出点开始获取增量�
 | UCloud 华北（北京2） UDB 8GB HA | UCloud 华北（北京2） UDB 8GB HA | 全量导入       | 内网                           | 19                     | 578                                        |
 
 
-单向增量同步峰值支持2W OPS （insert, update, delete）
-					
+单向增量同步峰值支持 6W RPS （insert, update, delete）

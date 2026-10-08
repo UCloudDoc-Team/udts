@@ -41,6 +41,8 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 
 UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证书，可以先转换为 pem 格式，`SSL 安全连接`可以在源或者目标中设置。
 
+SQL Server 迁移中开启 SSL 后，源端和目标端均仅支持单向认证，不支持双向认证（mTLS），因此只需上传 CA 证书，无需上传客户端证书及私钥。
+
 ## 填写表单
 
 数据源表单

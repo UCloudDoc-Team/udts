@@ -36,6 +36,12 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | DDL      | 不支持                                                                                                                  |
 | DML      | insert/update/delete                                                                                                    |
 
+## SSL 安全连接
+为了提高链路的安全性，支持使用 SSL 证书连接数据库。SSL 在传输层对数据进行加密，提升通信数据的安全性，但会增加一定的网络连接响应时间。
+
+UDTS 当前支持 pem 格式的证书，如果您使用的是其它格式的证书，可以先转换为 pem 格式，`SSL 安全连接`可以在源或者目标中设置。
+
+SQL Server 迁移中开启 SSL 后，源端和目标端均仅支持单向认证，不支持双向认证（mTLS），因此只需上传 CA 证书，无需上传客户端证书及私钥。
 
 ## 填写表单
 
@@ -49,6 +55,7 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | 密码     | SQL Server 数据库对应用户密码                                                                                                                                   |
 | 数据库名 | SQL Server 数据库名，仅支持单库迁移                                                                                                                             |
 | 表名     | SQL Server 传输表名，表名之间使用英文逗号隔开。示例：`dbo.tablename1,dbo.tablename2`，schema 为 dbo 时可以省略，只填写 tablename，示例：`tablename1,tablename2` |
+| SSL 安全连接  | 默认关闭，当您需要使用证书连接数据库时，可以打开该选项，具体可以[参考](#ssl-安全连接)             |
 
 
 传输目标表单
@@ -59,5 +66,6 @@ EXECUTE sys.sp_cdc_change_job @job_type = N'cleanup', @retention = 14400;
 | 端口     | SQL Server 连接端口           |
 | 用户名   | SQL Server 连接用户名         |
 | 密码     | SQL Server 数据库对应用户密码 |
+| SSL 安全连接  | 默认关闭，当您需要使用证书连接数据库时，可以打开该选项，具体可以[参考](#ssl-安全连接)             |
 
 

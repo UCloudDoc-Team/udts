@@ -1,12 +1,11 @@
 # MySQL 迁移到 Kafka
-UDTS 支持 从 MySQL 迁移到 Kafka。
- MySQL 支持版本有 MySQL(包含Percona版)5.6/5.7/8.x。
- Kafka 支持版本 2.x：包括 2.0、2.1、2.2、2.3、2.4、2.5、2.6、2.7、2.8 等。
+
+UDTS 支持从 MySQL 迁移到 Kafka。MySQL 支持版本有 MySQL（包含 Percona 版）5.6/5.7/8.x；Kafka 支持版本 2.x，包括 2.0、2.1、2.2、2.3、2.4、2.5、2.6、2.7、2.8 等。
 
 ## 1. 功能限制
 
 ### 1.1 源MySQL限制
-1. 增量/全+增迁移时，源库需要开启binlog，且格式设置为ROW, image设置为FULL。
+1. 增量/全+增迁移时，源库需要开启 binlog，且 `binlog_format` 设置为 ROW，`binlog_row_image` 设置为 FULL。
 
 ```
 
@@ -55,16 +54,18 @@ set global binlog_row_image = "FULL" ;
 | Nolocks  | 默认关闭，对于无法获取 SUPER 权限的友商RDS服务需要开启，UDB获取 SUPER 权限详见FAQ                                                                                                         |
 
 
-###  传输目标表单
+### 传输目标表单
 
 | 参数名         | 说明                                                                                                                                                     |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 内网地址       | Kafka集群的连接地址，示例：192.168.1.10:9092,192.168.1.11:9092,192.168.1.12:9093                                                                          |
-| 最大速率       | Kafka传输限速值，调整传输速率                                                                                                                            |
-| 同步Topic策略  | 数据写入目标Kafka的Topic的方式，支持两种策略：<br>1. 自定义Topic前缀：每张表创建一个Topic，Topic名称为 Topic前缀.数据库名.表名<br>2. 投递到单Topic：所有表的数据都写入同一个Topic |
-| Topic前缀      | 当“同步Topic策略”选择“自定义Topic前缀”时必填。UDTS迁移MySQL到Kafka会在目标Kafka上创建对应的Topic，规则是每张表创建一个Topic，每个Topic都会以此参数作为前缀(格式为: Topic前缀.数据库名.表名) |
-| Topic名称      | 当“同步Topic策略”选择“投递到单Topic”时必填。所有表的数据都写入该Topic                                                                                     |
-| 默认分区数量   | UDTS迁移MySQL到Kafka会在目标Kafka上创建对应Topic的默认分区数量                                                                                            |
+| 内网地址       | Kafka集群的连接地址，示例：192.168.1.10:9092,192.168.1.11:9092,192.168.1.12:9093 |
+| 最大速率       | Kafka传输限速值，调整传输速率 |
+| 同步Topic策略  | 数据写入目标Kafka的Topic的方式，支持三种策略：<br>1. Topic前缀：每张表创建一个Topic，Topic名称为 Topic前缀.数据库名.表名<br>2. 投递到单Topic：所有表的数据都写入同一个Topic<br>3. 自定义Topic：按“库名匹配模式”和“表名匹配模式”填写正则表达式，将匹配的库表数据写入指定的 Topic，最多支持 20 条规则；不符合匹配规则的剩余库、剩余表数据写入到为其指定的 Topic（即默认Topic）。 |
+| Topic前缀      | 当“同步Topic策略”选择“Topic前缀”时必填。UDTS迁移MySQL到Kafka会在目标Kafka上创建对应的Topic，规则是每张表创建一个Topic，每个Topic都会以此参数作为前缀(格式为: Topic前缀.数据库名.表名) |
+| Topic名称      | 当“同步Topic策略”选择“投递到单Topic”时必填。所有表的数据都写入该Topic |
+| 自定义Topic | 当“同步Topic策略”选择“自定义Topic”时必填。按“库名匹配模式”和“表名匹配模式”分别填写正则表达式，并为匹配的库表指定“Topic名称”，最多支持 20 条规则；不符合匹配规则的剩余库、剩余表数据写入到“不符合匹配规则的剩余库/剩余表”对应的 Topic（即默认Topic）中 |
+| Online DDL工具临时表过滤 | 可以选择过滤 pt-osc 或 gh-ost Online DDL 工具产生的临时表。勾选 pt-osc 时，'_表名_new'、'_表名_old' 不会被投递到目标 Kafka；勾选 gh-ost 时，'_表名_ghc'、'_表名_gho'、'_表名_del' 不会被投递到目标 Kafka |
+| 默认分区数量   | UDTS迁移MySQL到Kafka会在目标Kafka上创建对应Topic的默认分区数量 |
 
 
 ## 4. Kafka 传输数据格式
@@ -73,7 +74,16 @@ UDTS 迁移到 Kafka 的数据采用 Debezium JSON 格式，下游同步可使�
 
 Topic 的写入位置由「同步Topic策略」决定：
 
-- **自定义Topic前缀**：每张表创建一个 Topic，表数据写入其对应的 Topic，Topic 名称为 `Topic前缀.数据库名.表名`。
+- **Topic前缀**：每张表创建一个 Topic，表数据写入其对应的 Topic，Topic 名称为 `Topic前缀.数据库名.表名`。
 - **投递到单Topic**：所有表的数据都写入「Topic名称」指定的同一个 Topic。
+- **自定义Topic**：按“库名匹配模式”和“表名匹配模式”将不同的库、表数据写入不同的 Topic；不符合匹配规则的剩余库、剩余表写入到为其指定的 Topic（默认Topic）中。例如“库名匹配模式”填 `User`、“表名匹配模式”填 `.*`，匹配的库表写入 Topic_A，其它库表写入 Topic_Default，如下图所示：
+  - ![images](/images/any_topic_1.png)
 
-无论采用哪种策略，消息中都包含源库名与源表名，下游可据此区分数据来源。
+无论采用哪种策略，消息中都包含源库名与源表名（对应 Debezium JSON 中的 `source.db` 与 `source.table` 字段），下游可据此区分数据来源。
+
+### 分区策略
+
+UDTS 投递到 Kafka 的消息采用主键分区策略：
+
+- **源表有主键**：按主键选择分区，同一主键的数据始终写入同一个分区。
+- **源表无主键**：消息随机投递到各个分区。

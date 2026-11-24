@@ -1,7 +1,7 @@
 # MySQL 迁移到 StarRocks
 UDTS 支持 从 MySQL 迁移到 StarRocks。
 MySQL 支持版本有 MySQL(包含Percona版) 5.5/5.6/5.7/8.x。
-StarRocks 支持的版本有3.3.19。
+StarRocks 支持的版本有3.3.19 和 4.1.4。
  
 
 ## 1. 功能限制
@@ -29,20 +29,25 @@ set global binlog_row_image = "FULL" ;
 2. 主键类型不能是DECIMAL或者FLOAT或者DOUBLE。
 3. 增量同步期间主键字段不能执行修改操作，否则任务会失败。
 4. 对同一张表连续执行多条DDL命令会同步失败，StarRocks执行DDL是异步执行，第一条DDL执行未完全完成时执行第二条DDL会失败。建议合并DDL语句到一条。
-5. 主键字段必须是表的第一个字段，否则创建StarRocks表会失败。
-6. 自动创建库表时会将源库的表类型转换成StarRocks表类型，如果源库表有主键迁移到目标库后会成为主键表，如果没有主键（包括唯一索引的表）迁移到目标库后会成为明细表。
+5. 主键/唯一索引字段必须定义在其他字段之前，否则创建StarRocks表会失败。
+6. 自动创建库表时会将源库的表类型转换成StarRocks表类型：
+   - 源库表有主键时，迁移到目标库后成为主键表（PRIMARY KEY）。
+   - 源库表没有主键但有唯一索引时，成为更新表（UNIQUE KEY，取第一个唯一索引的列，存在多个唯一索引时只用第一个）。
+   - 源库表既没有主键也没有唯一索引时，成为明细表（DUPLICATE KEY）。
 
 ### 1.3 全量迁移
 1. 全量迁移会迁移任务指定的源库中的库表结构和数据到目标库。
-2. 全量迁移会清理指定库表在目标库中的数据，但不会删除表结构，如果需要重建表结构需要客户自己在目标库删除或重建。注意：在目标库StarRocks创建表时，如果源库有主键需要创建主键表，没有主键（包括唯一索引的表）则创建明细表，否则可能导致任务同步失败。
+2. 全量迁移会清理指定库表在目标库中的数据，但不会删除表结构，如果需要重建表结构需要客户自己在目标库删除或重建。注意：在目标库StarRocks创建表时，源库有主键需要创建主键表，没有主键但有唯一索引需要创建更新表，都没有则创建明细表，否则可能导致任务同步失败。
 
 ### 1.4 增量迁移
 1. 增量迁移会实时解析源库binlog，将增量数据同步到目标库。
-2. DML操作支持INSERT、UPDATE、DELETE。如果表不含有主键，那么UPDATE命令不会同步。
+2. DML操作支持INSERT、UPDATE、DELETE。如果源端表不含主键，那么UPDATE命令不会同步。
 3. DDL操作支持:
    1. CREATE/DROP DATABASE
    2. CREATE/DROP/RENAME TABLE
-   3. ALTER TABLE ADD/DROP/MODIFY
+   3. ALTER TABLE ADD/DROP/MODIFY COLUMN（不支持指定列位置，新增列统一追加到表末尾）
+   4. ALTER TABLE RENAME COLUMN（必须单独执行，不支持与 ADD/DROP/MODIFY COLUMN 等其他子句混在同一条 ALTER 中）
+   5. TRUNCATE TABLE
 4. 增量迁移会将源库的binlog位点信息记录在UDTS的任务中，下次增量迁移时会从上次的binlog位点开始解析。
 
 ## 2. 表单填写
@@ -77,7 +82,7 @@ set global binlog_row_image = "FULL" ;
 | 类别      | 权限说明                                                              |
 | --------- | --------------------------------------------------------------------- |
 | 源MySQL   | SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT |
-| 目标StarRocks | CREATE DATABASE, CREATE TABLE, SELECT, INSERT, DELETE, UPDATE, ALTER, 存储卷的USAGE权限 |
+| 目标StarRocks | CREATE DATABASE, CREATE TABLE, DROP, SELECT, INSERT, DELETE, UPDATE, ALTER, 存储卷的USAGE权限 |
 
 
 ## 4. 数据类型映射
@@ -96,7 +101,7 @@ set global binlog_row_image = "FULL" ;
 | INT UNSIGNED | BIGINT | |
 | BIGINT | BIGINT | |
 | BIGINT UNSIGNED | LARGEINT | |
-| BIT(M) | BIGINT | |
+| BIT(M) | LARGEINT | |
 | DECIMAL | DECIMAL | 不支持 zerofill |
 | NUMERIC | DECIMAL | |
 | FLOAT | FLOAT | |

@@ -21,6 +21,7 @@
         * [MySQL迁移到MAXIR](/udts/type/mysql_source/mysql2maxir)
         * [MySQL迁移到Elasticsearch](/udts/type/mysql_source/mysql2elasticsearch)
         * [MySQL迁移到StarRocks](/udts/type/mysql_source/mysql2starrocks)
+        * [MySQL迁移到Doris](/udts/type/mysql_source/mysql2doris)
         * [MySQL双向同步](/udts/type/mysql_source/mysql_synchronization)
     * 源为SQLServer
         * [SQL Server迁移到SQL Server](/udts/type/sqlserver_source/sqlserver2sqlserver)   

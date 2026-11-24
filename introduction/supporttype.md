@@ -7,11 +7,12 @@
 | MySQL         | MySQL         | 支持     | 支持          |
 | MySQL         | TiDB          | 支持     | 支持          |
 | MySQL         | PostgreSQL    | 支持     | 支持全量+增量 |
-| MySQL         | Kafka         | 支持     | 支持全量+增量 |
+| MySQL         | Kafka         | 支持     | 支持          |
 | MySQL         | ClickHouse    | 支持     | 支持          |
 | MySQL         | MAXIR         | 支持     | 支持全量+增量 |
 | MySQL         | Elasticsearch | 支持     | 支持全量+增量 |
 | MySQL         | StarRocks     | 支持     | 支持          |
+| MySQL         | Doris         | 支持     | 支持          |
 | TiDB          | TiDB          | 支持     | 暂不支持      |
 | TiDB          | MySQL         | 支持     | 暂不支持      |
 | MongoDB       | MongoDB       | 支持     | 支持          |
